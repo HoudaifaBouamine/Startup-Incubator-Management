@@ -112,9 +112,11 @@ model ApprovalStatus {
   status       ProjectStatus
   comments     String?
   createdAt    DateTime      @default(now())
+  token        String?       // Add this field to store unique tokens
   approvedBy   User?         @relation("ApprovalsGivenBy", fields: [approvedById], references: [id])
   project      Project       @relation(fields: [projectId], references: [id])
 }
+
 
 model Soutenance {
   id          String   @id @default(uuid())

@@ -1,5 +1,5 @@
-import { IsEnum, IsNotEmpty, IsOptional, IsString } from 'class-validator';
-import { ProjectStage, ProjectStatus } from '@prisma/client';
+import { IsEnum, IsNotEmpty, IsOptional, IsString, IsArray } from 'class-validator';
+import { ProjectStage } from '@prisma/client';
 
 export class CreateProjectDto {
   @IsString()
@@ -41,4 +41,9 @@ export class CreateProjectDto {
   @IsEnum(ProjectStage)
   @IsOptional()
   stage?: ProjectStage;
+
+  @IsArray()
+  @IsString({ each: true }) // Ensure every element in the array is a string
+  @IsOptional()
+  memberEmails?: string[]; // New field for member emails
 }

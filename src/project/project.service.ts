@@ -1,23 +1,29 @@
-import { Injectable, ForbiddenException, ConsoleLogger } from '@nestjs/common';
+import { Injectable, ForbiddenException } from '@nestjs/common';
 import { PrismaService } from 'src/prisma/prisma.service';
 import { CreateProjectDto } from './dto/create-project.dto';
 import { ProjectStatus, ProjectStage } from '@prisma/client';
+import { ApprovalStatusService } from '../approval-status/approval-status.service'; // Import ApprovalStatusService
 import { UpdateProjectDto } from './dto/update-project.dto';
+
 @Injectable()
 export class ProjectService {
-  constructor(private prisma: PrismaService) {}
-  async createProject(userId: string, dto: CreateProjectDto) {
-    // Ensure user existss
+  constructor(
+    private readonly prisma: PrismaService,
+    private readonly approvalStatusService: ApprovalStatusService, // Inject ApprovalStatusService
+  ) {}
+
+  async createProject(userId: string, dto: CreateProjectDto): Promise<any> {
+    // Step 1: Validate if user exists
     const user = await this.prisma.user.findUnique({
       where: { id: userId },
     });
-  
+
     if (!user) {
       throw new ForbiddenException('User not found');
     }
-  
-    // Create Project
-    const Project = await this.prisma.project.create({
+
+    // Step 2: Create the project
+    const project = await this.prisma.project.create({
       data: {
         name: dto.name,
         industry: dto.industry,
@@ -30,22 +36,27 @@ export class ProjectService {
         motivation: dto.motivation,
         status: ProjectStatus.PENDING, // Default status
         stage: dto.stage || ProjectStage.IDEA, // Default stage
-        owners: { connect: { id: userId } }, // Set user as owner
+        owners: { connect: { id: userId } }, // Set the user as the project owner
       },
       include: {
-        owners: { // ✅ Ensure owners are included in the response
+        owners: {
           select: {
-         
             email: true,
             firstName: true,
-            lastName:true,
+            lastName: true,
           },
         },
       },
     });
-  
-    return Project;
+
+    // Step 3: Create approval statuses for member emails
+    if (dto.memberEmails && dto.memberEmails.length > 0) {
+      await this.approvalStatusService.createApprovalStatuses(dto.memberEmails, project.id);
+    }
+
+    return project;
   }
+
   async searchProjectByName(name: string) {
     console.log('Searching for:', name);
   
@@ -92,6 +103,7 @@ export class ProjectService {
       include: {
         owners: { select: { id: true, firstName: true, lastName: true, email: true } },
         members: { select: { id: true, firstName: true, lastName: true, email: true } },
+        
       },
     });
   }

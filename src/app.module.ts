@@ -43,10 +43,12 @@ import { TaskModule } from './task/task.module';
 import { AdminController } from './admin/admin.controller';
 import { AdminService } from './admin/admin.service';
 import { AdminModule } from './admin/admin.module';
+import { MailModule } from './mail/mail.module';
+import { ConfigModule, ConfigService } from '@nestjs/config';
 
 
 @Module({
-  imports: [AuthModule, UserModule, AnnouncementModule, ApprovalStatusModule, AuditLogModule, CommentModule, FeedbackModule, FileModule, MilestoneModule, NotificationModule, SoutenanceModule, TaskModule, AdminModule,],
+  imports: [AuthModule,ConfigModule, UserModule, AnnouncementModule, ApprovalStatusModule, AuditLogModule, CommentModule, FeedbackModule, FileModule, MilestoneModule, NotificationModule, SoutenanceModule, TaskModule, AdminModule, MailModule,],
   controllers: [AppController, ProjectController, AnnouncementController, ApprovalStatusController, AuditLogController, CommentController, FeedbackController, FileController, MilestoneController, NotificationController, SoutenanceController, TaskController, AdminController],
   providers: [AppService, PrismaService, ProjectService,JwtService, MailService,AuthGuard, AnnouncementService, ApprovalStatusService, AuditLogService, CommentService, FeedbackService, FileService, MilestoneService, NotificationService, SoutenanceService, TaskService, AdminService],
 })
