@@ -98,10 +98,135 @@ This API is built using **NestJS**, **Prisma ORM**, and **PostgreSQL**. It inclu
 
 ### Authentication
 
-- `POST /auth/signup` - Register a new user
-- `POST /auth/signin` - Log in and receive a JWT token
-- `POST /auth/verify-email` - Verify email using a token
-- `POST /auth/forgot-password` - Request password reset
+## 📌 POST /auth/signup – Register a new user
+
+Registers a new user. Optional fields should be placed at the bottom of the request body.
+
+### ✅ Request Body
+
+```json
+{
+  "email": "example.example@esi-sba.dz",
+  "password": "password123",
+  "firstName": "Mohammed",
+  "lastName": "Rabah",
+  "role": "MEMBER",
+  //optional fields
+  "phoneNumber": "+213567890123",  // Optional, format: +[country code][phone number]
+  "profilePicture": "http://example.com/profile.jpg",  // Optional, URL format
+  "bio": "Software developer from Algeria, passionate about tech.",  // Optional
+  "website": "http://example.com",  // Optional, URL format
+}
+```
+
+### 🟢 Success Response
+
+```json
+{
+  "message": "User created successfully. Please verify your email with the code sent to you."
+}
+```
+
+---
+
+## 📌 POST /auth/signin – Log in and receive a JWT token
+
+### ✅ Request Body
+
+```json
+{
+  "email": "example.example@esi-sba.dz",
+  "password": "password123"
+}
+
+```
+
+### 🟢 Success Response
+
+```json
+{
+  "message": "Login successful",
+  "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjNlZDg4OGUyLWY0NjMtNDIxYS1iMjhkLTRlZjVjOTI0NWFhMiIsImVtYWlsIjoieGFtcGxlLmV4YW1wbGUuZXNpLXNiby5kemoiLCJpYXQiOjE3NDM3OTA0MDksImV4cCI6MTc0Mzc5NDAwOX0.nNimLWRX_G_Y5xQ8dfQcxWSoZhCXmD8lbdqEk_jkoKU",
+  "user": {
+    "id": "3ed888e2-f463-421a-b28d-4ef5c9245aa2",
+    "email": "example.example@esi-sba.dz",
+    "firstName": "Mohammed",
+    "lastName": "Rabah",
+    "role": "MEMBER"
+  }
+}
+
+```
+
+### ❌ Error Responses
+
+#### Invalid credentials
+
+```json
+{
+  "message": "Invalid credentials",
+  "error": "Bad Request",
+  "statusCode": 400
+}
+```
+
+#### Email not verified
+
+```json
+{
+  "message": "Your email is not verified. Please verify your email first.",
+  "error": "Forbidden",
+  "statusCode": 403
+}
+```
+
+---
+
+## 📌 POST /auth/verify-email – Verify email using a token
+
+### ✅ Request Body
+
+```json
+{
+  "token": "678820"
+}
+```
+
+### 🟢 Success Response
+
+```json
+{
+  "message": "Email verified successfully!"
+}
+```
+
+---
+
+## 📌 POST /auth/forgot-password – Request password reset
+
+### ✅ Request Body
+
+```json
+{
+  "email": "john.doe@example.com"
+}
+```
+
+---
+
+## 📌 POST /auth/reset-password – Reset password using a token
+
+### ✅ Request Body
+
+```json
+{
+  "token": "reset-token-from-email",
+  "newPassword": "newSecurePassword456"
+}
+```
+
+---
+
 
 ### Users
 
