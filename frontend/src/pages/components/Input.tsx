@@ -39,8 +39,9 @@ const useStyles = makeStyles({
     whiteSpace: 'nowrap',
   },
   Divider: {
-    color: tokens.colorNeutralStroke1,
-  },
+    borderBottom: `2px solid ${tokens.colorNeutralForeground1}`, 
+    width: '100%',
+  }
 });
 
 interface InputProps {
@@ -51,9 +52,10 @@ interface InputProps {
   errorMessage?: string;
   onBlur?: (e: React.FocusEvent<HTMLInputElement>) => void;
   onKeyDown?: (e: React.KeyboardEvent<HTMLInputElement>) => void;
+  type?: string;
 }
 
-const Input = ({ label, placeholder, value, onChange, errorMessage, onBlur, onKeyDown }: InputProps) => {
+const Input = ({ label, placeholder, value, onChange, errorMessage, onBlur, onKeyDown , type }: InputProps) => {
   const classes = useStyles();
 
   return (
@@ -65,7 +67,7 @@ const Input = ({ label, placeholder, value, onChange, errorMessage, onBlur, onKe
         {errorMessage && <Text className={classes.errorText}>{errorMessage}</Text>}
       </div>
       <input
-        type="text"
+        type={type}
         placeholder={placeholder}
         value={value}
         onChange={onChange}

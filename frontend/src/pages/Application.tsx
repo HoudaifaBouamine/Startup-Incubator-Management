@@ -1,6 +1,6 @@
-import { useState } from 'react';
-import { makeStyles, tokens, Button, Text, Textarea, ProgressBar, Radio, Dropdown, Option, RadioGroup, Label, Tag, Avatar, useId, Badge } from '@fluentui/react-components';
-import { ArrowLeft32Filled, TargetArrow24Filled, Rocket24Regular, ClockRegular } from '@fluentui/react-icons';
+import { JSX, useState } from 'react';
+import { makeStyles, tokens, Button, Text, Textarea, ProgressBar, Select,  Label, Tag, Avatar, useId, Badge } from '@fluentui/react-components';
+import { ArrowLeft32Filled, TargetArrow24Filled, Rocket24Regular, ClockRegular, Lightbulb24Regular,  MegaphoneRegular, DesignIdeas24Filled } from '@fluentui/react-icons';
 import { useNavigate } from 'react-router-dom';
 import Input from './components/Input';
 
@@ -52,7 +52,7 @@ const useStyles = makeStyles({
         boxShadow: tokens.shadow8,
         boxSizing: 'border-box',
         '@media (max-width: 768px)': {
-            width: '80%', 
+            width: '80%',
             padding: '1.5rem',
         },
         '@media (max-width: 480px)': {
@@ -173,11 +173,7 @@ const useStyles = makeStyles({
             fontSize: tokens.fontSizeBase300,
         },
     },
-    Dropdown: {
-        display: 'grid',
-        gridTemplateRows: 'repeat(1fr)',
-        justifyItems: 'start',
-        gap: '2px',
+    Select: {
         width: '100%',
         '@media (max-width: 480px)': {
             fontSize: tokens.fontSizeBase200,
@@ -195,29 +191,58 @@ const useStyles = makeStyles({
     radioGroup: {
         display: 'flex',
         flexDirection: 'column',
-        gap: '0.5rem',
+        gap: '0.25rem',
         '@media (max-width: 480px)': {
             gap: '0.25rem',
         },
     },
-    radio: {
-        '&:checked + span': {
-            backgroundColor: tokens.colorNeutralBackgroundDisabled,
-            color: tokens.colorNeutralForeground1,
+    stageButton: {
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'flex-start',
+        gap: '0.75rem',
+        padding: '0.75rem',
+        paddingLeft: '1rem',
+        backgroundColor: tokens.colorNeutralBackground3,
+        border: `1px solid ${tokens.colorNeutralStroke2}`,
+        borderRadius: tokens.borderRadiusMedium,
+        fontWeight: tokens.fontWeightRegular,
+        color: tokens.colorNeutralForeground1,
+        cursor: 'pointer',
+        transition: 'border-color 0.3s, background-color 0.3s',
+        width: '100%',
+        textAlign: 'left',
+        boxSizing: 'border-box', 
+        ':hover': {
+            border: `1.5px solid ${tokens.colorBrandStroke1}`, 
         },
-        '&:checked + span::before': {
-            backgroundColor: tokens.colorNeutralForeground1,
+        '@media (max-width: 480px)': {
+            padding: '0.5rem',
+            paddingLeft: '0.75rem',
         },
-        '&:checked + span::after': {
-            backgroundColor: 'transparent',
-        },
-        '&:disabled': {
-            opacity: 1,
-            backgroundColor: tokens.colorNeutralBackgroundDisabled,
-            color: tokens.colorNeutralForeground1,
+        ':focus': {
+            border: `2px solid ${tokens.colorBrandStroke1} `,
+            backgroundColor: tokens.colorNeutralBackground1,
         },
     },
-   
+    stageTextWrapper: {
+        display: 'flex',
+        flexDirection: 'column',
+        gap: '0.25rem',
+    },
+    stageTitle: {
+        fontSize: tokens.fontSizeBase400,
+        fontWeight: tokens.fontWeightSemibold,
+        color: tokens.colorNeutralForeground1,
+    },
+    stageSubtitle: {
+        fontSize: tokens.fontSizeBase300,
+        color: tokens.colorNeutralForeground3,
+    },
+    stageIcon: {
+        fontSize: '24px',
+        color: tokens.colorNeutralForeground2,
+    },
     successMessage: {
         color: tokens.colorNeutralForeground3,
         fontSize: tokens.fontSizeBase300,
@@ -299,23 +324,29 @@ const useStyles = makeStyles({
         },
     },
     teamMemberTag: {
-        width: '100',
+        width: '100%',
         overflow: 'hidden',
         textOverflow: 'ellipsis',
         '@media (max-width: 480px)': {
             fontSize: tokens.fontSizeBase200,
         },
     },
+    
 });
 
 const Application: React.FC = () => {
     const classes = useStyles();
     const navigate = useNavigate();
     const [step, setStep] = useState<number>(1);
-    const industryDropdownId = useId('industry-dropdown');
-    const stageDropdownId = useId('stage-dropdown');
-
+    const industrySelectId = useId('industry-select');
+    
     const industryOptions: string[] = ['Technology', 'Healthcare', 'Finance', 'Education'];
+    const stageOptions: { value: string; title: string; subtitle: string; icon: JSX.Element }[] = [
+        { value: 'Idea', title: 'Idea Stage', subtitle: 'I need to develop my startup', icon: <Lightbulb24Regular /> },
+        { value: 'Prototype', title: 'Prototype', subtitle: 'I have a working prototype', icon: <DesignIdeas24Filled /> },
+        { value: 'MVP', title: 'MVP', subtitle: 'I am ready to test my product', icon: <Rocket24Regular />},
+        { value: 'Launched', title: 'Launched', subtitle: 'My startup is live and growing', icon:  <MegaphoneRegular /> },
+    ];
 
     const [formData, setFormData] = useState<FormData>({
         startupName: '',
@@ -345,6 +376,7 @@ const Application: React.FC = () => {
         switch (step) {
             case 1:
                 if (!formData.startupName) newErrors.startupName = 'Startup name is required';
+                if (!formData.industry) newErrors.industry = 'Industry is required';
                 if (!formData.about) newErrors.about = 'About is required';
                 break;
             case 2:
@@ -375,21 +407,20 @@ const Application: React.FC = () => {
         setErrors({ ...errors, [field]: null });
     };
 
-    const handleDropdownChange = (field: keyof FormData) => (_e: any, data: { optionValue?: string }): void => {
-        if (data.optionValue) {
-            setFormData({ ...formData, [field]: data.optionValue });
-            setErrors({ ...errors, [field]: null });
-        }
+    const handleSelectChange = (field: keyof FormData) => (e: React.ChangeEvent<HTMLSelectElement>): void => {
+        const value = e.target.value;
+        setFormData({ ...formData, [field]: value });
+        setErrors({ ...errors, [field]: null });
+    };
+
+    const handleStageChange = (value: string) => {
+        setFormData({ ...formData, stage: value });
+        setErrors({ ...errors, stage: null });
     };
 
     const handleEmailInput = (field: keyof TempEmail) => (e: React.ChangeEvent<HTMLInputElement>): void => {
         setTempEmail({ ...tempEmail, [field]: e.target.value });
         setErrors({ ...errors, [field]: null });
-    };
-
-    const handleRadioChange = (value: string) => {
-        setFormData({ ...formData, stage: value });
-        setErrors({ ...errors, stage: null });
     };
 
     const addTeamMember = (): void => {
@@ -454,7 +485,6 @@ const Application: React.FC = () => {
             navigate(-1);
         }
     };
-
     return (
         <div className={classes.background}>
             <div className={classes.container}>
@@ -482,22 +512,22 @@ const Application: React.FC = () => {
                             />
                             <div className={classes.inputWrapper}>
                                 <div className={classes.labelWrapper}>
-                                    <Label className={classes.Label} htmlFor={industryDropdownId}>Industry</Label>
+                                    <Label className={classes.Label} htmlFor={industrySelectId}>Industry</Label>
                                     {errors.industry && <Text className={classes.errorText}>{errors.industry}</Text>}
                                 </div>
-                                <Dropdown
-                                    id={industryDropdownId}
-                                    className={classes.Dropdown}
-                                    placeholder="Select industry"
-                                    onOptionSelect={handleDropdownChange('industry')}
+                                <Select
+                                    id={industrySelectId}
+                                    className={classes.Select}
                                     value={formData.industry}
+                                    onChange={handleSelectChange('industry')}
                                 >
+                                    <option value="" disabled hidden>Select industry</option>
                                     {industryOptions.map((option) => (
-                                        <Option key={option} value={option}>
+                                        <option key={option} value={option}>
                                             {option}
-                                        </Option>
+                                        </option>
                                     ))}
-                                </Dropdown>
+                                </Select>
                             </div>
                             <div className={classes.inputWrapper}>
                                 <div className={classes.labelWrapper}>
@@ -650,22 +680,28 @@ const Application: React.FC = () => {
                     <div style={{ alignSelf: 'flex-start', width: '100%' }}>
                         <div className={classes.header}>
                             <Text as="h1" className={classes.title}>How far along is your startup?</Text>
-                            <Text className={classes.text} style={{ marginBottom: '0.5rem' }}>Tell us about your current stage.</Text>
+                            <Text className={classes.text} style={{ marginBottom: '0.5rem' }}>
+                                Understanding your startup’s current stage helps us tailor the incubator’s support
+                            </Text>
                         </div>
                         <div className={classes.inputWrapper}>
                             <div className={classes.inputWrapper}>
-                                <div className={classes.labelWrapper}>
-                                    <Label className={classes.Label} htmlFor={stageDropdownId} required>
-                                        Startup Stage
-                                    </Label>
-                                    {errors.stage && <Text className={classes.errorText}>{errors.stage}</Text>}
+                                {errors.stage && <Text className={classes.errorText}>{errors.stage}</Text>}
+                                <div className={classes.radioGroup}>
+                                    {stageOptions.map((option) => (
+                                        <Button
+                                            key={option.value}
+                                            className={`${classes.stageButton} `}
+                                            onClick={() => handleStageChange(option.value)}
+                                        >
+                                            <span className={classes.stageIcon}>{option.icon}</span>
+                                            <div className={classes.stageTextWrapper}>
+                                                <Text className={classes.stageTitle}>{option.title}</Text>
+                                                <Text className={classes.stageSubtitle}>{option.subtitle}</Text>
+                                            </div>
+                                        </Button>
+                                    ))}
                                 </div>
-                                <RadioGroup className={classes.radioGroup} value={formData.stage} onChange={(_, data) => handleRadioChange(data.value)} layout="vertical">
-                                    <Radio value="Idea" label="I have just the idea" className={classes.radio} />
-                                    <Radio value="Prototype" label="I have built a prototype" className={classes.radio} />
-                                    <Radio value="MVP" label="I have an MVP ready" className={classes.radio} />
-                                    <Radio value="Startup" label="I have launched my startup" className={classes.radio} />
-                                </RadioGroup>
                             </div>
                         </div>
                     </div>
@@ -698,7 +734,7 @@ const Application: React.FC = () => {
 
                 {step === 7 && (
                     <div className={classes.wrapper}>
-                        <TargetArrow24Filled  />
+                        <TargetArrow24Filled />
                         <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem', alignItems: 'center' }}>
                             <Text as="h1" className={classes.title} style={{ textAlign: 'center' }}>
                                 Application Submitted!
