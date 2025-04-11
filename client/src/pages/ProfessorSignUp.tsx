@@ -126,7 +126,7 @@ const ProfessorSignUp = () => {
 
       const data = await res.json()
       console.log("Register success:", data)
-      navigate("/verifyEmail")
+      navigate("/login")
     } catch (err: any) {
       setError(err.message)
     } finally {
