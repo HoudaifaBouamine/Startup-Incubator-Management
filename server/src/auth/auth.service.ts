@@ -71,17 +71,18 @@ export class AuthService {
           bio,
           website,
           role,
-          verified: false,
+          // verified: false,
+          verified: true, // do not verify for the MVP
           verificationToken,
         },
       });
     
       // ✅ Send email with 6-digit code
-      await this.sendVerificationEmail(user.email, verificationToken);
+      // await this.sendVerificationEmail(user.email, verificationToken); // do not verify for the MVP
     
       return { message: 'User created successfully. Please verify your email with the code sent to you.' };
     } catch (error) {
-      throw new BadRequestException('Error creating user. Please try again.');
+      throw new BadRequestException(`Error creating user. Please try again. error : ${error}`);
     }
     
   }
