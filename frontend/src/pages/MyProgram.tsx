@@ -2,13 +2,13 @@ import { useState } from 'react';
 import { makeStyles, tokens, Button, ProgressBar, TabList, Tab } from '@fluentui/react-components';
 import { ChevronRightRegular, DocumentRegular, CommentRegular, ChevronDownRegular, Folder20Filled, Folder20Regular, Comment20Filled, Comment20Regular, CommentDismiss24Regular } from '@fluentui/react-icons';
 
-
-
 const useStyles = makeStyles({
   layout: {
     display: 'flex',
     flexDirection: 'column',
-    height: '100vh',
+    height: '100%',
+    padding: '0',
+    margin: '0',
   },
   contentWrapper: {
     display: 'flex',
@@ -16,7 +16,7 @@ const useStyles = makeStyles({
     height: '100%',
     backgroundColor: tokens.colorNeutralBackground2,
     overflow: 'hidden',
-    alignItems: 'stretch'
+    alignItems: 'stretch',
   },
   mainContent: {
     flex: 1,
@@ -25,21 +25,23 @@ const useStyles = makeStyles({
     gap: '2rem',
     overflow: 'auto',
     height: '100%',
+    position: 'relative',
   },
   programSection: {
     display: 'flex',
     flexDirection: 'column',
     gap: '1rem',
-    flex: '1 1 33%'
+    flex: '1 1 33%',
+    padding: '1rem', // Added padding to make the left panel more spacious
   },
   programHeader: {
     fontSize: '24px',
     fontWeight: '600',
-    color: tokens.colorNeutralForeground1
+    color: tokens.colorNeutralForeground1,
   },
   programSubtext: {
     fontSize: '14px',
-    color: tokens.colorNeutralForeground2
+    color: tokens.colorNeutralForeground2,
   },
   progressWrapper: {
     display: 'flex',
@@ -55,44 +57,44 @@ const useStyles = makeStyles({
   },
   progressText: {
     fontSize: '14px',
-    color: tokens.colorBrandForeground1
+    color: tokens.colorBrandForeground1,
   },
   progressText2: {
     fontSize: '14px',
-    color: tokens.colorNeutralForeground1
+    color: tokens.colorNeutralForeground1,
   },
   milestoneSection: {
     backgroundColor: tokens.colorNeutralBackground1,
     borderRadius: '8px',
-    padding: '1rem'
+    padding: '1.5rem',
   },
   milestoneHeader: {
     fontSize: '18px',
     fontWeight: '600',
     color: tokens.colorNeutralForeground1,
-    marginBottom: '1rem'
+    marginBottom: '1rem',
   },
   milestoneItem: {
     display: 'flex',
     alignItems: 'center',
-    padding: '0.75rem',
+    padding: '0.5rem',
     borderRadius: '4px',
     marginBottom: '0.5rem',
     cursor: 'pointer',
     ':hover': {
-      backgroundColor: tokens.colorNeutralBackground4
-    }
+      backgroundColor: tokens.colorNeutralBackground4,
+    },
   },
   milestoneHeaderContent: {
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'space-between',
-    width: '100%'
+    width: '100%',
   },
   milestoneText: {
     flex: 1,
     fontSize: '14px',
-    color: tokens.colorNeutralForeground1
+    color: tokens.colorNeutralForeground1,
   },
   documentIcon: {
     display: 'flex',
@@ -104,21 +106,21 @@ const useStyles = makeStyles({
     marginLeft: '1.5rem',
     cursor: 'pointer',
     ':hover': {
-      color: tokens.colorBrandForeground1
-    }
+      color: tokens.colorBrandForeground1,
+    },
   },
   activeMilestone: {
     backgroundColor: tokens.colorNeutralBackground1,
     color: tokens.colorNeutralForeground1,
     ':hover': {
-      backgroundColor: tokens.colorNeutralBackground4
-    }
+      backgroundColor: tokens.colorNeutralBackground4,
+    },
   },
   deliverablesSection: {
     flex: '2 1 66%',
     display: 'flex',
     flexDirection: 'column',
-    gap: '0.25rem'
+    gap:'0.25rem'
   },
   deliverableHeader: {
     display: 'flex',
@@ -129,29 +131,29 @@ const useStyles = makeStyles({
   deliverableTitle: {
     fontSize: tokens.fontSizeBase600,
     fontWeight: '600',
-    color: tokens.colorNeutralForeground1
+    color: tokens.colorNeutralForeground1,
   },
   deliverableTitle2: {
     fontSize: '18px',
     fontWeight: '600',
-    color: tokens.colorBrandForeground1
+    color: tokens.colorBrandForeground1,
   },
   deliverableStats: {
     display: 'flex',
-    gap: '1rem',
-    margin: '0.5rem 0'
+    gap: '0.5rem',
+    margin: '0.5rem 0',
   },
   statItem: {
     display: 'flex',
     alignItems: 'center',
     gap: '0.5rem',
     fontSize: '14px',
-    color: tokens.colorNeutralForeground2
+    color: tokens.colorNeutralForeground2,
   },
   deliverableCard: {
     backgroundColor: tokens.colorNeutralBackground1,
     borderRadius: '8px',
-    padding: '1rem 1.5rem',
+    padding: '1.25rem', 
     marginBottom: '1rem',
     display: 'flex',
     alignItems: 'center',
@@ -162,25 +164,25 @@ const useStyles = makeStyles({
     fontSize: tokens.fontSizeBase500,
     fontWeight: '500',
     color: tokens.colorNeutralForeground1,
-    marginBottom: '0.5rem'
+    marginBottom: '0.5rem',
   },
   deliverableSubtext: {
     fontSize: '14px',
     color: tokens.colorNeutralForeground2,
-    marginBottom: '0.5rem'
+    marginBottom: '0.5rem',
   },
   feedbackCard: {
     backgroundColor: tokens.colorNeutralBackground1,
     borderRadius: '8px',
-    padding: '1rem',
+    padding: '1.5rem', 
     marginBottom: '1rem',
     display: 'flex',
     alignItems: 'center',
-    gap: '1rem'
+    gap: '1rem',
   },
   feedbackText: {
     fontSize: '14px',
-    color: tokens.colorNeutralForeground2
+    color: tokens.colorNeutralForeground2,
   },
   status: {
     display: 'inline-flex',
@@ -192,7 +194,7 @@ const useStyles = makeStyles({
     border: `2px solid ${tokens.colorNeutralStroke2}`,
     position: 'relative',
     marginRight: '0.5rem',
-    overflow: 'hidden'
+    overflow: 'hidden',
   },
   statusFill: {
     position: 'absolute',
@@ -206,7 +208,7 @@ const useStyles = makeStyles({
     borderRightColor: 'transparent',
     borderBottomColor: 'transparent',
     transform: 'rotate(-90deg)',
-    transformOrigin: 'center'
+    transformOrigin: 'center',
   },
   statusBadge: {
     fontSize: '12px',
@@ -249,17 +251,19 @@ const useStyles = makeStyles({
     color: tokens.colorNeutralForeground1,
     border: `1px solid ${tokens.colorNeutralStroke1}`,
     ':hover': {
-      backgroundColor: tokens.colorNeutralBackground2
-    }
+      backgroundColor: tokens.colorNeutralBackground2,
+    },
   },
   tabContainer: {
-    marginBottom: '1rem'
+    marginBottom: '1rem',
   },
   divider: {
     backgroundColor: tokens.colorNeutralStroke2,
     width: '2px',
-    margin: '0 1rem',
-    height: '100%',
+    position: 'absolute',
+    top: 0,
+    bottom: 0,
+    left: 'calc(33% + 1rem)',
   },
   feedbackAvatar: {
     width: '24px',
@@ -268,7 +272,7 @@ const useStyles = makeStyles({
     backgroundColor: tokens.colorNeutralBackground4,
     display: 'flex',
     alignItems: 'center',
-    justifyContent: 'center'
+    justifyContent: 'center',
   },
   headerCard: {
     display: 'flex',
@@ -281,7 +285,7 @@ const useStyles = makeStyles({
     height: '4px',
     backgroundColor: tokens.colorNeutralBackground4,
     '& .fui-ProgressBar__bar': {
-      backgroundColor: tokens.colorBrandForeground1
+      backgroundColor: tokens.colorBrandForeground1,
     },
     position: 'absolute',
     bottom: 0,
@@ -297,7 +301,7 @@ const useStyles = makeStyles({
   titleWrapper: {
     display: 'flex',
     flexDirection: 'column',
-    gap: '1rem'
+    gap: '1rem',
   },
   activeTabIcon: {
     color: tokens.colorBrandForeground1,
@@ -316,14 +320,13 @@ const useStyles = makeStyles({
     borderRadius: '16px',
     lineHeight: '1',
     borderWidth: '1px' as any,
-
   },
   nofeed: {
     display: 'flex',
     justifyContent: 'center',
     alignItems: 'center',
     width: '100%',
-    height: '100%'
+    height: '100%',
   },
   titlefeed: {
     fontSize: tokens.fontSizeBase600,
@@ -335,7 +338,7 @@ const useStyles = makeStyles({
     display: 'flex',
     flexDirection: 'column',
     alignItems: 'center',
-    gap: '0.5rem'
+    gap: '0.5rem',
   },
   nofeedWrapper2: {
     display: 'flex',
@@ -343,10 +346,8 @@ const useStyles = makeStyles({
     alignItems: 'center',
     padding: '12px',
     width: '70%',
-    textAlign: 'center'
-
+    textAlign: 'center',
   },
-  
 });
 
 const MyProgram = () => {
@@ -365,13 +366,13 @@ const MyProgram = () => {
         { name: 'Those are Required documents', status: 'Not Submitted Yet' },
         { name: 'Submit your application form', status: 'Pending Review' },
         { name: 'Provide financial statements', status: 'Not Submitted Yet' },
-        { name: 'Include team bios', status: 'Not Submitted Yet' }
+        { name: 'Include team bios', status: 'Not Submitted Yet' },
       ],
       feedbacks: [
         { author: 'Primary string', text: 'Great progress so far. A few adjustments are needed to refine the submission.' },
-        { author: 'Secondary string', text: 'The prototype looks good' }
+        { author: 'Secondary string', text: 'The prototype looks good' },
       ],
-      progress: 0.75
+      progress: 0.75,
     },
     {
       name: 'M2: Planning & Budgeting',
@@ -379,10 +380,10 @@ const MyProgram = () => {
         { name: 'Upload project proposal', status: 'Not Submitted Yet' },
         { name: 'Submit budget plan', status: 'Pending Review' },
         { name: 'Provide team roles', status: 'Not Submitted Yet' },
-        { name: 'Include references', status: 'Not Submitted Yet' }
+        { name: 'Include references', status: 'Not Submitted Yet' },
       ],
       feedbacks: [],
-      progress: 0.5
+      progress: 0.5,
     },
     {
       name: 'M3: Application & Selection',
@@ -390,14 +391,14 @@ const MyProgram = () => {
         { name: 'Upload project proposal', status: 'Not Submitted Yet' },
         { name: 'Submit budget plan', status: 'Pending Review' },
         { name: 'Provide team roles', status: 'Not Submitted Yet' },
-        { name: 'Include references', status: 'Not Submitted Yet' }
+        { name: 'Include references', status: 'Not Submitted Yet' },
       ],
       feedbacks: [
         { author: 'Primary string', text: 'Please clarify the team roles.' },
         { author: 'Secondary string', text: 'References are well-structured.' },
-        { author: 'Tertiary string', text: 'Timeline needs to be more detailed.' }
+        { author: 'Tertiary string', text: 'Timeline needs to be more detailed.' },
       ],
-      progress: 0.5
+      progress: 0.5,
     },
     {
       name: 'M4: Application & Selection',
@@ -405,12 +406,12 @@ const MyProgram = () => {
         { name: 'Submit legal documents', status: 'Not Submitted Yet' },
         { name: 'Provide market analysis', status: 'Not Submitted Yet' },
         { name: 'Include project timeline', status: 'Pending Review' },
-        { name: 'Upload pitch deck', status: 'Not Submitted Yet' }
+        { name: 'Upload pitch deck', status: 'Not Submitted Yet' },
       ],
       feedbacks: [
-        { author: 'Primary string', text: 'Market analysis needs more depth.' }
+        { author: 'Primary string', text: 'Market analysis needs more depth.' },
       ],
-      progress: 0.25
+      progress: 0.25,
     },
     {
       name: 'M5: Application & Selection',
@@ -418,10 +419,10 @@ const MyProgram = () => {
         { name: 'Submit team resumes', status: 'Not Submitted Yet' },
         { name: 'Provide funding history', status: 'Not Submitted Yet' },
         { name: 'Upload business plan', status: 'Not Submitted Yet' },
-        { name: 'Prototype Details', status: 'Accepted' }
+        { name: 'Prototype Details', status: 'Accepted' },
       ],
       feedbacks: [],
-      progress: 0.1
+      progress: 0.1,
     },
   ];
 
@@ -473,7 +474,6 @@ const MyProgram = () => {
                       <div className={styles.milestoneHeaderContent}>
                         <span className={styles.milestoneText}>
                           {milestone.name}
-
                         </span>
                         <div className={styles.status}>
                           <div
@@ -482,11 +482,10 @@ const MyProgram = () => {
                               borderLeftColor: milestone.progress >= 0.25 ? tokens.colorBrandForeground1 : 'transparent',
                               borderBottomColor: milestone.progress >= 0.5 ? tokens.colorBrandForeground1 : 'transparent',
                               borderRightColor: milestone.progress >= 0.75 ? tokens.colorBrandForeground1 : 'transparent',
-                              borderTopColor: milestone.progress >= 1 ? tokens.colorBrandForeground1 : 'transparent'
+                              borderTopColor: milestone.progress >= 1 ? tokens.colorBrandForeground1 : 'transparent',
                             }}
                           />
                         </div>
-
                         {expandedMilestone === index ? <ChevronDownRegular /> : <ChevronRightRegular />}
                       </div>
                     </div>
@@ -592,7 +591,6 @@ const MyProgram = () => {
                     <div className={styles.nofeedWrapper}>
                       <CommentDismiss24Regular />
                       <div className={styles.nofeedWrapper2}>
-
                         <h3 className={styles.titlefeed}>No Feedbacks Yet</h3>
                         <p className={styles.deliverableSubtext}>Once you submit your deliverable, your mentor will review it and leave feedback</p>
                       </div>

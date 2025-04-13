@@ -10,6 +10,8 @@ const useStyles = makeStyles({
     flexDirection: 'column',
     height: '100vh',
     backgroundColor: tokens.colorNeutralBackground2,
+    padding: '0',
+    margin: '0',
   },
   header: {
     width: '100%',
@@ -33,7 +35,6 @@ const useStyles = makeStyles({
     display: 'flex',
     flexDirection: 'column',
     overflow: 'auto',
-    padding: '1rem', 
     '@media (max-width: 768px)': {
       padding: '0.5rem',
     },

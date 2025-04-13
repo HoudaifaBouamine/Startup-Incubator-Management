@@ -25,12 +25,13 @@ const useStyles = makeStyles({
   },
   input: {
     width: '100%',
-    maxWidth: '550px',
+    maxWidth: '650px',
     minWidth: '300px',
     backgroundColor: tokens.colorNeutralBackground3,
     padding: '0.5rem 1rem',
     borderRadius: '4px',
     color: tokens.colorNeutralForeground4,
+    marginRight: '4rem',
   },
   button: {
     background: 'transparent',
