@@ -25,97 +25,270 @@ This API is built using **NestJS**, **Prisma ORM**, and **PostgreSQL**. It inclu
 ## Project Structure
 
 ```bash
+.
 ├── admin
+│   ├── admin.controller.spec.ts
 │   ├── admin.controller.ts
 │   ├── admin.module.ts
+│   ├── admin.service.spec.ts
 │   ├── admin.service.ts
 │   └── dto
 ├── announcement
+│   ├── announcement.controller.spec.ts
 │   ├── announcement.controller.ts
 │   ├── announcement.module.ts
+│   ├── announcement.service.spec.ts
 │   ├── announcement.service.ts
 │   └── dto
+├── app.controller.spec.ts
+├── app.controller.ts
 ├── app.module.ts
+├── app.service.ts
 ├── approval-status
+│   ├── approval-status.controller.spec.ts
 │   ├── approval-status.controller.ts
 │   ├── approval-status.module.ts
+│   ├── approval-status.service.spec.ts
 │   ├── approval-status.service.ts
 │   └── dto
-├── audit-log
-│   ├── audit-log.controller.ts
-│   ├── audit-log.module.ts
-│   ├── audit-log.service.ts
-│   └── dto
 ├── auth
+│   ├── auth.controller.spec.ts
 │   ├── auth.controller.ts
 │   ├── auth.module.ts
+│   ├── auth.service.spec.ts
 │   ├── auth.service.ts
 │   ├── dto
-│   ├── jwt.strategy.ts
+│   └── jwt.strategy.ts
 ├── config
 ├── decorators
-│   ├── roles.decorator.ts
-│   ├── user.decorator.ts
-├── feedback
-│   ├── feedback.controller.ts
-│   ├── feedback.module.ts
-│   ├── feedback.service.ts
-│   └── dto
-├── file
-│   ├── file.controller.ts
-│   ├── file.module.ts
-│   ├── file.service.ts
-│   └── dto
+│   ├── roles
+│   └── user.decorator.ts
 ├── filters
+│   ├── auth
+│   └── http-exception
 ├── guards
+│   ├── auth
+│   ├── is-verified
+│   ├── ownership
+│   └── roles
 ├── jwt
+│   ├── jwt.module.ts
+│   ├── jwt.service.spec.ts
+│   └── jwt.service.ts
 ├── mail
+│   ├── dto
+│   ├── mail.controller.spec.ts
+│   ├── mail.controller.ts
+│   ├── mail.module.ts
+│   ├── mail.service.spec.ts
+│   └── mail.service.ts
+├── main.ts
 ├── middleware
-├── milestone
+│   ├── auth
+│   └── logger
 ├── notification
+│   ├── dto
+│   ├── notification.controller.spec.ts
+│   ├── notification.controller.ts
+│   ├── notification.module.ts
+│   ├── notification.service.spec.ts
+│   └── notification.service.ts
 ├── pipes
+│   ├── auth
+│   └── parse-int
 ├── prisma
 │   ├── prisma.module.ts
-│   ├── prisma.service.ts
+│   ├── prisma.service.spec.ts
+│   └── prisma.service.ts
 ├── project
-│   ├── project.controller.ts
-│   ├── project.service.ts
 │   ├── dto
+│   ├── project.controller.spec.ts
+│   ├── project.controller.ts
+│   ├── project.service.spec.ts
+│   └── project.service.ts
 ├── soutenance
-├── task
+│   ├── dto
+│   ├── soutenance.controller.spec.ts
+│   ├── soutenance.controller.ts
+│   ├── soutenance.module.ts
+│   ├── soutenance.service.spec.ts
+│   └── soutenance.service.ts
 ├── types
+│   ├── ApprovalStatus.ts
+│   ├── AuditLog.ts
+│   ├── Comment.ts
+│   ├── Feedback.ts
+│   ├── File.ts
+│   ├── Milestone.type.ts
+│   ├── Notification.ts
+│   ├── Soutenance.ts
+│   ├── Task.ts
+│   ├── custom-prisma.types.ts
+│   ├── jwt-payload.type.ts
+│   ├── project.types.ts
+│   ├── request-with-user.type.ts
+│   ├── roles.enum.ts
+│   └── user.type.ts
 ├── user
+│   ├── dto
+│   ├── user.controller.spec.ts
 │   ├── user.controller.ts
 │   ├── user.module.ts
-│   ├── user.service.ts
-│   ├── dto
-└── utils
-    └── verification.ts
+│   ├── user.service.spec.ts
+│   └── user.service.ts
+├── utils
+│   └── verfication.ts
+└── workshop
+    ├── workshop.controller.spec.ts
+    ├── workshop.controller.ts
+    ├── workshop.module.ts
+    ├── workshop.service.spec.ts
+    └── workshop.service.ts
+
 ```
 
 
 ## API Endpoints
-
+## Host : https://nestjs-projects-management.onrender.com
 ### Authentication
 
-- `POST /auth/signup` - Register a new user
-- `POST /auth/signin` - Log in and receive a JWT token
-- `POST /auth/verify-email` - Verify email using a token
-- `POST /auth/forgot-password` - Request password reset
+## 📌 POST /auth/signup – Register a new user
 
-### Users
+Registers a new user. Optional fields should be placed at the bottom of the request body.
 
-- `GET /users` - Retrieve all users
-- `GET /users/:id` - Retrieve a user by ID
-- `PATCH /users/:id` - Update user information
+### ✅ Request Body
 
-### Projects
+```json
+{
+  "email": "example.example@esi-sba.dz",
+  "password": "password123",
+  "firstName": "Mohammed",
+  "lastName": "Rabah",
+  "role": "MEMBER",
+  //optional fields
+  "phoneNumber": "+213567890123",  // Optional, format: +[country code][phone number]
+  "profilePicture": "http://example.com/profile.jpg",  // Optional, URL format
+  "bio": "Software developer from Algeria, passionate about tech.",  // Optional
+  "website": "http://example.com",  // Optional, URL format
+}
+```
 
-- `POST /projects` - Create a new project
-- `GET /projects` - Get all projects
-- `GET /projects/:id` - Get project by ID
-- `PATCH /projects/:id` - Update project details
-- `DELETE /projects/:id` - Delete a project
+### 🟢 Success Response
+
+```json
+{
+  "message": "User created successfully. Please verify your email with the code sent to you."
+}
+```
+
+---
+
+## 📌 POST /auth/signin – Log in and receive a JWT token
+
+### ✅ Request Body
+
+```json
+{
+  "email": "example.example@esi-sba.dz",
+  "password": "password123"
+}
+
+```
+
+### 🟢 Success Response
+
+```json
+{
+  "message": "Login successful",
+  "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjNlZDg4OGUyLWY0NjMtNDIxYS1iMjhkLTRlZjVjOTI0NWFhMiIsImVtYWlsIjoieGFtcGxlLmV4YW1wbGUuZXNpLXNiby5kemoiLCJpYXQiOjE3NDM3OTA0MDksImV4cCI6MTc0Mzc5NDAwOX0.nNimLWRX_G_Y5xQ8dfQcxWSoZhCXmD8lbdqEk_jkoKU",
+  "user": {
+    "id": "3ed888e2-f463-421a-b28d-4ef5c9245aa2",
+    "email": "example.example@esi-sba.dz",
+    "firstName": "Mohammed",
+    "lastName": "Rabah",
+    "role": "MEMBER"
+  }
+}
+
+```
+
+### ❌ Error Responses
+
+#### Invalid credentials
+
+```json
+{
+  "message": "Invalid credentials",
+  "error": "Bad Request",
+  "statusCode": 400
+}
+```
+
+#### Email not verified
+
+```json
+{
+  "message": "Your email is not verified. Please verify your email first.",
+  "error": "Forbidden",
+  "statusCode": 403
+}
+```
+
+---
+
+## 📌 POST /auth/verify-email – Verify email using a token
+
+### ✅ Request Body
+
+```json
+{
+  "token": "678820"
+}
+```
+
+### 🟢 Success Response
+
+```json
+{
+  "message": "Email verified successfully!"
+}
+```
+
+---
+
+## 📌 POST /auth/forgot-password – Request password reset
+
+### ✅ Request Body
+
+```json
+{
+  "email": "john.doe@example.com"
+}
+```
+
+---
+
+## 📌 POST /auth/reset-password – Reset password using a token
+
+### ✅ Request Body
+
+```json
+{
+  "token": "reset-token-from-email",
+  "newPassword": "newSecurePassword456"
+}
+```
+
+---
+# Project API Documentation
+
+This document outlines the available routes for managing projects, members, and associated data within the system.
+
+## Routes
+## API Reference
+- [projects API](readme/projects.md)
+- [users](readme/users.md)
+
 
 ### Approval System (In Progress)
 

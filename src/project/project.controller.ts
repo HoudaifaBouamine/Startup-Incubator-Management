@@ -1,4 +1,4 @@
-import { Controller, Post, Body, UseGuards, Request, Get, Patch, Delete, Param } from '@nestjs/common';
+import { Controller, Post, Body,Query, UseGuards, Request, Get, Patch, Delete, Param } from '@nestjs/common';
 import { ProjectService } from './project.service';
 import { CreateProjectDto } from './dto/create-project.dto';
 import { AuthGuard } from 'src/guards/auth/auth.guard';
@@ -7,6 +7,7 @@ import { OwnershipGuard } from 'src/guards/ownership/ownership.guard';
 import { UpdateProjectDto } from './dto/update-project.dto';
 import { JwtService } from '@nestjs/jwt';
 import { ProjectType, ProjectStatus, ProjectStage } from '../types/project.types';
+import { BadRequestException, NotFoundException } from '@nestjs/common';
 
 @Controller('projects')
 export class ProjectController {
@@ -17,6 +18,51 @@ export class ProjectController {
   async createProject(@Request() req, @Body() dto: CreateProjectDto) {
     return this.projectService.createProject(req.user.id, dto);
   }
+//get all memebrs , encadrants ...../
+@Get(':projectId/relation')
+async getProjectRelation(
+  @Param('projectId') projectId: string,
+  @Query('relationType') relationType: string, // Pass the relation type as a query parameter
+) {
+  if (!relationType) {
+    throw new BadRequestException('Relation type is required');
+  }
+  return this.projectService.getProjectRelation(projectId, relationType);
+}
+
+  //add member to a project 
+  // Example route handler for /add-user
+  //✅ tested 
+  @UseGuards(AuthGuard, OwnershipGuard)
+  @Post('/add-member')
+  addMember(@Body() body) {
+    const { projectId, userIdentifier } = body;
+    return this.projectService.attachUserToProject(projectId, userIdentifier, "members");
+  }
+  
+  @Post('/add-encadrant')
+  addEncadrant(@Body() body) {
+    const { projectId, userIdentifier } = body;
+    return this.projectService.attachUserToProject(projectId, userIdentifier, "encadrants");
+  }
+  
+  @Post('/add-jury')
+  addJury(@Body() body) {
+    const { projectId, userIdentifier } = body;
+    return this.projectService.attachUserToProject(projectId, userIdentifier, "juryMembers");
+  }
+  
+
+  //add encadrant to a prject (in case they didnt have encdarant yet )
+
+  // get projects that doest have encadranss 
+  @Get('noencadransts')
+  async getProjectsWithoutEncadrants() {
+    return this.projectService.getProjectsWithoutEncadrants();
+  }
+
+  // get projects that have only 2 members (field of more members needeed true )
+
 
   @Get('search/name/:name')
   async searchByName(@Param('name') name: string) {
@@ -32,6 +78,7 @@ export class ProjectController {
   async getAllProjects() {
     return this.projectService.getAllProjects();
   }
+
 
   @Get(':id')
   async getProjectById(@Param('id') id: string) {
@@ -57,7 +104,7 @@ export class ProjectController {
 
   @UseGuards(AuthGuard, OwnershipGuard) // Only owners can manage team members
   @Post(':projectId/add-member/:userId')
-  async addMember(@Param('projectId') projectId: string, @Param('userId') userId: string) {
+  async addMembe(@Param('projectId') projectId: string, @Param('userId') userId: string) {
     return this.projectService.addMember(projectId, userId);
   }
 

@@ -4,7 +4,8 @@ import { CreateProjectDto } from './dto/create-project.dto';
 import { ProjectStatus, ProjectStage } from '@prisma/client';
 import { ApprovalStatusService } from '../approval-status/approval-status.service'; // Import ApprovalStatusService
 import { UpdateProjectDto } from './dto/update-project.dto';
-
+import { BadRequestException, NotFoundException } from '@nestjs/common';
+import { ConflictException } from '@nestjs/common';
 @Injectable()
 export class ProjectService {
   constructor(
@@ -17,12 +18,69 @@ export class ProjectService {
     const user = await this.prisma.user.findUnique({
       where: { id: userId },
     });
-
+  
     if (!user) {
       throw new ForbiddenException('User not found');
     }
-
-    // Step 2: Create the project
+  
+    // Step 2: Check if a project with the same name already exists
+    const existingProject = await this.prisma.project.findFirst({
+      where: {
+        name: dto.name,
+        OR: [
+          { industry: { equals: dto.industry, mode: 'insensitive' } },  // Case-insensitive check for same industry
+        ],
+      },
+    });
+  
+    if (existingProject) {
+      throw new ConflictException('Project with this name or industry already exists');
+    }
+  
+    // Step 3: Validate memberEmails (at least one member required)
+    if (!dto.memberEmails || dto.memberEmails.length < 1) {
+      throw new BadRequestException('At least one member is required for the project');
+    }
+  
+    // Step 4: Validate encadrantEmails (at least one encadrant required)
+    if (dto.encadrantEmails && dto.encadrantEmails.length < 1) {
+      throw new BadRequestException('At least one encadrant is required for the project');
+    }
+  
+    // Step 5: Check if member emails are valid users
+    if (dto.memberEmails) {
+      const existingMembers = await this.prisma.user.findMany({
+        where: {
+          email: { in: dto.memberEmails },
+        },
+      });
+      if (existingMembers.length !== dto.memberEmails.length) {
+        throw new BadRequestException('Some member emails are invalid or do not exist');
+      }
+    }
+  
+    // Step 6: Check if encadrant emails are valid users
+    if (dto.encadrantEmails) {
+      const existingEncadrants = await this.prisma.user.findMany({
+        where: {
+          email: { in: dto.encadrantEmails },
+        },
+      });
+      if (existingEncadrants.length !== dto.encadrantEmails.length) {
+        throw new BadRequestException('Some encadrant emails are invalid or do not exist');
+      }
+    }
+  
+    // Step 7: Check if the user has active projects
+ 
+  
+   
+    // Step 9: Validate project description length
+    if (dto.about.length < 20) {
+      throw new BadRequestException('The project description must be at least 20 characters long');
+    }
+  
+    // Step 10: Create the project
     const project = await this.prisma.project.create({
       data: {
         name: dto.name,
@@ -38,25 +96,70 @@ export class ProjectService {
         stage: dto.stage || ProjectStage.IDEA, // Default stage
         owners: { connect: { id: userId } }, // Set the user as the project owner
       },
+    });
+  
+    // Step 11: Create approval statuses for members
+    if (dto.memberEmails && dto.memberEmails.length > 0) {
+      await this.approvalStatusService.generateApprovalRequests(
+        dto.memberEmails,
+        project.id,
+        'members' // Relation name for members
+      );
+    }
+  
+    // Step 12: Create approval statuses for encadrants
+    if (dto.encadrantEmails && dto.encadrantEmails.length > 0) {
+      await this.approvalStatusService.generateApprovalRequests(
+        dto.encadrantEmails,
+        project.id,
+        'encadrants' // Relation name for encadrants
+      );
+    }
+  
+    // Return the created project
+    return project;
+  }
+  
+  //add user to project member encadrant...
+  async attachUserToProject(projectId: string, userIdentifier: string, relationType: string) {
+    const user = await this.prisma.user.findFirst({
+      where: {
+        OR: [{ id: userIdentifier }, { email: userIdentifier }],
+      },
+    });
+  
+    if (!user) {
+      throw new NotFoundException("User not found");
+    }
+  
+    const validRelations = [
+      "members",
+      "encadrants",
+      "juryMembers",
+      "owners",
+      "scientificReviewers",
+    ];
+  
+    if (!validRelations.includes(relationType)) {
+      throw new BadRequestException("Invalid relation type");
+    }
+  
+    return this.prisma.project.update({
+      where: { id: projectId },
+      data: {
+        [relationType]: {
+          connect: { id: user.id },
+        },
+      },
       include: {
-        owners: {
-          select: {
-            email: true,
-            firstName: true,
-            lastName: true,
-          },
+        [relationType]: {
+          select: { id: true, firstName: true, lastName: true, email: true },
         },
       },
     });
-
-    // Step 3: Create approval statuses for member emails
-    if (dto.memberEmails && dto.memberEmails.length > 0) {
-      await this.approvalStatusService.createApprovalStatuses(dto.memberEmails, project.id);
-    }
-
-    return project;
   }
-
+  
+  
   async searchProjectByName(name: string) {
     console.log('Searching for:', name);
   
@@ -103,10 +206,34 @@ export class ProjectService {
       include: {
         owners: { select: { id: true, firstName: true, lastName: true, email: true } },
         members: { select: { id: true, firstName: true, lastName: true, email: true } },
+        encadrants: { select: { id: true, firstName: true, lastName: true, email: true } },
+        modules
         
       },
     });
   }
+
+  async getProjectsWithoutEncadrants() {
+    return this.prisma.project.findMany({
+      where: {
+        encadrants: {
+          none: {}, // ⛔ means: no encadrants exist
+        },
+      },
+      include: {
+        owners: {
+          select: { id: true, firstName: true, lastName: true, email: true },
+        },
+        members: {
+          select: { id: true, firstName: true, lastName: true, email: true },
+        },
+        encadrants: {
+          select: { id: true, firstName: true, lastName: true, email: true },
+        },
+      },
+    });
+  }
+  
   
   async getProjectById(id: string) {
     return this.prisma.project.findUnique({
@@ -220,14 +347,55 @@ async getTopProjectsByMembers() {
   });
 }
 
+////members relatiosn stufs 
 
 
+  // General function to fetch project relations
+  async getProjectRelation(projectId: string, relationType: string) {
+    const validRelations = [
+      "members",
+      "encadrants",
+      "juryMembers",
+      "owners",
+      "scientificReviewers",
+      "modules", // Add other relations if needed
+    ];
+
+    // Check if the relation type is valid
+    if (!validRelations.includes(relationType)) {
+      throw new BadRequestException(`Invalid relation type: ${relationType}`);
+    }
+
+    // Dynamically query the relation
+    const project = await this.prisma.project.findUnique({
+      where: { id: projectId },
+      include: {
+        [relationType]: {
+          select: {
+            id: true,
+            firstName: true,
+            lastName: true,
+            email: true,
+          },
+        },
+      },
+    });
+
+    // Handle case where project is not found
+    if (!project) {
+      throw new NotFoundException("Project not found");
+    }
+
+    // Return the requested relation data
+    return project[relationType];
+  
+
   
   
   
   
   
-  
+  }
 }
 
 /*// ✅ Filter by stage
