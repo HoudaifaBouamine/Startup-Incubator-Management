@@ -33,9 +33,9 @@ const useStyles = makeStyles({
     transform: 'translateX(-100%)',
     transition: 'transform 0.3s ease-in-out',
     '@media (max-width: 768px)': {
-      width: '100%', // Full width on small screens
-      height: 'auto', // Adjust height
-      gap: '1rem', // Reduce gap on small screens
+      width: '100%', 
+      height: 'auto', 
+      gap: '1rem', 
     },
   },
   sidebarVisible: {
@@ -62,9 +62,9 @@ const useStyles = makeStyles({
       backgroundColor: tokens.colorNeutralBackground2,
     },
     '@media (max-width: 768px)': {
-      padding: '8px 12px', // Smaller padding on small screens
-      height: '36px', // Smaller height
-      fontSize: '12px', // Smaller font size
+      padding: '8px 12px', 
+      height: '36px', 
+      fontSize: '12px', 
     },
   },
   activeNavItem: {
@@ -88,7 +88,7 @@ const useStyles = makeStyles({
     justifyContent: 'center',
     alignItems: 'center',
     '@media (max-width: 768px)': {
-      fontSize: '16px', // Smaller icon on small screens
+      fontSize: '16px', 
       width: '16px',
       height: '16px',
     },
@@ -108,7 +108,7 @@ const useStyles = makeStyles({
     },
   },
   customDivider: {
-    backgroundColor: tokens.colorNeutralStroke1, // Darker divider color
+    backgroundColor: tokens.colorNeutralStroke1, 
   },
   bottomItems: {
     display: 'flex',
@@ -140,16 +140,10 @@ const Sidebar = () => {
       path: '/dashboard',
     },
     { 
-      label: 'Incubation Program', 
+      label: 'Progress', 
       regularIcon: <DesktopTowerRegular />, 
       filledIcon: <DesktopTowerFilled />,
-      path: '/incubation-program',
-    },
-    { 
-      label: 'Startup', 
-      regularIcon: <RocketRegular />, 
-      filledIcon: <RocketFilled />,
-      path: '/startup',
+      path: '/Progress',
     },
     { 
       label: 'Team', 

@@ -1,4 +1,4 @@
-import { Text, Divider, tokens, makeStyles } from '@fluentui/react-components';
+import { Text, tokens, makeStyles } from '@fluentui/react-components';
 
 const useStyles = makeStyles({
   inputWrapper: {
@@ -39,9 +39,9 @@ const useStyles = makeStyles({
     whiteSpace: 'nowrap',
   },
   Divider: {
-    borderBottom: `2px solid ${tokens.colorNeutralForeground1}`, 
+    borderBottom: `1px solid ${tokens.colorNeutralForeground1}`,
     width: '100%',
-  }
+  },
 });
 
 interface InputProps {
@@ -55,7 +55,16 @@ interface InputProps {
   type?: string;
 }
 
-const Input = ({ label, placeholder, value, onChange, errorMessage, onBlur, onKeyDown , type }: InputProps) => {
+const Input = ({
+  label,
+  placeholder,
+  value,
+  onChange,
+  errorMessage,
+  onBlur,
+  onKeyDown,
+  type = 'text',
+}: InputProps) => {
   const classes = useStyles();
 
   return (
@@ -75,7 +84,7 @@ const Input = ({ label, placeholder, value, onChange, errorMessage, onBlur, onKe
         onKeyDown={onKeyDown}
         className={classes.inputField}
       />
-      <Divider />
+      <div className={classes.Divider}></div>
     </div>
   );
 };

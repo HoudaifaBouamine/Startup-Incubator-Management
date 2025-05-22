@@ -135,7 +135,7 @@
 
 "@babel/runtime@^7.1.2":
   version "7.26.9"
-  resolved "https://registry.yarnpkg.com/@babel/runtime/-/runtime-7.26.9.tgz#aa4c6facc65b9cb3f87d75125ffd47781b475433"
+  resolved "https://registry.npmjs.org/@babel/runtime/-/runtime-7.26.9.tgz"
   integrity sha512-aA63XwOkcl4xxQa3HjPMqOP6LiK0ZDv3mUPYEFXkpHbaFjtGggE1A61FjFzJnB+p7/oy2gA8E+rcBNl/zC1tMg==
   dependencies:
     regenerator-runtime "^0.14.0"
@@ -172,128 +172,8 @@
 
 "@emotion/hash@^0.9.0":
   version "0.9.2"
-  resolved "https://registry.yarnpkg.com/@emotion/hash/-/hash-0.9.2.tgz#ff9221b9f58b4dfe61e619a7788734bd63f6898b"
+  resolved "https://registry.npmjs.org/@emotion/hash/-/hash-0.9.2.tgz"
   integrity sha512-MyqliTZGuOm3+5ZRSaaBGP3USLw6+EGykkwZns2EPC5g8jJ4z9OrdZY9apkl3+UP9+sdz76YYkwCKP5gh8iY3g==
-
-"@esbuild/aix-ppc64@0.25.0":
-  version "0.25.0"
-  resolved "https://registry.yarnpkg.com/@esbuild/aix-ppc64/-/aix-ppc64-0.25.0.tgz#499600c5e1757a524990d5d92601f0ac3ce87f64"
-  integrity sha512-O7vun9Sf8DFjH2UtqK8Ku3LkquL9SZL8OLY1T5NZkA34+wG3OQF7cl4Ql8vdNzM6fzBbYfLaiRLIOZ+2FOCgBQ==
-
-"@esbuild/android-arm64@0.25.0":
-  version "0.25.0"
-  resolved "https://registry.yarnpkg.com/@esbuild/android-arm64/-/android-arm64-0.25.0.tgz#b9b8231561a1dfb94eb31f4ee056b92a985c324f"
-  integrity sha512-grvv8WncGjDSyUBjN9yHXNt+cq0snxXbDxy5pJtzMKGmmpPxeAmAhWxXI+01lU5rwZomDgD3kJwulEnhTRUd6g==
-
-"@esbuild/android-arm@0.25.0":
-  version "0.25.0"
-  resolved "https://registry.yarnpkg.com/@esbuild/android-arm/-/android-arm-0.25.0.tgz#ca6e7888942505f13e88ac9f5f7d2a72f9facd2b"
-  integrity sha512-PTyWCYYiU0+1eJKmw21lWtC+d08JDZPQ5g+kFyxP0V+es6VPPSUhM6zk8iImp2jbV6GwjX4pap0JFbUQN65X1g==
-
-"@esbuild/android-x64@0.25.0":
-  version "0.25.0"
-  resolved "https://registry.yarnpkg.com/@esbuild/android-x64/-/android-x64-0.25.0.tgz#e765ea753bac442dfc9cb53652ce8bd39d33e163"
-  integrity sha512-m/ix7SfKG5buCnxasr52+LI78SQ+wgdENi9CqyCXwjVR2X4Jkz+BpC3le3AoBPYTC9NHklwngVXvbJ9/Akhrfg==
-
-"@esbuild/darwin-arm64@0.25.0":
-  version "0.25.0"
-  resolved "https://registry.yarnpkg.com/@esbuild/darwin-arm64/-/darwin-arm64-0.25.0.tgz#fa394164b0d89d4fdc3a8a21989af70ef579fa2c"
-  integrity sha512-mVwdUb5SRkPayVadIOI78K7aAnPamoeFR2bT5nszFUZ9P8UpK4ratOdYbZZXYSqPKMHfS1wdHCJk1P1EZpRdvw==
-
-"@esbuild/darwin-x64@0.25.0":
-  version "0.25.0"
-  resolved "https://registry.yarnpkg.com/@esbuild/darwin-x64/-/darwin-x64-0.25.0.tgz#91979d98d30ba6e7d69b22c617cc82bdad60e47a"
-  integrity sha512-DgDaYsPWFTS4S3nWpFcMn/33ZZwAAeAFKNHNa1QN0rI4pUjgqf0f7ONmXf6d22tqTY+H9FNdgeaAa+YIFUn2Rg==
-
-"@esbuild/freebsd-arm64@0.25.0":
-  version "0.25.0"
-  resolved "https://registry.yarnpkg.com/@esbuild/freebsd-arm64/-/freebsd-arm64-0.25.0.tgz#b97e97073310736b430a07b099d837084b85e9ce"
-  integrity sha512-VN4ocxy6dxefN1MepBx/iD1dH5K8qNtNe227I0mnTRjry8tj5MRk4zprLEdG8WPyAPb93/e4pSgi1SoHdgOa4w==
-
-"@esbuild/freebsd-x64@0.25.0":
-  version "0.25.0"
-  resolved "https://registry.yarnpkg.com/@esbuild/freebsd-x64/-/freebsd-x64-0.25.0.tgz#f3b694d0da61d9910ec7deff794d444cfbf3b6e7"
-  integrity sha512-mrSgt7lCh07FY+hDD1TxiTyIHyttn6vnjesnPoVDNmDfOmggTLXRv8Id5fNZey1gl/V2dyVK1VXXqVsQIiAk+A==
-
-"@esbuild/linux-arm64@0.25.0":
-  version "0.25.0"
-  resolved "https://registry.yarnpkg.com/@esbuild/linux-arm64/-/linux-arm64-0.25.0.tgz#f921f699f162f332036d5657cad9036f7a993f73"
-  integrity sha512-9QAQjTWNDM/Vk2bgBl17yWuZxZNQIF0OUUuPZRKoDtqF2k4EtYbpyiG5/Dk7nqeK6kIJWPYldkOcBqjXjrUlmg==
-
-"@esbuild/linux-arm@0.25.0":
-  version "0.25.0"
-  resolved "https://registry.yarnpkg.com/@esbuild/linux-arm/-/linux-arm-0.25.0.tgz#cc49305b3c6da317c900688995a4050e6cc91ca3"
-  integrity sha512-vkB3IYj2IDo3g9xX7HqhPYxVkNQe8qTK55fraQyTzTX/fxaDtXiEnavv9geOsonh2Fd2RMB+i5cbhu2zMNWJwg==
-
-"@esbuild/linux-ia32@0.25.0":
-  version "0.25.0"
-  resolved "https://registry.yarnpkg.com/@esbuild/linux-ia32/-/linux-ia32-0.25.0.tgz#3e0736fcfab16cff042dec806247e2c76e109e19"
-  integrity sha512-43ET5bHbphBegyeqLb7I1eYn2P/JYGNmzzdidq/w0T8E2SsYL1U6un2NFROFRg1JZLTzdCoRomg8Rvf9M6W6Gg==
-
-"@esbuild/linux-loong64@0.25.0":
-  version "0.25.0"
-  resolved "https://registry.yarnpkg.com/@esbuild/linux-loong64/-/linux-loong64-0.25.0.tgz#ea2bf730883cddb9dfb85124232b5a875b8020c7"
-  integrity sha512-fC95c/xyNFueMhClxJmeRIj2yrSMdDfmqJnyOY4ZqsALkDrrKJfIg5NTMSzVBr5YW1jf+l7/cndBfP3MSDpoHw==
-
-"@esbuild/linux-mips64el@0.25.0":
-  version "0.25.0"
-  resolved "https://registry.yarnpkg.com/@esbuild/linux-mips64el/-/linux-mips64el-0.25.0.tgz#4cababb14eede09248980a2d2d8b966464294ff1"
-  integrity sha512-nkAMFju7KDW73T1DdH7glcyIptm95a7Le8irTQNO/qtkoyypZAnjchQgooFUDQhNAy4iu08N79W4T4pMBwhPwQ==
-
-"@esbuild/linux-ppc64@0.25.0":
-  version "0.25.0"
-  resolved "https://registry.yarnpkg.com/@esbuild/linux-ppc64/-/linux-ppc64-0.25.0.tgz#8860a4609914c065373a77242e985179658e1951"
-  integrity sha512-NhyOejdhRGS8Iwv+KKR2zTq2PpysF9XqY+Zk77vQHqNbo/PwZCzB5/h7VGuREZm1fixhs4Q/qWRSi5zmAiO4Fw==
-
-"@esbuild/linux-riscv64@0.25.0":
-  version "0.25.0"
-  resolved "https://registry.yarnpkg.com/@esbuild/linux-riscv64/-/linux-riscv64-0.25.0.tgz#baf26e20bb2d38cfb86ee282dff840c04f4ed987"
-  integrity sha512-5S/rbP5OY+GHLC5qXp1y/Mx//e92L1YDqkiBbO9TQOvuFXM+iDqUNG5XopAnXoRH3FjIUDkeGcY1cgNvnXp/kA==
-
-"@esbuild/linux-s390x@0.25.0":
-  version "0.25.0"
-  resolved "https://registry.yarnpkg.com/@esbuild/linux-s390x/-/linux-s390x-0.25.0.tgz#8323afc0d6cb1b6dc6e9fd21efd9e1542c3640a4"
-  integrity sha512-XM2BFsEBz0Fw37V0zU4CXfcfuACMrppsMFKdYY2WuTS3yi8O1nFOhil/xhKTmE1nPmVyvQJjJivgDT+xh8pXJA==
-
-"@esbuild/linux-x64@0.25.0":
-  version "0.25.0"
-  resolved "https://registry.yarnpkg.com/@esbuild/linux-x64/-/linux-x64-0.25.0.tgz#08fcf60cb400ed2382e9f8e0f5590bac8810469a"
-  integrity sha512-9yl91rHw/cpwMCNytUDxwj2XjFpxML0y9HAOH9pNVQDpQrBxHy01Dx+vaMu0N1CKa/RzBD2hB4u//nfc+Sd3Cw==
-
-"@esbuild/netbsd-arm64@0.25.0":
-  version "0.25.0"
-  resolved "https://registry.yarnpkg.com/@esbuild/netbsd-arm64/-/netbsd-arm64-0.25.0.tgz#935c6c74e20f7224918fbe2e6c6fe865b6c6ea5b"
-  integrity sha512-RuG4PSMPFfrkH6UwCAqBzauBWTygTvb1nxWasEJooGSJ/NwRw7b2HOwyRTQIU97Hq37l3npXoZGYMy3b3xYvPw==
-
-"@esbuild/netbsd-x64@0.25.0":
-  version "0.25.0"
-  resolved "https://registry.yarnpkg.com/@esbuild/netbsd-x64/-/netbsd-x64-0.25.0.tgz#414677cef66d16c5a4d210751eb2881bb9c1b62b"
-  integrity sha512-jl+qisSB5jk01N5f7sPCsBENCOlPiS/xptD5yxOx2oqQfyourJwIKLRA2yqWdifj3owQZCL2sn6o08dBzZGQzA==
-
-"@esbuild/openbsd-arm64@0.25.0":
-  version "0.25.0"
-  resolved "https://registry.yarnpkg.com/@esbuild/openbsd-arm64/-/openbsd-arm64-0.25.0.tgz#8fd55a4d08d25cdc572844f13c88d678c84d13f7"
-  integrity sha512-21sUNbq2r84YE+SJDfaQRvdgznTD8Xc0oc3p3iW/a1EVWeNj/SdUCbm5U0itZPQYRuRTW20fPMWMpcrciH2EJw==
-
-"@esbuild/openbsd-x64@0.25.0":
-  version "0.25.0"
-  resolved "https://registry.yarnpkg.com/@esbuild/openbsd-x64/-/openbsd-x64-0.25.0.tgz#0c48ddb1494bbc2d6bcbaa1429a7f465fa1dedde"
-  integrity sha512-2gwwriSMPcCFRlPlKx3zLQhfN/2WjJ2NSlg5TKLQOJdV0mSxIcYNTMhk3H3ulL/cak+Xj0lY1Ym9ysDV1igceg==
-
-"@esbuild/sunos-x64@0.25.0":
-  version "0.25.0"
-  resolved "https://registry.yarnpkg.com/@esbuild/sunos-x64/-/sunos-x64-0.25.0.tgz#86ff9075d77962b60dd26203d7352f92684c8c92"
-  integrity sha512-bxI7ThgLzPrPz484/S9jLlvUAHYMzy6I0XiU1ZMeAEOBcS0VePBFxh1JjTQt3Xiat5b6Oh4x7UC7IwKQKIJRIg==
-
-"@esbuild/win32-arm64@0.25.0":
-  version "0.25.0"
-  resolved "https://registry.yarnpkg.com/@esbuild/win32-arm64/-/win32-arm64-0.25.0.tgz#849c62327c3229467f5b5cd681bf50588442e96c"
-  integrity sha512-ZUAc2YK6JW89xTbXvftxdnYy3m4iHIkDtK3CLce8wg8M2L+YZhIvO1DKpxrd0Yr59AeNNkTiic9YLf6FTtXWMw==
-
-"@esbuild/win32-ia32@0.25.0":
-  version "0.25.0"
-  resolved "https://registry.yarnpkg.com/@esbuild/win32-ia32/-/win32-ia32-0.25.0.tgz#f62eb480cd7cca088cb65bb46a6db25b725dc079"
-  integrity sha512-eSNxISBu8XweVEWG31/JzjkIGbGIJN/TrRoiSVZwZ6pkC6VX4Im/WV2cz559/TXLcYbcrDN8JtKgd9DJVIo8GA==
 
 "@esbuild/win32-x64@0.25.0":
   version "0.25.0"
@@ -343,7 +223,7 @@
     minimatch "^3.1.2"
     strip-json-comments "^3.1.1"
 
-"@eslint/js@9.21.0", "@eslint/js@^9.21.0":
+"@eslint/js@^9.21.0", "@eslint/js@9.21.0":
   version "9.21.0"
   resolved "https://registry.npmjs.org/@eslint/js/-/js-9.21.0.tgz"
   integrity sha512-BqStZ3HX8Yz6LvsF5ByXYrtigrV5AXADWLAGc7PH/1SxOb7/FIYYMszZZWiUou/GB9P2lXWk2SV4d+Z8h0nknw==
@@ -363,19 +243,19 @@
 
 "@floating-ui/core@^1.6.0":
   version "1.6.9"
-  resolved "https://registry.yarnpkg.com/@floating-ui/core/-/core-1.6.9.tgz#64d1da251433019dafa091de9b2886ff35ec14e6"
+  resolved "https://registry.npmjs.org/@floating-ui/core/-/core-1.6.9.tgz"
   integrity sha512-uMXCuQ3BItDUbAMhIXw7UPXRfAlOAvZzdK9BWpE60MCn+Svt3aLn9jsPTi/WNGlRUu2uI0v5S7JiIUsbsvh3fw==
   dependencies:
     "@floating-ui/utils" "^0.2.9"
 
 "@floating-ui/devtools@0.2.1":
   version "0.2.1"
-  resolved "https://registry.yarnpkg.com/@floating-ui/devtools/-/devtools-0.2.1.tgz#3e8023e09ede273a7aa426e7911f3dac630024c5"
+  resolved "https://registry.npmjs.org/@floating-ui/devtools/-/devtools-0.2.1.tgz"
   integrity sha512-8PHJLbD6VhBh+LJ1uty/Bz30qs02NXCE5u8WpOhSewlYXUWl03GNXknr9AS2yaAWJEQaY27x7eByJs44gODBcw==
 
 "@floating-ui/dom@^1.6.12":
   version "1.6.13"
-  resolved "https://registry.yarnpkg.com/@floating-ui/dom/-/dom-1.6.13.tgz#a8a938532aea27a95121ec16e667a7cbe8c59e34"
+  resolved "https://registry.npmjs.org/@floating-ui/dom/-/dom-1.6.13.tgz"
   integrity sha512-umqzocjDgNRGTuO7Q8CU32dkHkECqI8ZdMZ5Swb6QAM0t5rnlrN3lGo1hdpscRd3WS8T6DKYK4ephgIH9iRh3w==
   dependencies:
     "@floating-ui/core" "^1.6.0"
@@ -383,26 +263,26 @@
 
 "@floating-ui/utils@^0.2.9":
   version "0.2.9"
-  resolved "https://registry.yarnpkg.com/@floating-ui/utils/-/utils-0.2.9.tgz#50dea3616bc8191fb8e112283b49eaff03e78429"
+  resolved "https://registry.npmjs.org/@floating-ui/utils/-/utils-0.2.9.tgz"
   integrity sha512-MDWhGtE+eHw5JW7lq4qhc5yRLS11ERl1c7Z6Xd0a58DozHES6EnNNwUWbMiG4J9Cgj053Bhk8zvlhFYKVhULwg==
 
 "@fluentui/keyboard-keys@^9.0.8":
   version "9.0.8"
-  resolved "https://registry.yarnpkg.com/@fluentui/keyboard-keys/-/keyboard-keys-9.0.8.tgz#812b923f20d428f3c5cdff9922a4478b59e907c5"
+  resolved "https://registry.npmjs.org/@fluentui/keyboard-keys/-/keyboard-keys-9.0.8.tgz"
   integrity sha512-iUSJUUHAyTosnXK8O2Ilbfxma+ZyZPMua5vB028Ys96z80v+LFwntoehlFsdH3rMuPsA8GaC1RE7LMezwPBPdw==
   dependencies:
     "@swc/helpers" "^0.5.1"
 
 "@fluentui/priority-overflow@^9.1.15":
   version "9.1.15"
-  resolved "https://registry.yarnpkg.com/@fluentui/priority-overflow/-/priority-overflow-9.1.15.tgz#edce236aa21024ead00dbf6e7c5e4eaa89cd6a1d"
+  resolved "https://registry.npmjs.org/@fluentui/priority-overflow/-/priority-overflow-9.1.15.tgz"
   integrity sha512-/3jPBBq64hRdA416grVj+ZeMBUIaKZk2S5HiRg7CKCAV1JuyF84Do0rQI6ns8Vb9XOGuc4kurMcL/UEftoEVrg==
   dependencies:
     "@swc/helpers" "^0.5.1"
 
 "@fluentui/react-accordion@^9.6.0":
   version "9.6.0"
-  resolved "https://registry.yarnpkg.com/@fluentui/react-accordion/-/react-accordion-9.6.0.tgz#5e3cd6006122bc4d1ecea7fe6bea60c0d3b481dc"
+  resolved "https://registry.npmjs.org/@fluentui/react-accordion/-/react-accordion-9.6.0.tgz"
   integrity sha512-k0/SH3qSwQ9C3kTaw25RQUvd1woBwA5hqTyy/5P0uVj1QKAxNT39uCSs4qmCVBPnjP2x/HJk99in6mCjngdeFQ==
   dependencies:
     "@fluentui/react-aria" "^9.14.0"
@@ -420,7 +300,7 @@
 
 "@fluentui/react-alert@9.0.0-beta.124":
   version "9.0.0-beta.124"
-  resolved "https://registry.yarnpkg.com/@fluentui/react-alert/-/react-alert-9.0.0-beta.124.tgz#b408971fd5b1e76bdca20fcae280a527858ad2f5"
+  resolved "https://registry.npmjs.org/@fluentui/react-alert/-/react-alert-9.0.0-beta.124.tgz"
   integrity sha512-yFBo3B5H9hnoaXxlkuz8wRz04DEyQ+ElYA/p5p+Vojf19Zuta8DmFZZ6JtWdtxcdnnQ4LvAfC5OYYlzdReozPA==
   dependencies:
     "@fluentui/react-avatar" "^9.6.29"
@@ -435,7 +315,7 @@
 
 "@fluentui/react-aria@^9.14.0":
   version "9.14.0"
-  resolved "https://registry.yarnpkg.com/@fluentui/react-aria/-/react-aria-9.14.0.tgz#63c1dd51079bbfa40cd4e9365f83648ed9f4bd35"
+  resolved "https://registry.npmjs.org/@fluentui/react-aria/-/react-aria-9.14.0.tgz"
   integrity sha512-2SF/0fHHQsUC0ok6w11k69KHxQX+FQbbJY+C/6iamkNSxCk4T65QdYzGcSyHHcxx78rN3sA2khNJnPS7Z2yqmQ==
   dependencies:
     "@fluentui/keyboard-keys" "^9.0.8"
@@ -447,7 +327,7 @@
 
 "@fluentui/react-avatar@^9.6.29", "@fluentui/react-avatar@^9.7.0":
   version "9.7.0"
-  resolved "https://registry.yarnpkg.com/@fluentui/react-avatar/-/react-avatar-9.7.0.tgz#bc1cc8cdf6fb0d46a6376d554825c36b07a6de32"
+  resolved "https://registry.npmjs.org/@fluentui/react-avatar/-/react-avatar-9.7.0.tgz"
   integrity sha512-JTovVU090XWh1GVfBUq2YBxawFNKqjsdduV7AxR1/TgMWYsoG4wOb396D3PwmIanFBDnXRRb2K4vb06LeCLDUA==
   dependencies:
     "@fluentui/react-badge" "^9.2.50"
@@ -465,7 +345,7 @@
 
 "@fluentui/react-badge@^9.2.50":
   version "9.2.50"
-  resolved "https://registry.yarnpkg.com/@fluentui/react-badge/-/react-badge-9.2.50.tgz#a549554098b524e8c76f2db5bdacaef9a8adb60f"
+  resolved "https://registry.npmjs.org/@fluentui/react-badge/-/react-badge-9.2.50.tgz"
   integrity sha512-rMptIUeUWwbTvzSo917GOVDY5nKeNbcSfvtvop54zrFNrcMicAZIfrJK8fB1hFggT2cuaiI9qWdWuSTd+q1LZw==
   dependencies:
     "@fluentui/react-icons" "^2.0.245"
@@ -478,7 +358,7 @@
 
 "@fluentui/react-breadcrumb@^9.1.0":
   version "9.1.0"
-  resolved "https://registry.yarnpkg.com/@fluentui/react-breadcrumb/-/react-breadcrumb-9.1.0.tgz#9d673fb424f01a661aa2a466c70ee19ca72edfeb"
+  resolved "https://registry.npmjs.org/@fluentui/react-breadcrumb/-/react-breadcrumb-9.1.0.tgz"
   integrity sha512-si+E3khtKelaNOgMR3GP4VB9jJ4pDfF5gaqyH3wgfy9JMAbq0rlJ76MMdVNOLkfvnXtubbpsVu46BAQC2GO3aA==
   dependencies:
     "@fluentui/react-aria" "^9.14.0"
@@ -495,7 +375,7 @@
 
 "@fluentui/react-button@^9.3.83", "@fluentui/react-button@^9.4.0":
   version "9.4.0"
-  resolved "https://registry.yarnpkg.com/@fluentui/react-button/-/react-button-9.4.0.tgz#e19e3ad3b8191208689bc4c5685031aaa98199a3"
+  resolved "https://registry.npmjs.org/@fluentui/react-button/-/react-button-9.4.0.tgz"
   integrity sha512-VtjkyBdGRxvjbQPVKhKr5Frj5RBwn0Rxcjv+MRhosA9GS7LE5hDfIaIJkBZUug4czmhzBDZapT/2IljFN/eK3g==
   dependencies:
     "@fluentui/keyboard-keys" "^9.0.8"
@@ -511,7 +391,7 @@
 
 "@fluentui/react-card@^9.1.0":
   version "9.1.0"
-  resolved "https://registry.yarnpkg.com/@fluentui/react-card/-/react-card-9.1.0.tgz#440fd6f84b49954b97cecf6b7fa106933b4dc2b4"
+  resolved "https://registry.npmjs.org/@fluentui/react-card/-/react-card-9.1.0.tgz"
   integrity sha512-9iOxgTkLPytTn6fKyGv9GwglQ+saLztYyFJtxYHxpR5uCJ6Dat62vKPr2AsJN/EvOUfi9SgEGN2qjqDm/AfvPw==
   dependencies:
     "@fluentui/keyboard-keys" "^9.0.8"
@@ -525,7 +405,7 @@
 
 "@fluentui/react-carousel@^9.6.0":
   version "9.6.0"
-  resolved "https://registry.yarnpkg.com/@fluentui/react-carousel/-/react-carousel-9.6.0.tgz#61ea291c5cb91c152a993d3b6d2eafe8969d7328"
+  resolved "https://registry.npmjs.org/@fluentui/react-carousel/-/react-carousel-9.6.0.tgz"
   integrity sha512-ek0EHTK1nvhLS2/j3axn7/x8SExn48LIGKDva9uvun/hmG2QJbkWv7X8yxVkkT60+XDPZ1Kq5YvFI13hqarULA==
   dependencies:
     "@fluentui/react-aria" "^9.14.0"
@@ -546,7 +426,7 @@
 
 "@fluentui/react-checkbox@^9.3.0":
   version "9.3.0"
-  resolved "https://registry.yarnpkg.com/@fluentui/react-checkbox/-/react-checkbox-9.3.0.tgz#62018bdb1b3aa68f63c183d22e51cf7516a2ca15"
+  resolved "https://registry.npmjs.org/@fluentui/react-checkbox/-/react-checkbox-9.3.0.tgz"
   integrity sha512-aVEGhF+s9ezmp0avgZzemFUW6+xLCD0zrHVLRP7K6vAyHUOcBSN7ITEg0v7dOUKFEF98pIjNYyxJtLqQfS5ULg==
   dependencies:
     "@fluentui/react-field" "^9.2.0"
@@ -562,7 +442,7 @@
 
 "@fluentui/react-combobox@^9.14.0":
   version "9.14.0"
-  resolved "https://registry.yarnpkg.com/@fluentui/react-combobox/-/react-combobox-9.14.0.tgz#534f2cc8d2c180a093c3e861b13c15a17d417ce3"
+  resolved "https://registry.npmjs.org/@fluentui/react-combobox/-/react-combobox-9.14.0.tgz"
   integrity sha512-tbO57dPua5kYLpsXxcbvqmVXr4NbmL4IDfaKrayJ4YTPCvy5nhIEOTtHMnnz7DU6F0CN4y1uptrz/FfE7t2b8w==
   dependencies:
     "@fluentui/keyboard-keys" "^9.0.8"
@@ -582,7 +462,7 @@
 
 "@fluentui/react-components@^9.60.0":
   version "9.60.0"
-  resolved "https://registry.yarnpkg.com/@fluentui/react-components/-/react-components-9.60.0.tgz#da2fc4e6a17761f26d577b9c9213b72a77f51da5"
+  resolved "https://registry.npmjs.org/@fluentui/react-components/-/react-components-9.60.0.tgz"
   integrity sha512-rio7BAgF5oyQ0jL6/h1By5ya6pBZtf1UFj0YOto75OhLp/PdHqZy5vWpntveUnih6hwnGeZ07EQkgyPnZl5Rog==
   dependencies:
     "@fluentui/react-accordion" "^9.6.0"
@@ -648,7 +528,7 @@
 
 "@fluentui/react-context-selector@^9.1.72":
   version "9.1.72"
-  resolved "https://registry.yarnpkg.com/@fluentui/react-context-selector/-/react-context-selector-9.1.72.tgz#e6d3806ec0f8e21eed3f236b61c0d796a53ff317"
+  resolved "https://registry.npmjs.org/@fluentui/react-context-selector/-/react-context-selector-9.1.72.tgz"
   integrity sha512-n9M7o81fuIzKuvrzdOK9Rcc+SyYg9hkr0bXhdclTHWKBYw2RgIEzXuld1qL3+gOFcSYS6AoNKpqrd9mithWYpw==
   dependencies:
     "@fluentui/react-utilities" "^9.18.20"
@@ -656,7 +536,7 @@
 
 "@fluentui/react-dialog@^9.12.0":
   version "9.12.0"
-  resolved "https://registry.yarnpkg.com/@fluentui/react-dialog/-/react-dialog-9.12.0.tgz#ffac1043bf0cbc0c1b349d98ce029e6bb7f89340"
+  resolved "https://registry.npmjs.org/@fluentui/react-dialog/-/react-dialog-9.12.0.tgz"
   integrity sha512-ouZEsU7ZNaRfAYWlSwVmTwtIY5pAXL1tE41CVj5XIb2Jsx1+5qFXG9szw3mwtlaDZMHbbsQswqToqnI7T4iv5g==
   dependencies:
     "@fluentui/keyboard-keys" "^9.0.8"
@@ -676,7 +556,7 @@
 
 "@fluentui/react-divider@^9.2.82":
   version "9.2.82"
-  resolved "https://registry.yarnpkg.com/@fluentui/react-divider/-/react-divider-9.2.82.tgz#e369bad4533bc957810dd0ec2004488525b96301"
+  resolved "https://registry.npmjs.org/@fluentui/react-divider/-/react-divider-9.2.82.tgz"
   integrity sha512-U3krzGswRxpFgMkXafkl12+R7R1SeX+JdTZpw8SMnvQsBroEWgy6hq8bWhh8AFUcqCoHIbieBOrRFV68pvIvGg==
   dependencies:
     "@fluentui/react-jsx-runtime" "^9.0.50"
@@ -688,7 +568,7 @@
 
 "@fluentui/react-drawer@^9.7.0":
   version "9.7.0"
-  resolved "https://registry.yarnpkg.com/@fluentui/react-drawer/-/react-drawer-9.7.0.tgz#b24b4e8b6b911ade12c26718383d5cc556e450fd"
+  resolved "https://registry.npmjs.org/@fluentui/react-drawer/-/react-drawer-9.7.0.tgz"
   integrity sha512-9kL+a9KmlFWnKpJLNcNnMWOi+51XLylJN+af/K0gqU9pH+HzU6Akr4/tc74CNsmpX7aJ94oXUAqEL/Oukfeuyg==
   dependencies:
     "@fluentui/react-dialog" "^9.12.0"
@@ -704,7 +584,7 @@
 
 "@fluentui/react-field@^9.2.0":
   version "9.2.0"
-  resolved "https://registry.yarnpkg.com/@fluentui/react-field/-/react-field-9.2.0.tgz#f1508e1f752c49155a65b53c65c0e0c2a4f772ce"
+  resolved "https://registry.npmjs.org/@fluentui/react-field/-/react-field-9.2.0.tgz"
   integrity sha512-5XfkIUcvvR/V6oTrQAO2t+5dqGFFJhHJJ7buanct9nedaT1LPYQGXYgjAc0vMUzSePRDOdgOOKZHzXQ2UT2RiA==
   dependencies:
     "@fluentui/react-context-selector" "^9.1.72"
@@ -718,7 +598,7 @@
 
 "@fluentui/react-icons@^2.0.237", "@fluentui/react-icons@^2.0.239", "@fluentui/react-icons@^2.0.245":
   version "2.0.274"
-  resolved "https://registry.yarnpkg.com/@fluentui/react-icons/-/react-icons-2.0.274.tgz#b60180c9d4baa0423e85ea6a5193fe89b846b144"
+  resolved "https://registry.npmjs.org/@fluentui/react-icons/-/react-icons-2.0.274.tgz"
   integrity sha512-URmKlK8yS8f+RNsqi1pHBiL91V8RFBJlIBrPnsm8GcZsZv3vhA8k9jUinGyiMKgcsgcUulGPT/T7JUOLGEE+oQ==
   dependencies:
     "@griffel/react" "^1.0.0"
@@ -726,7 +606,7 @@
 
 "@fluentui/react-image@^9.1.80":
   version "9.1.80"
-  resolved "https://registry.yarnpkg.com/@fluentui/react-image/-/react-image-9.1.80.tgz#103a7a0534bcb8936439a65d1c43d72e327fcc4e"
+  resolved "https://registry.npmjs.org/@fluentui/react-image/-/react-image-9.1.80.tgz"
   integrity sha512-Vw6cPJaGSGy9usjXxaK0If9Ow3wo0e2yUIsKRWpWtiX7CTwENGP7N6WYbJFw26gY4AVer/S9bfGlen/gqq3cHg==
   dependencies:
     "@fluentui/react-jsx-runtime" "^9.0.50"
@@ -738,7 +618,7 @@
 
 "@fluentui/react-infobutton@9.0.0-beta.102":
   version "9.0.0-beta.102"
-  resolved "https://registry.yarnpkg.com/@fluentui/react-infobutton/-/react-infobutton-9.0.0-beta.102.tgz#c0473275141999455fae4388f47d4f77b98c0f89"
+  resolved "https://registry.npmjs.org/@fluentui/react-infobutton/-/react-infobutton-9.0.0-beta.102.tgz"
   integrity sha512-3kA4F0Vga8Ds6JGlBajLCCDOo/LmPuS786Wg7ui4ZTDYVIMzy1yp2XuVcZniifBFvEp0HQCUoDPWUV0VI3FfzQ==
   dependencies:
     "@fluentui/react-icons" "^2.0.237"
@@ -753,7 +633,7 @@
 
 "@fluentui/react-infolabel@^9.1.0":
   version "9.1.0"
-  resolved "https://registry.yarnpkg.com/@fluentui/react-infolabel/-/react-infolabel-9.1.0.tgz#cdea4a9be3e813405bff616087cf1138c7a7b446"
+  resolved "https://registry.npmjs.org/@fluentui/react-infolabel/-/react-infolabel-9.1.0.tgz"
   integrity sha512-0Q8VcXKN+Wo90PQGH/lhhNRV5YlxEwt+ifs15kO8V0M3ZC68WWaq6T2cH61FW2kTVwM7sSIyDyNJGpckzIRo1Q==
   dependencies:
     "@fluentui/react-icons" "^2.0.245"
@@ -768,7 +648,7 @@
 
 "@fluentui/react-input@^9.5.0":
   version "9.5.0"
-  resolved "https://registry.yarnpkg.com/@fluentui/react-input/-/react-input-9.5.0.tgz#1989f88712746d5d27b2a3d859d8fd24854dad49"
+  resolved "https://registry.npmjs.org/@fluentui/react-input/-/react-input-9.5.0.tgz"
   integrity sha512-qZQvCwL5vdQOe/6XVWwDiK/x8gua13bKH1vk4GH197bqaoDw+8F6LtTokq31Z0ut1gOMC2Sw31YzuWqXfptP7A==
   dependencies:
     "@fluentui/react-field" "^9.2.0"
@@ -781,7 +661,7 @@
 
 "@fluentui/react-jsx-runtime@^9.0.36", "@fluentui/react-jsx-runtime@^9.0.39", "@fluentui/react-jsx-runtime@^9.0.50":
   version "9.0.50"
-  resolved "https://registry.yarnpkg.com/@fluentui/react-jsx-runtime/-/react-jsx-runtime-9.0.50.tgz#cabd038f78cc11593e5d0bcdeaf609574b6b0592"
+  resolved "https://registry.npmjs.org/@fluentui/react-jsx-runtime/-/react-jsx-runtime-9.0.50.tgz"
   integrity sha512-dnelPmz0x591tr58B/jbIHVzgjWskMkBmWEvZJc2rlbGH1oZl+MPJqvVdOAMvLTKJzqVmNkeSDtQmkjzjccogA==
   dependencies:
     "@fluentui/react-utilities" "^9.18.20"
@@ -790,7 +670,7 @@
 
 "@fluentui/react-label@^9.1.68", "@fluentui/react-label@^9.1.83":
   version "9.1.83"
-  resolved "https://registry.yarnpkg.com/@fluentui/react-label/-/react-label-9.1.83.tgz#f41a6297f7db6945c5617f043571f5a63e7ef7d1"
+  resolved "https://registry.npmjs.org/@fluentui/react-label/-/react-label-9.1.83.tgz"
   integrity sha512-XJF78Vwn4sSRJUyWcTj/F6hJVcHlPozDBcGWipMpnFgKBljuVmE2sg581CUGKn4AOTa9/blc81DLv0AE3itNtQ==
   dependencies:
     "@fluentui/react-jsx-runtime" "^9.0.50"
@@ -802,7 +682,7 @@
 
 "@fluentui/react-link@^9.4.0":
   version "9.4.0"
-  resolved "https://registry.yarnpkg.com/@fluentui/react-link/-/react-link-9.4.0.tgz#586f505dd464cc459bae929dc06bd05e8532356e"
+  resolved "https://registry.npmjs.org/@fluentui/react-link/-/react-link-9.4.0.tgz"
   integrity sha512-uoIOjaFoY6GmR2W1G/Ll/VZ/866KbPMFksufMN1MRYIsBHQPpbkQk9MXk9obpnThja7g2rLmz8Pr3RWm3q9I4g==
   dependencies:
     "@fluentui/keyboard-keys" "^9.0.8"
@@ -816,7 +696,7 @@
 
 "@fluentui/react-list@^9.1.0":
   version "9.1.0"
-  resolved "https://registry.yarnpkg.com/@fluentui/react-list/-/react-list-9.1.0.tgz#a6612cf783bc2bb005591863a875ad20948e7b02"
+  resolved "https://registry.npmjs.org/@fluentui/react-list/-/react-list-9.1.0.tgz"
   integrity sha512-4c/oLUWBbdoQAOQ0OJDX730P06h8Z/SFvJG3F/P6QsxiYiXJlzCkjJEKzYnrmsiPmi0omqO1m2SzIcJDEAxLKw==
   dependencies:
     "@fluentui/keyboard-keys" "^9.0.8"
@@ -832,7 +712,7 @@
 
 "@fluentui/react-menu@^9.16.0":
   version "9.16.0"
-  resolved "https://registry.yarnpkg.com/@fluentui/react-menu/-/react-menu-9.16.0.tgz#7898c7d54a0a5f83d60714348767255d0283191a"
+  resolved "https://registry.npmjs.org/@fluentui/react-menu/-/react-menu-9.16.0.tgz"
   integrity sha512-4aMANLEiUwBTWVpBnvo3LVMf6sB1yDpTcqFsjcb1wwwTr7DssBPqGOBKWGzB7WJ+P3wEALiAUwXasotVQzIRhA==
   dependencies:
     "@fluentui/keyboard-keys" "^9.0.8"
@@ -851,7 +731,7 @@
 
 "@fluentui/react-message-bar@^9.4.0":
   version "9.4.0"
-  resolved "https://registry.yarnpkg.com/@fluentui/react-message-bar/-/react-message-bar-9.4.0.tgz#ef7f1e3eef464bcbde7b99c1cf5d84f12b0d421a"
+  resolved "https://registry.npmjs.org/@fluentui/react-message-bar/-/react-message-bar-9.4.0.tgz"
   integrity sha512-VBXa3V4M3HfsBrypDxo8lA22VoC+AirnAAPpasgYmlcLeEypdqtxC3a5BJ5D8KJ4L7P3HljVYlshOxoVqJJVlw==
   dependencies:
     "@fluentui/react-button" "^9.4.0"
@@ -868,7 +748,7 @@
 
 "@fluentui/react-motion-components-preview@^0.4.3":
   version "0.4.3"
-  resolved "https://registry.yarnpkg.com/@fluentui/react-motion-components-preview/-/react-motion-components-preview-0.4.3.tgz#789b6a43860b792dfb50239091b03f464907d067"
+  resolved "https://registry.npmjs.org/@fluentui/react-motion-components-preview/-/react-motion-components-preview-0.4.3.tgz"
   integrity sha512-g6ACukFXcZ8TFYP30WnVjkvRuQkkx2Q48jI7TowTsJBQg01FFT4w22ii5s2ABuO6L1TR02kAL3wvvo5O2KP5Ew==
   dependencies:
     "@fluentui/react-motion" "*"
@@ -876,7 +756,7 @@
 
 "@fluentui/react-motion@*", "@fluentui/react-motion@^9.6.7":
   version "9.6.7"
-  resolved "https://registry.yarnpkg.com/@fluentui/react-motion/-/react-motion-9.6.7.tgz#fdfec6a857b31b0e81f8c9b32c8f5e0fa86df17b"
+  resolved "https://registry.npmjs.org/@fluentui/react-motion/-/react-motion-9.6.7.tgz"
   integrity sha512-xvNsN8n7e7OOMnNK1ynIZcREpoYY+97WuI+qnEiqkwJWKA+WzWYN+ydvH7IFI1PV7wz7qhyXUga5L10CjFeCAA==
   dependencies:
     "@fluentui/react-shared-contexts" "^9.21.2"
@@ -886,7 +766,7 @@
 
 "@fluentui/react-overflow@^9.3.0":
   version "9.3.0"
-  resolved "https://registry.yarnpkg.com/@fluentui/react-overflow/-/react-overflow-9.3.0.tgz#27ec690e3826b30d4ff0ac52c79c8a17950ff2e8"
+  resolved "https://registry.npmjs.org/@fluentui/react-overflow/-/react-overflow-9.3.0.tgz"
   integrity sha512-7TwCjPOhInHCEf59m5tPBt2d+77R9AI9E6YXYu5TxMdkDqG/nqkmfx5B2MwOc5iYdvLcIR1VHdfA4A61qVe6MQ==
   dependencies:
     "@fluentui/priority-overflow" "^9.1.15"
@@ -898,7 +778,7 @@
 
 "@fluentui/react-persona@^9.3.0":
   version "9.3.0"
-  resolved "https://registry.yarnpkg.com/@fluentui/react-persona/-/react-persona-9.3.0.tgz#dc09ba81e9bc5bb865a39fb2856eb2f70047c4f7"
+  resolved "https://registry.npmjs.org/@fluentui/react-persona/-/react-persona-9.3.0.tgz"
   integrity sha512-HH5CKMZVo3LR0S4ZVnRl607CKskt8KT9rUslmfeZ2mU2svxaaKMMNOVsUHsBkSc6YF0yEW0HNMqX0S9sf8pl/A==
   dependencies:
     "@fluentui/react-avatar" "^9.7.0"
@@ -912,7 +792,7 @@
 
 "@fluentui/react-popover@^9.10.0", "@fluentui/react-popover@^9.9.6":
   version "9.10.0"
-  resolved "https://registry.yarnpkg.com/@fluentui/react-popover/-/react-popover-9.10.0.tgz#0861f918d104e2e9f805b422dd40dd28b39343b7"
+  resolved "https://registry.npmjs.org/@fluentui/react-popover/-/react-popover-9.10.0.tgz"
   integrity sha512-8S5RnKewpGqUD2GPKXC26W46wKT7cE1qQRf0D64f2goAzJcyJy+FXQ8KtBW2kHn+btpirw4IYtTPE8+TKEHkrw==
   dependencies:
     "@fluentui/keyboard-keys" "^9.0.8"
@@ -930,7 +810,7 @@
 
 "@fluentui/react-portal@^9.5.0":
   version "9.5.0"
-  resolved "https://registry.yarnpkg.com/@fluentui/react-portal/-/react-portal-9.5.0.tgz#7c82de189a9f8666c992598d312b3e9f0edb2622"
+  resolved "https://registry.npmjs.org/@fluentui/react-portal/-/react-portal-9.5.0.tgz"
   integrity sha512-3nLkZ3P8iAm/uwVGRXcncgP/cYUWpcl6kP1l3W/7f092fDRv7QNy4eMZrVVYocNoJjpulemrfOn64wgIPemU6Q==
   dependencies:
     "@fluentui/react-shared-contexts" "^9.21.2"
@@ -942,7 +822,7 @@
 
 "@fluentui/react-positioning@^9.16.3":
   version "9.16.3"
-  resolved "https://registry.yarnpkg.com/@fluentui/react-positioning/-/react-positioning-9.16.3.tgz#b40f86492a62b1d394dd738afb92b18a91661828"
+  resolved "https://registry.npmjs.org/@fluentui/react-positioning/-/react-positioning-9.16.3.tgz"
   integrity sha512-z8phNPD0BhREOPsqt4iMsIvzzkBbfuA3TaXwQeLhM0imISWBnctTAaLjDZDQno/Bt/pbEd+qulPV7fagL20tWQ==
   dependencies:
     "@floating-ui/devtools" "0.2.1"
@@ -955,7 +835,7 @@
 
 "@fluentui/react-progress@^9.2.0":
   version "9.2.0"
-  resolved "https://registry.yarnpkg.com/@fluentui/react-progress/-/react-progress-9.2.0.tgz#59bce9504fdda9b6000ab6ec8c021c3f452ec25f"
+  resolved "https://registry.npmjs.org/@fluentui/react-progress/-/react-progress-9.2.0.tgz"
   integrity sha512-Fclooh/8kyxo1UEyNlbI8QRjafMCokgHt3Iuk7WVNXnsUXUM5NUsgpfXPCgEJud0mEWVbzZ18IQabdFS7IJ6wQ==
   dependencies:
     "@fluentui/react-field" "^9.2.0"
@@ -968,7 +848,7 @@
 
 "@fluentui/react-provider@^9.20.0":
   version "9.20.0"
-  resolved "https://registry.yarnpkg.com/@fluentui/react-provider/-/react-provider-9.20.0.tgz#f9e94bce0ae9293d4ea3878a6bbcaf089b81e1e7"
+  resolved "https://registry.npmjs.org/@fluentui/react-provider/-/react-provider-9.20.0.tgz"
   integrity sha512-dfcdZJF5y0sk5zllQjoBK/Vehm1fVmxosivRp5tJM7qh95SM9NSjhf47TmG70JGdFeZdU5mJ9iWBPvw5ekdRVQ==
   dependencies:
     "@fluentui/react-icons" "^2.0.245"
@@ -983,7 +863,7 @@
 
 "@fluentui/react-radio@^9.3.0":
   version "9.3.0"
-  resolved "https://registry.yarnpkg.com/@fluentui/react-radio/-/react-radio-9.3.0.tgz#adbab48ad030d5bbbb5c5205bceb6d7319df5dfa"
+  resolved "https://registry.npmjs.org/@fluentui/react-radio/-/react-radio-9.3.0.tgz"
   integrity sha512-jsrVNISLRK+p/1Cwwx2oa+saHyeWr9PI5pk7GkVkWOUXOZoc3GmZRG6PbWXsQh7Ykd0JikoBX39RruUzafGt4w==
   dependencies:
     "@fluentui/react-field" "^9.2.0"
@@ -998,7 +878,7 @@
 
 "@fluentui/react-rating@^9.1.0":
   version "9.1.0"
-  resolved "https://registry.yarnpkg.com/@fluentui/react-rating/-/react-rating-9.1.0.tgz#5929d551b6223ac610037f06912d93e64d300d34"
+  resolved "https://registry.npmjs.org/@fluentui/react-rating/-/react-rating-9.1.0.tgz"
   integrity sha512-9nXwWsUTpnCuwZfYmkn2SbOl+F1LV11klGcse3OxWrNld3ANYP2L8SJT75t3gp+V01/qUHVEwPjhfIAaJKhf9g==
   dependencies:
     "@fluentui/react-icons" "^2.0.245"
@@ -1011,7 +891,7 @@
 
 "@fluentui/react-search@^9.1.0":
   version "9.1.0"
-  resolved "https://registry.yarnpkg.com/@fluentui/react-search/-/react-search-9.1.0.tgz#e0fa12439d2f325552fe65c0261833f856f06304"
+  resolved "https://registry.npmjs.org/@fluentui/react-search/-/react-search-9.1.0.tgz"
   integrity sha512-xqIiQEOFLyqajDrw2l+pvhPO2mXwgzNzGlAQJc3hTNS8yapYrVsCCUBqX1SXHZdT6J1ELKYuYwazUXI4bjlXWQ==
   dependencies:
     "@fluentui/react-icons" "^2.0.245"
@@ -1024,7 +904,7 @@
 
 "@fluentui/react-select@^9.2.0":
   version "9.2.0"
-  resolved "https://registry.yarnpkg.com/@fluentui/react-select/-/react-select-9.2.0.tgz#f0901a2a48a329e0d99f30be62696322b2ce7f92"
+  resolved "https://registry.npmjs.org/@fluentui/react-select/-/react-select-9.2.0.tgz"
   integrity sha512-vEPlDKDtBdgxOSgVcOSi9LTIGtW3eyBGs7gW2IeqcVBP3FlBRCDalG6cqjOuzRHR67fDYuPS2Hh/IaQcMZlcxw==
   dependencies:
     "@fluentui/react-field" "^9.2.0"
@@ -1038,7 +918,7 @@
 
 "@fluentui/react-shared-contexts@^9.21.2":
   version "9.21.2"
-  resolved "https://registry.yarnpkg.com/@fluentui/react-shared-contexts/-/react-shared-contexts-9.21.2.tgz#f2a5c92bab806bc54cabadc345f98d0cb5fe84ad"
+  resolved "https://registry.npmjs.org/@fluentui/react-shared-contexts/-/react-shared-contexts-9.21.2.tgz"
   integrity sha512-5hw9CfCmKaEbxmFi+ZF4EZzYWFKrfRLq9pXFIoJWprP1D3ZAds/ymtIOG/CsJzig8zQ1LQ3cNSUzNB75XWg6IQ==
   dependencies:
     "@fluentui/react-theme" "^9.1.24"
@@ -1046,7 +926,7 @@
 
 "@fluentui/react-skeleton@^9.2.0":
   version "9.2.0"
-  resolved "https://registry.yarnpkg.com/@fluentui/react-skeleton/-/react-skeleton-9.2.0.tgz#2078d3a36f94e86d74903620269260718f992e14"
+  resolved "https://registry.npmjs.org/@fluentui/react-skeleton/-/react-skeleton-9.2.0.tgz"
   integrity sha512-afQb+yzCuh06rkO3Ch98w7YUf/rwVgq3upH/zzIC4byLusHAps/67AaGin1ppOGEZm6aAmWhqrZF8+DCPBRfIQ==
   dependencies:
     "@fluentui/react-field" "^9.2.0"
@@ -1059,7 +939,7 @@
 
 "@fluentui/react-slider@^9.3.0":
   version "9.3.0"
-  resolved "https://registry.yarnpkg.com/@fluentui/react-slider/-/react-slider-9.3.0.tgz#71d3cef68b9028afa26be61a299016703140814c"
+  resolved "https://registry.npmjs.org/@fluentui/react-slider/-/react-slider-9.3.0.tgz"
   integrity sha512-rRajn0oFxRHMIqiLfylquhCOTRaIFl1YeakUvknRByp1rXI8uUP+mmbPQXq8cFivdZtqsU1wX39agls/wSrRWA==
   dependencies:
     "@fluentui/react-field" "^9.2.0"
@@ -1073,7 +953,7 @@
 
 "@fluentui/react-spinbutton@^9.3.0":
   version "9.3.0"
-  resolved "https://registry.yarnpkg.com/@fluentui/react-spinbutton/-/react-spinbutton-9.3.0.tgz#b72123713b75f2944eee7da49f084552d430777c"
+  resolved "https://registry.npmjs.org/@fluentui/react-spinbutton/-/react-spinbutton-9.3.0.tgz"
   integrity sha512-RuIkqvxuHM/Na3LACenmAhag5s0TMnNgggWh5ZYasgMg12lFhg4bx8+PXzb2lZ7gUgVn+6WrukVzDUJ7MNC7vw==
   dependencies:
     "@fluentui/keyboard-keys" "^9.0.8"
@@ -1088,7 +968,7 @@
 
 "@fluentui/react-spinner@^9.5.7":
   version "9.5.7"
-  resolved "https://registry.yarnpkg.com/@fluentui/react-spinner/-/react-spinner-9.5.7.tgz#092077a35fb9198b93075466d3fba001d4de41d1"
+  resolved "https://registry.npmjs.org/@fluentui/react-spinner/-/react-spinner-9.5.7.tgz"
   integrity sha512-DdfQAbdiz50V2DqRSX1MfN6ehw+9etcLysueSeH2n1PnpZ8TVEZYrJzBW608S/bCWrR8OAEVoY/3W/nDjwf8qw==
   dependencies:
     "@fluentui/react-jsx-runtime" "^9.0.50"
@@ -1101,7 +981,7 @@
 
 "@fluentui/react-swatch-picker@^9.2.0":
   version "9.2.0"
-  resolved "https://registry.yarnpkg.com/@fluentui/react-swatch-picker/-/react-swatch-picker-9.2.0.tgz#aab8456c388c2fe448238906afb408d734066130"
+  resolved "https://registry.npmjs.org/@fluentui/react-swatch-picker/-/react-swatch-picker-9.2.0.tgz"
   integrity sha512-tFwZ2e6HwJnuVtQqx6pxB+dKEXL01xFXUKKUDCNtmEeVtpm/f7SMK5T2MT0FGbIVca1QXL4PaT1wE4tuZu4CSg==
   dependencies:
     "@fluentui/react-context-selector" "^9.1.72"
@@ -1117,7 +997,7 @@
 
 "@fluentui/react-switch@^9.2.0":
   version "9.2.0"
-  resolved "https://registry.yarnpkg.com/@fluentui/react-switch/-/react-switch-9.2.0.tgz#750800604658401b6c76c2ebf7a22249f8ac76c1"
+  resolved "https://registry.npmjs.org/@fluentui/react-switch/-/react-switch-9.2.0.tgz"
   integrity sha512-tN//X+H7G+MwmcurfaKjw5EkKZLldrD9T6pyNnzqZQyPZLqkByvMuABgSRBINO0kCnEYt/VCQzirSvBHLQV+Dw==
   dependencies:
     "@fluentui/react-field" "^9.2.0"
@@ -1133,7 +1013,7 @@
 
 "@fluentui/react-table@^9.16.0":
   version "9.16.0"
-  resolved "https://registry.yarnpkg.com/@fluentui/react-table/-/react-table-9.16.0.tgz#3a7d9e40bb5405a3afbc184f19d78fbe4571392c"
+  resolved "https://registry.npmjs.org/@fluentui/react-table/-/react-table-9.16.0.tgz"
   integrity sha512-RCAJmcLLIdpciIuHJ6uK/1lMfYDz5LvAdujfRP+ywMxPmTDSslE1yVBZ/E3NyebHkjFnfgoV/maJ9D/VoQpVbw==
   dependencies:
     "@fluentui/keyboard-keys" "^9.0.8"
@@ -1153,7 +1033,7 @@
 
 "@fluentui/react-tabs@^9.7.0":
   version "9.7.0"
-  resolved "https://registry.yarnpkg.com/@fluentui/react-tabs/-/react-tabs-9.7.0.tgz#814201fc315fec89cdb54084c13932e24b5e3935"
+  resolved "https://registry.npmjs.org/@fluentui/react-tabs/-/react-tabs-9.7.0.tgz"
   integrity sha512-NZwC+9X437BX1TdtzaPCdEE84T4up9YpecoF2bxp2AlTIGB52265En5BPZidT+SSHz+YBvC1kukoWJxtRz1usg==
   dependencies:
     "@fluentui/react-context-selector" "^9.1.72"
@@ -1167,7 +1047,7 @@
 
 "@fluentui/react-tabster@^9.21.0", "@fluentui/react-tabster@^9.21.5", "@fluentui/react-tabster@^9.24.0":
   version "9.24.0"
-  resolved "https://registry.yarnpkg.com/@fluentui/react-tabster/-/react-tabster-9.24.0.tgz#cbeee1bc43c713c35989fe5959d504b6f380f2d1"
+  resolved "https://registry.npmjs.org/@fluentui/react-tabster/-/react-tabster-9.24.0.tgz"
   integrity sha512-/O0/zXGUpZwYwcF7hPu/xcV32+A2NfkBHf6UoEze3a6meBj2mC+MEnPcqCnBAOu50GzorFLtLihWHRJGGq9YVA==
   dependencies:
     "@fluentui/react-shared-contexts" "^9.21.2"
@@ -1180,7 +1060,7 @@
 
 "@fluentui/react-tag-picker@^9.5.0":
   version "9.5.0"
-  resolved "https://registry.yarnpkg.com/@fluentui/react-tag-picker/-/react-tag-picker-9.5.0.tgz#1b11db5159e0b5d201e81993d4e2c3fc4f8dac99"
+  resolved "https://registry.npmjs.org/@fluentui/react-tag-picker/-/react-tag-picker-9.5.0.tgz"
   integrity sha512-nySVi6pxroi+nFGkcPqyT9BFIQ248B7uA/2WJQPQDIcb9jRglU+iHjcWOt3nZzCykD9DhsCiGA2nJC2Qs+xcMw==
   dependencies:
     "@fluentui/keyboard-keys" "^9.0.8"
@@ -1202,7 +1082,7 @@
 
 "@fluentui/react-tags@^9.4.0":
   version "9.4.0"
-  resolved "https://registry.yarnpkg.com/@fluentui/react-tags/-/react-tags-9.4.0.tgz#561a6c1fc26bb84dd54407a0baddda29d51bdae5"
+  resolved "https://registry.npmjs.org/@fluentui/react-tags/-/react-tags-9.4.0.tgz"
   integrity sha512-Pvvwtn11a0KwLPDRRaA00K8y5xNVsnnpPWH7ye4LKBP44F3+0jtYe2EWTkpr2cWZymVYEvxtfbIjE/a4PoXa8Q==
   dependencies:
     "@fluentui/keyboard-keys" "^9.0.8"
@@ -1219,7 +1099,7 @@
 
 "@fluentui/react-teaching-popover@^9.3.0":
   version "9.3.0"
-  resolved "https://registry.yarnpkg.com/@fluentui/react-teaching-popover/-/react-teaching-popover-9.3.0.tgz#7b6600e5358447ed16a70c55adc5d96cd1713744"
+  resolved "https://registry.npmjs.org/@fluentui/react-teaching-popover/-/react-teaching-popover-9.3.0.tgz"
   integrity sha512-q8ZSY4aupprnX6wEU1TJ4jmtfVF01vE3d3cO/wp7Mk/8V1JBYZVsw36b/TBQox3zIwOmhJRkfvakB+VDnhWfYA==
   dependencies:
     "@fluentui/react-aria" "^9.14.0"
@@ -1238,7 +1118,7 @@
 
 "@fluentui/react-text@^9.4.32":
   version "9.4.32"
-  resolved "https://registry.yarnpkg.com/@fluentui/react-text/-/react-text-9.4.32.tgz#a94b34c61c8aa7c8587943f9360a404b7f3f3035"
+  resolved "https://registry.npmjs.org/@fluentui/react-text/-/react-text-9.4.32.tgz"
   integrity sha512-unEqjCSX8MjcW7+ZavEZ2D+JYM8DEpkIlgNb8lF1ye/ACqTQINKFEc9ShAeXIk/1yVNlA02P3pjbHOWL2Vgwhg==
   dependencies:
     "@fluentui/react-jsx-runtime" "^9.0.50"
@@ -1250,7 +1130,7 @@
 
 "@fluentui/react-textarea@^9.4.0":
   version "9.4.0"
-  resolved "https://registry.yarnpkg.com/@fluentui/react-textarea/-/react-textarea-9.4.0.tgz#c9ae1700f71665807edcd9af911effd2c088d40e"
+  resolved "https://registry.npmjs.org/@fluentui/react-textarea/-/react-textarea-9.4.0.tgz"
   integrity sha512-Z5YVzkeYJLfvTFAWiKbI07zWT1GuIwKArrczN2yqVYt1MMgOrY1it3FVby5pljiy6lXjYHpz3o3iPR2kvMuroQ==
   dependencies:
     "@fluentui/react-field" "^9.2.0"
@@ -1263,7 +1143,7 @@
 
 "@fluentui/react-theme@^9.1.19", "@fluentui/react-theme@^9.1.24":
   version "9.1.24"
-  resolved "https://registry.yarnpkg.com/@fluentui/react-theme/-/react-theme-9.1.24.tgz#8ad614df32a60278719a073ea7e308f5016aae34"
+  resolved "https://registry.npmjs.org/@fluentui/react-theme/-/react-theme-9.1.24.tgz"
   integrity sha512-OhVKYD7CMYHxzJEn4PtIszledj8hbQJNWBMfIZsp4Sytdp9vCi0txIQUx4BhS1WqtQPhNGCF16eW9Q3NRrnIrQ==
   dependencies:
     "@fluentui/tokens" "1.0.0-alpha.21"
@@ -1271,7 +1151,7 @@
 
 "@fluentui/react-toast@^9.4.0":
   version "9.4.0"
-  resolved "https://registry.yarnpkg.com/@fluentui/react-toast/-/react-toast-9.4.0.tgz#55c482d2ec345eeea1141989f9ea7728247bc21f"
+  resolved "https://registry.npmjs.org/@fluentui/react-toast/-/react-toast-9.4.0.tgz"
   integrity sha512-WolR3dM8WpAOgPu7xCdN8t/RM+S8xT9sKb9x5WK3+Z/oPIkPC/C0vCTCt1bK1DOvh47Tpe9H1peIwYlUhGKhZg==
   dependencies:
     "@fluentui/keyboard-keys" "^9.0.8"
@@ -1290,7 +1170,7 @@
 
 "@fluentui/react-toolbar@^9.3.0":
   version "9.3.0"
-  resolved "https://registry.yarnpkg.com/@fluentui/react-toolbar/-/react-toolbar-9.3.0.tgz#1383b16d3d27a3ba4953076057592c556323c6cb"
+  resolved "https://registry.npmjs.org/@fluentui/react-toolbar/-/react-toolbar-9.3.0.tgz"
   integrity sha512-nDirTIBoAGjMAD+CZ8LDLBJA71OTqf65rRsldf9OU3UFeDhj8UtPZjFw+Gv3pakNOc25amzer/06BgFj1lVM1w==
   dependencies:
     "@fluentui/react-button" "^9.4.0"
@@ -1307,7 +1187,7 @@
 
 "@fluentui/react-tooltip@^9.6.0":
   version "9.6.0"
-  resolved "https://registry.yarnpkg.com/@fluentui/react-tooltip/-/react-tooltip-9.6.0.tgz#74ddedc91b25be8419edbe314cf1692ffbc378f6"
+  resolved "https://registry.npmjs.org/@fluentui/react-tooltip/-/react-tooltip-9.6.0.tgz"
   integrity sha512-NuFfh9HJ1Fwt9LhNjBPrqcqnMaKhYHLqxqUU9XzraXTXzo3wSbkUBP9W8cxm9YVUs9C3tUBbZj3vnOJx0IPaEw==
   dependencies:
     "@fluentui/keyboard-keys" "^9.0.8"
@@ -1323,7 +1203,7 @@
 
 "@fluentui/react-tree@^9.10.0":
   version "9.10.0"
-  resolved "https://registry.yarnpkg.com/@fluentui/react-tree/-/react-tree-9.10.0.tgz#da94b8e0432fe922a965e57507ce2a83565e8f48"
+  resolved "https://registry.npmjs.org/@fluentui/react-tree/-/react-tree-9.10.0.tgz"
   integrity sha512-r7P0MxUZaAxl5IIaOpN+9CY3ucYYPFtiFREtrHuou70OxtVqoMZhgxct0OBVHP9jn+k4kS9PYn2jcu5lm2Eglg==
   dependencies:
     "@fluentui/keyboard-keys" "^9.0.8"
@@ -1346,7 +1226,7 @@
 
 "@fluentui/react-utilities@^9.18.10", "@fluentui/react-utilities@^9.18.20", "@fluentui/react-utilities@^9.18.7":
   version "9.18.20"
-  resolved "https://registry.yarnpkg.com/@fluentui/react-utilities/-/react-utilities-9.18.20.tgz#0522abaf14946b0cd1b6eda3ed33749e3c3d989d"
+  resolved "https://registry.npmjs.org/@fluentui/react-utilities/-/react-utilities-9.18.20.tgz"
   integrity sha512-4uIgf4e4yP1HWAQapFQKNN88+L88NqbzXyQPf+NWE9lmP5xRyyMePKRX7i4PcJFdSt7lN4BYvwUxJ7DkQ/Npnw==
   dependencies:
     "@fluentui/keyboard-keys" "^9.0.8"
@@ -1355,7 +1235,7 @@
 
 "@fluentui/react-virtualizer@9.0.0-alpha.92":
   version "9.0.0-alpha.92"
-  resolved "https://registry.yarnpkg.com/@fluentui/react-virtualizer/-/react-virtualizer-9.0.0-alpha.92.tgz#4af23409bb1599848b068579d3d6085e2f4041cc"
+  resolved "https://registry.npmjs.org/@fluentui/react-virtualizer/-/react-virtualizer-9.0.0-alpha.92.tgz"
   integrity sha512-hT7xwMXyXco/tQRdZgPZS3O8DjJnYIKc9EnZ2qQMYrv0PEiee01WwH2NVFbhkn2utD9TZlE3Gu0j25fSYICBxQ==
   dependencies:
     "@fluentui/react-jsx-runtime" "^9.0.50"
@@ -1366,14 +1246,14 @@
 
 "@fluentui/tokens@1.0.0-alpha.21":
   version "1.0.0-alpha.21"
-  resolved "https://registry.yarnpkg.com/@fluentui/tokens/-/tokens-1.0.0-alpha.21.tgz#25738cabb95aa5a90dad92397325ce70044ad5f7"
+  resolved "https://registry.npmjs.org/@fluentui/tokens/-/tokens-1.0.0-alpha.21.tgz"
   integrity sha512-xQ1T56sNgDFGl+kJdIwhz67mHng8vcwO7Dvx5Uja4t+NRULQBgMcJ4reUo4FGF3TjufHj08pP0/OnKQgnOaSVg==
   dependencies:
     "@swc/helpers" "^0.5.1"
 
 "@griffel/core@^1.16.0", "@griffel/core@^1.19.1":
   version "1.19.1"
-  resolved "https://registry.yarnpkg.com/@griffel/core/-/core-1.19.1.tgz#a6aec031984c5ebefcfedd7b5fd6da52ea091d6d"
+  resolved "https://registry.npmjs.org/@griffel/core/-/core-1.19.1.tgz"
   integrity sha512-ZItAAOm8YH1FW0ebzOxS3jwENqd+Dz4CGiPEdgkL4kr7D6mBpjjBbQC6VRXxnA+VqHeEQGy69Ll4M1peY8MX/g==
   dependencies:
     "@emotion/hash" "^0.9.0"
@@ -1385,7 +1265,7 @@
 
 "@griffel/react@^1.0.0", "@griffel/react@^1.5.14", "@griffel/react@^1.5.22":
   version "1.5.29"
-  resolved "https://registry.yarnpkg.com/@griffel/react/-/react-1.5.29.tgz#940b56590cc5421a7203623f8b52c1a6ee927ae3"
+  resolved "https://registry.npmjs.org/@griffel/react/-/react-1.5.29.tgz"
   integrity sha512-xKenEIfV2PnLKVsM8yp2ZCUTknh2790937XlI88zDaO9TC8ylG10mZ3MrcgCdSecrVjKq9JKmm24tsODpkh4pw==
   dependencies:
     "@griffel/core" "^1.19.1"
@@ -1393,7 +1273,7 @@
 
 "@griffel/style-types@^1.3.0":
   version "1.3.0"
-  resolved "https://registry.yarnpkg.com/@griffel/style-types/-/style-types-1.3.0.tgz#42b4f1902a0221a9a8334fda12a2fe88f13d65ee"
+  resolved "https://registry.npmjs.org/@griffel/style-types/-/style-types-1.3.0.tgz"
   integrity sha512-bHwD3sUE84Xwv4dH011gOKe1jul77M1S6ZFN9Tnq8pvZ48UMdY//vtES6fv7GRS5wXYT4iqxQPBluAiYAfkpmw==
   dependencies:
     csstype "^3.1.3"
@@ -1466,7 +1346,7 @@
     "@nodelib/fs.stat" "2.0.5"
     run-parallel "^1.1.9"
 
-"@nodelib/fs.stat@2.0.5", "@nodelib/fs.stat@^2.0.2":
+"@nodelib/fs.stat@^2.0.2", "@nodelib/fs.stat@2.0.5":
   version "2.0.5"
   resolved "https://registry.npmjs.org/@nodelib/fs.stat/-/fs.stat-2.0.5.tgz"
   integrity sha512-RkhPPp2zrqDAQA/2jNhnztcPAlv64XdhIp7a7454A5ovI7Bukxgt7MX7udwAu3zg1DcpPU0rz3VV1SeaqvY4+A==
@@ -1479,96 +1359,6 @@
     "@nodelib/fs.scandir" "2.1.5"
     fastq "^1.6.0"
 
-"@rollup/rollup-android-arm-eabi@4.34.9":
-  version "4.34.9"
-  resolved "https://registry.yarnpkg.com/@rollup/rollup-android-arm-eabi/-/rollup-android-arm-eabi-4.34.9.tgz#661a45a4709c70e59e596ec78daa9cb8b8d27604"
-  integrity sha512-qZdlImWXur0CFakn2BJ2znJOdqYZKiedEPEVNTBrpfPjc/YuTGcaYZcdmNFTkUj3DU0ZM/AElcM8Ybww3xVLzA==
-
-"@rollup/rollup-android-arm64@4.34.9":
-  version "4.34.9"
-  resolved "https://registry.yarnpkg.com/@rollup/rollup-android-arm64/-/rollup-android-arm64-4.34.9.tgz#128fe8dd510d880cf98b4cb6c7add326815a0c4b"
-  integrity sha512-4KW7P53h6HtJf5Y608T1ISKvNIYLWRKMvfnG0c44M6In4DQVU58HZFEVhWINDZKp7FZps98G3gxwC1sb0wXUUg==
-
-"@rollup/rollup-darwin-arm64@4.34.9":
-  version "4.34.9"
-  resolved "https://registry.yarnpkg.com/@rollup/rollup-darwin-arm64/-/rollup-darwin-arm64-4.34.9.tgz#363467bc49fd0b1e17075798ac8e9ad1e1e29535"
-  integrity sha512-0CY3/K54slrzLDjOA7TOjN1NuLKERBgk9nY5V34mhmuu673YNb+7ghaDUs6N0ujXR7fz5XaS5Aa6d2TNxZd0OQ==
-
-"@rollup/rollup-darwin-x64@4.34.9":
-  version "4.34.9"
-  resolved "https://registry.yarnpkg.com/@rollup/rollup-darwin-x64/-/rollup-darwin-x64-4.34.9.tgz#c2fe3d85fffe47f0ed0f076b3563ada22c8af19c"
-  integrity sha512-eOojSEAi/acnsJVYRxnMkPFqcxSMFfrw7r2iD9Q32SGkb/Q9FpUY1UlAu1DH9T7j++gZ0lHjnm4OyH2vCI7l7Q==
-
-"@rollup/rollup-freebsd-arm64@4.34.9":
-  version "4.34.9"
-  resolved "https://registry.yarnpkg.com/@rollup/rollup-freebsd-arm64/-/rollup-freebsd-arm64-4.34.9.tgz#d95bd8f6eaaf829781144fc8bd2d5d71d9f6a9f5"
-  integrity sha512-2lzjQPJbN5UnHm7bHIUKFMulGTQwdvOkouJDpPysJS+QFBGDJqcfh+CxxtG23Ik/9tEvnebQiylYoazFMAgrYw==
-
-"@rollup/rollup-freebsd-x64@4.34.9":
-  version "4.34.9"
-  resolved "https://registry.yarnpkg.com/@rollup/rollup-freebsd-x64/-/rollup-freebsd-x64-4.34.9.tgz#c3576c6011656e4966ded29f051edec636b44564"
-  integrity sha512-SLl0hi2Ah2H7xQYd6Qaiu01kFPzQ+hqvdYSoOtHYg/zCIFs6t8sV95kaoqjzjFwuYQLtOI0RZre/Ke0nPaQV+g==
-
-"@rollup/rollup-linux-arm-gnueabihf@4.34.9":
-  version "4.34.9"
-  resolved "https://registry.yarnpkg.com/@rollup/rollup-linux-arm-gnueabihf/-/rollup-linux-arm-gnueabihf-4.34.9.tgz#48c87d0dee4f8dc9591a416717f91b4a89d77e3d"
-  integrity sha512-88I+D3TeKItrw+Y/2ud4Tw0+3CxQ2kLgu3QvrogZ0OfkmX/DEppehus7L3TS2Q4lpB+hYyxhkQiYPJ6Mf5/dPg==
-
-"@rollup/rollup-linux-arm-musleabihf@4.34.9":
-  version "4.34.9"
-  resolved "https://registry.yarnpkg.com/@rollup/rollup-linux-arm-musleabihf/-/rollup-linux-arm-musleabihf-4.34.9.tgz#f4c4e7c03a7767f2e5aa9d0c5cfbf5c0f59f2d41"
-  integrity sha512-3qyfWljSFHi9zH0KgtEPG4cBXHDFhwD8kwg6xLfHQ0IWuH9crp005GfoUUh/6w9/FWGBwEHg3lxK1iHRN1MFlA==
-
-"@rollup/rollup-linux-arm64-gnu@4.34.9":
-  version "4.34.9"
-  resolved "https://registry.yarnpkg.com/@rollup/rollup-linux-arm64-gnu/-/rollup-linux-arm64-gnu-4.34.9.tgz#1015c9d07a99005025d13b8622b7600029d0b52f"
-  integrity sha512-6TZjPHjKZUQKmVKMUowF3ewHxctrRR09eYyvT5eFv8w/fXarEra83A2mHTVJLA5xU91aCNOUnM+DWFMSbQ0Nxw==
-
-"@rollup/rollup-linux-arm64-musl@4.34.9":
-  version "4.34.9"
-  resolved "https://registry.yarnpkg.com/@rollup/rollup-linux-arm64-musl/-/rollup-linux-arm64-musl-4.34.9.tgz#8f895eb5577748fc75af21beae32439626e0a14c"
-  integrity sha512-LD2fytxZJZ6xzOKnMbIpgzFOuIKlxVOpiMAXawsAZ2mHBPEYOnLRK5TTEsID6z4eM23DuO88X0Tq1mErHMVq0A==
-
-"@rollup/rollup-linux-loongarch64-gnu@4.34.9":
-  version "4.34.9"
-  resolved "https://registry.yarnpkg.com/@rollup/rollup-linux-loongarch64-gnu/-/rollup-linux-loongarch64-gnu-4.34.9.tgz#c9cd5dbbdc6b3ca4dbeeb0337498cf31949004a0"
-  integrity sha512-dRAgTfDsn0TE0HI6cmo13hemKpVHOEyeciGtvlBTkpx/F65kTvShtY/EVyZEIfxFkV5JJTuQ9tP5HGBS0hfxIg==
-
-"@rollup/rollup-linux-powerpc64le-gnu@4.34.9":
-  version "4.34.9"
-  resolved "https://registry.yarnpkg.com/@rollup/rollup-linux-powerpc64le-gnu/-/rollup-linux-powerpc64le-gnu-4.34.9.tgz#7ebb5b4441faa17843a210f7d0583a20c93b40e4"
-  integrity sha512-PHcNOAEhkoMSQtMf+rJofwisZqaU8iQ8EaSps58f5HYll9EAY5BSErCZ8qBDMVbq88h4UxaNPlbrKqfWP8RfJA==
-
-"@rollup/rollup-linux-riscv64-gnu@4.34.9":
-  version "4.34.9"
-  resolved "https://registry.yarnpkg.com/@rollup/rollup-linux-riscv64-gnu/-/rollup-linux-riscv64-gnu-4.34.9.tgz#10f5d7349fbd2fe78f9e36ecc90aab3154435c8d"
-  integrity sha512-Z2i0Uy5G96KBYKjeQFKbbsB54xFOL5/y1P5wNBsbXB8yE+At3oh0DVMjQVzCJRJSfReiB2tX8T6HUFZ2k8iaKg==
-
-"@rollup/rollup-linux-s390x-gnu@4.34.9":
-  version "4.34.9"
-  resolved "https://registry.yarnpkg.com/@rollup/rollup-linux-s390x-gnu/-/rollup-linux-s390x-gnu-4.34.9.tgz#196347d2fa20593ab09d0b7e2589fb69bdf742c6"
-  integrity sha512-U+5SwTMoeYXoDzJX5dhDTxRltSrIax8KWwfaaYcynuJw8mT33W7oOgz0a+AaXtGuvhzTr2tVKh5UO8GVANTxyQ==
-
-"@rollup/rollup-linux-x64-gnu@4.34.9":
-  version "4.34.9"
-  resolved "https://registry.yarnpkg.com/@rollup/rollup-linux-x64-gnu/-/rollup-linux-x64-gnu-4.34.9.tgz#7193cbd8d128212b8acda37e01b39d9e96259ef8"
-  integrity sha512-FwBHNSOjUTQLP4MG7y6rR6qbGw4MFeQnIBrMe161QGaQoBQLqSUEKlHIiVgF3g/mb3lxlxzJOpIBhaP+C+KP2A==
-
-"@rollup/rollup-linux-x64-musl@4.34.9":
-  version "4.34.9"
-  resolved "https://registry.yarnpkg.com/@rollup/rollup-linux-x64-musl/-/rollup-linux-x64-musl-4.34.9.tgz#29a6867278ca0420b891574cfab98ecad70c59d1"
-  integrity sha512-cYRpV4650z2I3/s6+5/LONkjIz8MBeqrk+vPXV10ORBnshpn8S32bPqQ2Utv39jCiDcO2eJTuSlPXpnvmaIgRA==
-
-"@rollup/rollup-win32-arm64-msvc@4.34.9":
-  version "4.34.9"
-  resolved "https://registry.yarnpkg.com/@rollup/rollup-win32-arm64-msvc/-/rollup-win32-arm64-msvc-4.34.9.tgz#89427dcac0c8e3a6d32b13a03a296a275d0de9a9"
-  integrity sha512-z4mQK9dAN6byRA/vsSgQiPeuO63wdiDxZ9yg9iyX2QTzKuQM7T4xlBoeUP/J8uiFkqxkcWndWi+W7bXdPbt27Q==
-
-"@rollup/rollup-win32-ia32-msvc@4.34.9":
-  version "4.34.9"
-  resolved "https://registry.yarnpkg.com/@rollup/rollup-win32-ia32-msvc/-/rollup-win32-ia32-msvc-4.34.9.tgz#ecb9711ba2b6d2bf6ee51265abe057ab90913deb"
-  integrity sha512-KB48mPtaoHy1AwDNkAJfHXvHp24H0ryZog28spEs0V48l3H1fr4i37tiyHsgKZJnCmvxsbATdZGBpbmxTE3a9w==
-
 "@rollup/rollup-win32-x64-msvc@4.34.9":
   version "4.34.9"
   resolved "https://registry.npmjs.org/@rollup/rollup-win32-x64-msvc/-/rollup-win32-x64-msvc-4.34.9.tgz"
@@ -1576,7 +1366,7 @@
 
 "@swc/helpers@^0.5.1":
   version "0.5.15"
-  resolved "https://registry.yarnpkg.com/@swc/helpers/-/helpers-0.5.15.tgz#79efab344c5819ecf83a43f3f9f811fc84b516d7"
+  resolved "https://registry.npmjs.org/@swc/helpers/-/helpers-0.5.15.tgz"
   integrity sha512-JQ5TuMi45Owi4/BIMAJBoSQoOJu12oOk/gADqlcUL9JEdHB8vyjUSsxqeNXnmXHjYKMi2WcYtezGEEhqUI/E2g==
   dependencies:
     tslib "^2.8.0"
@@ -1589,56 +1379,6 @@
     enhanced-resolve "^5.18.1"
     jiti "^2.4.2"
     tailwindcss "4.0.9"
-
-"@tailwindcss/oxide-android-arm64@4.0.9":
-  version "4.0.9"
-  resolved "https://registry.yarnpkg.com/@tailwindcss/oxide-android-arm64/-/oxide-android-arm64-4.0.9.tgz#ad8fbe3018c04b1931e35f048f8975d06de6cc64"
-  integrity sha512-YBgy6+2flE/8dbtrdotVInhMVIxnHJPbAwa7U1gX4l2ThUIaPUp18LjB9wEH8wAGMBZUb//SzLtdXXNBHPUl6Q==
-
-"@tailwindcss/oxide-darwin-arm64@4.0.9":
-  version "4.0.9"
-  resolved "https://registry.yarnpkg.com/@tailwindcss/oxide-darwin-arm64/-/oxide-darwin-arm64-4.0.9.tgz#e15a8d68b7ea225ce98f046a94078a5e8f89f52c"
-  integrity sha512-pWdl4J2dIHXALgy2jVkwKBmtEb73kqIfMpYmcgESr7oPQ+lbcQ4+tlPeVXaSAmang+vglAfFpXQCOvs/aGSqlw==
-
-"@tailwindcss/oxide-darwin-x64@4.0.9":
-  version "4.0.9"
-  resolved "https://registry.yarnpkg.com/@tailwindcss/oxide-darwin-x64/-/oxide-darwin-x64-4.0.9.tgz#6de929f441e9f3c256ae023364888fb3d8da80e4"
-  integrity sha512-4Dq3lKp0/C7vrRSkNPtBGVebEyWt9QPPlQctxJ0H3MDyiQYvzVYf8jKow7h5QkWNe8hbatEqljMj/Y0M+ERYJg==
-
-"@tailwindcss/oxide-freebsd-x64@4.0.9":
-  version "4.0.9"
-  resolved "https://registry.yarnpkg.com/@tailwindcss/oxide-freebsd-x64/-/oxide-freebsd-x64-4.0.9.tgz#5690a15919fcda09a000bc32e3db43e52850bfb4"
-  integrity sha512-k7U1RwRODta8x0uealtVt3RoWAWqA+D5FAOsvVGpYoI6ObgmnzqWW6pnVwz70tL8UZ/QXjeMyiICXyjzB6OGtQ==
-
-"@tailwindcss/oxide-linux-arm-gnueabihf@4.0.9":
-  version "4.0.9"
-  resolved "https://registry.yarnpkg.com/@tailwindcss/oxide-linux-arm-gnueabihf/-/oxide-linux-arm-gnueabihf-4.0.9.tgz#351a7aa8b5c5d6739e440716e60e54f6b96aa0ea"
-  integrity sha512-NDDjVweHz2zo4j+oS8y3KwKL5wGCZoXGA9ruJM982uVJLdsF8/1AeKvUwKRlMBpxHt1EdWJSAh8a0Mfhl28GlQ==
-
-"@tailwindcss/oxide-linux-arm64-gnu@4.0.9":
-  version "4.0.9"
-  resolved "https://registry.yarnpkg.com/@tailwindcss/oxide-linux-arm64-gnu/-/oxide-linux-arm64-gnu-4.0.9.tgz#9c4e3fbc5f37997da7323f78c2c76d403394e5d2"
-  integrity sha512-jk90UZ0jzJl3Dy1BhuFfRZ2KP9wVKMXPjmCtY4U6fF2LvrjP5gWFJj5VHzfzHonJexjrGe1lMzgtjriuZkxagg==
-
-"@tailwindcss/oxide-linux-arm64-musl@4.0.9":
-  version "4.0.9"
-  resolved "https://registry.yarnpkg.com/@tailwindcss/oxide-linux-arm64-musl/-/oxide-linux-arm64-musl-4.0.9.tgz#3e5fcc39d1b98658639d88bbec2fbef6805a1e53"
-  integrity sha512-3eMjyTC6HBxh9nRgOHzrc96PYh1/jWOwHZ3Kk0JN0Kl25BJ80Lj9HEvvwVDNTgPg154LdICwuFLuhfgH9DULmg==
-
-"@tailwindcss/oxide-linux-x64-gnu@4.0.9":
-  version "4.0.9"
-  resolved "https://registry.yarnpkg.com/@tailwindcss/oxide-linux-x64-gnu/-/oxide-linux-x64-gnu-4.0.9.tgz#c92400522b3fa3bb789314106c5170c82136e9e7"
-  integrity sha512-v0D8WqI/c3WpWH1kq/HP0J899ATLdGZmENa2/emmNjubT0sWtEke9W9+wXeEoACuGAhF9i3PO5MeyditpDCiWQ==
-
-"@tailwindcss/oxide-linux-x64-musl@4.0.9":
-  version "4.0.9"
-  resolved "https://registry.yarnpkg.com/@tailwindcss/oxide-linux-x64-musl/-/oxide-linux-x64-musl-4.0.9.tgz#7a8cc4787ca3c143d2429529835749777faf3263"
-  integrity sha512-Kvp0TCkfeXyeehqLJr7otsc4hd/BUPfcIGrQiwsTVCfaMfjQZCG7DjI+9/QqPZha8YapLA9UoIcUILRYO7NE1Q==
-
-"@tailwindcss/oxide-win32-arm64-msvc@4.0.9":
-  version "4.0.9"
-  resolved "https://registry.yarnpkg.com/@tailwindcss/oxide-win32-arm64-msvc/-/oxide-win32-arm64-msvc-4.0.9.tgz#5e51fe3859216703c72c3fabde8e86b45b2786b3"
-  integrity sha512-m3+60T/7YvWekajNq/eexjhV8z10rswcz4BC9bioJ7YaN+7K8W2AmLmG0B79H14m6UHE571qB0XsPus4n0QVgQ==
 
 "@tailwindcss/oxide-win32-x64-msvc@4.0.9":
   version "4.0.9"
@@ -1710,7 +1450,7 @@
   resolved "https://registry.npmjs.org/@types/cookie/-/cookie-0.6.0.tgz"
   integrity sha512-4Kh9a6B2bQciAhf7FSuMRRkUWecJgJu9nPnx3yzpsfXX/c50REIqpHY4C82bXP90qrLtXtkDxTZosYO3UpOwlA==
 
-"@types/estree@1.0.6", "@types/estree@^1.0.6":
+"@types/estree@^1.0.6", "@types/estree@1.0.6":
   version "1.0.6"
   resolved "https://registry.npmjs.org/@types/estree/-/estree-1.0.6.tgz"
   integrity sha512-AYnb1nQyY49te+VRAVgmzfcgjYS91mY5P0TKUDCLEM+gNnA+3T6rWITXRLYCpahpqSQbN5cE+gHpnPyXjHWxcw==
@@ -1727,7 +1467,7 @@
 
 "@types/node@^22.14.0":
   version "22.14.0"
-  resolved "https://registry.yarnpkg.com/@types/node/-/node-22.14.0.tgz#d3bfa3936fef0dbacd79ea3eb17d521c628bb47e"
+  resolved "https://registry.npmjs.org/@types/node/-/node-22.14.0.tgz"
   integrity sha512-Kmpl+z84ILoG+3T/zQFyAJsU6EPTmOCj8/2+83fSN6djd6I4o7uOuGIH6vq3PrjY5BGitSbFuMN18j3iknubbA==
   dependencies:
     undici-types "~6.21.0"
@@ -1887,7 +1627,7 @@ argparse@^2.0.1:
 
 autoprefixer@^10.4.20:
   version "10.4.20"
-  resolved "https://registry.yarnpkg.com/autoprefixer/-/autoprefixer-10.4.20.tgz#5caec14d43976ef42e32dcb4bd62878e96be5b3b"
+  resolved "https://registry.npmjs.org/autoprefixer/-/autoprefixer-10.4.20.tgz"
   integrity sha512-XY25y5xSv/wEoqzDyXXME4AFfkZI0P23z6Fs3YgymDnKJkCGOnkL0iTxCa85UTqaSgfcqyf3UA6+c7wUvx/16g==
   dependencies:
     browserslist "^4.23.3"
@@ -2017,17 +1757,17 @@ electron-to-chromium@^1.5.73:
 
 embla-carousel-autoplay@^8.5.1:
   version "8.5.2"
-  resolved "https://registry.yarnpkg.com/embla-carousel-autoplay/-/embla-carousel-autoplay-8.5.2.tgz#b24f2b5523282113ad2f2289a8e9a0bee7877e4e"
+  resolved "https://registry.npmjs.org/embla-carousel-autoplay/-/embla-carousel-autoplay-8.5.2.tgz"
   integrity sha512-27emJ0px3q/c0kCHCjwRrEbYcyYUPfGO3g5IBWF1i7714TTzE6L9P81V6PHLoSMAKJ1aHoT2e7YFOsuFKCbyag==
 
 embla-carousel-fade@^8.5.1:
   version "8.5.2"
-  resolved "https://registry.yarnpkg.com/embla-carousel-fade/-/embla-carousel-fade-8.5.2.tgz#2ac00b70333ae1d41f5c7b98ffbd89ee373a1a82"
+  resolved "https://registry.npmjs.org/embla-carousel-fade/-/embla-carousel-fade-8.5.2.tgz"
   integrity sha512-QJ46Xy+mpijjquQeIY0d0sPSy34XduREUnz7tn1K20hcKyZYTONNIXQZu3GGNwG59cvhMqYJMw9ki92Rjd14YA==
 
 embla-carousel@^8.5.1:
   version "8.5.2"
-  resolved "https://registry.yarnpkg.com/embla-carousel/-/embla-carousel-8.5.2.tgz#95eb936d14a1b9a67b9207a0fde1f25259a5d692"
+  resolved "https://registry.npmjs.org/embla-carousel/-/embla-carousel-8.5.2.tgz"
   integrity sha512-xQ9oVLrun/eCG/7ru3R+I5bJ7shsD8fFwLEY7yPe27/+fDHCNj0OT5EoG5ZbFyOxOcG6yTwW8oTz/dWyFnyGpg==
 
 enhanced-resolve@^5.18.1:
@@ -2250,13 +1990,8 @@ flatted@^3.2.9:
 
 fraction.js@^4.3.7:
   version "4.3.7"
-  resolved "https://registry.yarnpkg.com/fraction.js/-/fraction.js-4.3.7.tgz#06ca0085157e42fda7f9e726e79fefc4068840f7"
+  resolved "https://registry.npmjs.org/fraction.js/-/fraction.js-4.3.7.tgz"
   integrity sha512-ZsDfxO51wGAXREY55a7la9LScWpwv9RxIrYABrlvOFBlH/ShPnrtsXeuUIfXKKOVicNxQ+o8JTbJvjS4M89yew==
-
-fsevents@~2.3.2, fsevents@~2.3.3:
-  version "2.3.3"
-  resolved "https://registry.yarnpkg.com/fsevents/-/fsevents-2.3.3.tgz#cac6407785d03675a2a5e1a5305c697b347d90d6"
-  integrity sha512-5xoDfX+fL7faATnagmWPpbFtwh/R77WmMMqqHGS65C3vvB0YHrgF+B1YmZ3441tMj5n63k0212XNoJwzlhffQw==
 
 gensync@^1.0.0-beta.2:
   version "1.0.0-beta.2"
@@ -2389,9 +2124,9 @@ json5@^2.2.3:
   resolved "https://registry.npmjs.org/json5/-/json5-2.2.3.tgz"
   integrity sha512-XmOWe7eyHYH14cLdVPoyg+GOH3rYX++KpzrylJwSW98t3Nk+U8XOl8FWKOgwtzdb8lXGf6zYwDUzeHMWfxasyg==
 
-keyborg@2.6.0, keyborg@^2.6.0:
+keyborg@^2.6.0, keyborg@2.6.0:
   version "2.6.0"
-  resolved "https://registry.yarnpkg.com/keyborg/-/keyborg-2.6.0.tgz#ebfcaaed2f517f9295058ff5d57d14e71958ab5a"
+  resolved "https://registry.npmjs.org/keyborg/-/keyborg-2.6.0.tgz"
   integrity sha512-o5kvLbuTF+o326CMVYpjlaykxqYP9DphFQZ2ZpgrvBouyvOxyEB7oqe8nOLFpiV5VCtz0D3pt8gXQYWpLpBnmA==
 
 keyv@^4.5.4:
@@ -2408,51 +2143,6 @@ levn@^0.4.1:
   dependencies:
     prelude-ls "^1.2.1"
     type-check "~0.4.0"
-
-lightningcss-darwin-arm64@1.29.1:
-  version "1.29.1"
-  resolved "https://registry.yarnpkg.com/lightningcss-darwin-arm64/-/lightningcss-darwin-arm64-1.29.1.tgz#dce17349c7b9f968f396ec240503de14e7b4870b"
-  integrity sha512-HtR5XJ5A0lvCqYAoSv2QdZZyoHNttBpa5EP9aNuzBQeKGfbyH5+UipLWvVzpP4Uml5ej4BYs5I9Lco9u1fECqw==
-
-lightningcss-darwin-x64@1.29.1:
-  version "1.29.1"
-  resolved "https://registry.yarnpkg.com/lightningcss-darwin-x64/-/lightningcss-darwin-x64-1.29.1.tgz#e79c984180c57d00ee114210ceced83473d72dfc"
-  integrity sha512-k33G9IzKUpHy/J/3+9MCO4e+PzaFblsgBjSGlpAaFikeBFm8B/CkO3cKU9oI4g+fjS2KlkLM/Bza9K/aw8wsNA==
-
-lightningcss-freebsd-x64@1.29.1:
-  version "1.29.1"
-  resolved "https://registry.yarnpkg.com/lightningcss-freebsd-x64/-/lightningcss-freebsd-x64-1.29.1.tgz#4b3aec9620684a60c45266d50fd843869320f42f"
-  integrity sha512-0SUW22fv/8kln2LnIdOCmSuXnxgxVC276W5KLTwoehiO0hxkacBxjHOL5EtHD8BAXg2BvuhsJPmVMasvby3LiQ==
-
-lightningcss-linux-arm-gnueabihf@1.29.1:
-  version "1.29.1"
-  resolved "https://registry.yarnpkg.com/lightningcss-linux-arm-gnueabihf/-/lightningcss-linux-arm-gnueabihf-1.29.1.tgz#b80e9c4dd75652bec451ffd4d5779492a01791ff"
-  integrity sha512-sD32pFvlR0kDlqsOZmYqH/68SqUMPNj+0pucGxToXZi4XZgZmqeX/NkxNKCPsswAXU3UeYgDSpGhu05eAufjDg==
-
-lightningcss-linux-arm64-gnu@1.29.1:
-  version "1.29.1"
-  resolved "https://registry.yarnpkg.com/lightningcss-linux-arm64-gnu/-/lightningcss-linux-arm64-gnu-1.29.1.tgz#7825eb119ddf580a4a4f011c6f384a3f9c992060"
-  integrity sha512-0+vClRIZ6mmJl/dxGuRsE197o1HDEeeRk6nzycSy2GofC2JsY4ifCRnvUWf/CUBQmlrvMzt6SMQNMSEu22csWQ==
-
-lightningcss-linux-arm64-musl@1.29.1:
-  version "1.29.1"
-  resolved "https://registry.yarnpkg.com/lightningcss-linux-arm64-musl/-/lightningcss-linux-arm64-musl-1.29.1.tgz#389efccf80088dce2bb00e28bd7d1cfe36a71669"
-  integrity sha512-UKMFrG4rL/uHNgelBsDwJcBqVpzNJbzsKkbI3Ja5fg00sgQnHw/VrzUTEc4jhZ+AN2BvQYz/tkHu4vt1kLuJyw==
-
-lightningcss-linux-x64-gnu@1.29.1:
-  version "1.29.1"
-  resolved "https://registry.yarnpkg.com/lightningcss-linux-x64-gnu/-/lightningcss-linux-x64-gnu-1.29.1.tgz#98fc5df5e39ac8ddc51e51f785849eb21131f789"
-  integrity sha512-u1S+xdODy/eEtjADqirA774y3jLcm8RPtYztwReEXoZKdzgsHYPl0s5V52Tst+GKzqjebkULT86XMSxejzfISw==
-
-lightningcss-linux-x64-musl@1.29.1:
-  version "1.29.1"
-  resolved "https://registry.yarnpkg.com/lightningcss-linux-x64-musl/-/lightningcss-linux-x64-musl-1.29.1.tgz#fb4f80895ba7dfa8048ee32e9716a1684fefd6b2"
-  integrity sha512-L0Tx0DtaNUTzXv0lbGCLB/c/qEADanHbu4QdcNOXLIe1i8i22rZRpbT3gpWYsCh9aSL9zFujY/WmEXIatWvXbw==
-
-lightningcss-win32-arm64-msvc@1.29.1:
-  version "1.29.1"
-  resolved "https://registry.yarnpkg.com/lightningcss-win32-arm64-msvc/-/lightningcss-win32-arm64-msvc-1.29.1.tgz#fd4409fd1505d89d0ff66511c36df5a1379eb7cd"
-  integrity sha512-QoOVnkIEFfbW4xPi+dpdft/zAKmgLgsRHfJalEPYuJDOWf7cLQzYg0DEh8/sn737FaeMJxHZRc1oBreiwZCjog==
 
 lightningcss-win32-x64-msvc@1.29.1:
   version "1.29.1"
@@ -2545,7 +2235,7 @@ node-releases@^2.0.19:
 
 normalize-range@^0.1.2:
   version "0.1.2"
-  resolved "https://registry.yarnpkg.com/normalize-range/-/normalize-range-0.1.2.tgz#2d10c06bdfd312ea9777695a4d28439456b75942"
+  resolved "https://registry.npmjs.org/normalize-range/-/normalize-range-0.1.2.tgz"
   integrity sha512-bdok/XvKII3nUpklnV6P2hxtMNrCboOjAcyBuQnWEhO665FwrSNRxU+AqpsyvO6LgGYPspN+lu5CLtw4jPRKNA==
 
 optionator@^0.9.3:
@@ -2603,12 +2293,12 @@ picomatch@^2.3.1:
 
 postcss-value-parser@^4.2.0:
   version "4.2.0"
-  resolved "https://registry.yarnpkg.com/postcss-value-parser/-/postcss-value-parser-4.2.0.tgz#723c09920836ba6d3e5af019f92bc0971c02e514"
+  resolved "https://registry.npmjs.org/postcss-value-parser/-/postcss-value-parser-4.2.0.tgz"
   integrity sha512-1NNCs6uurfkVbeXG4S8JFT9t19m45ICnif8zWLd5oPSZ50QnwMfK+H3jv408d4jw/7Bttv5axS5IiHoLaVNHeQ==
 
 postcss@^8.5.3:
   version "8.5.3"
-  resolved "https://registry.yarnpkg.com/postcss/-/postcss-8.5.3.tgz#1463b6f1c7fb16fe258736cba29a2de35237eafb"
+  resolved "https://registry.npmjs.org/postcss/-/postcss-8.5.3.tgz"
   integrity sha512-dle9A3yYxlBSrt8Fu+IpjGT8SY8hN0mlaA6GY8t0P5PjIOZemULz/E2Bnm/2dcUOena75OTNkHI76uZBNUUq3A==
   dependencies:
     nanoid "^3.3.8"
@@ -2639,7 +2329,7 @@ react-dom@^19.0.0:
 
 react-is@^17.0.2:
   version "17.0.2"
-  resolved "https://registry.yarnpkg.com/react-is/-/react-is-17.0.2.tgz#e691d4a8e9c789365655539ab372762b0efb54f0"
+  resolved "https://registry.npmjs.org/react-is/-/react-is-17.0.2.tgz"
   integrity sha512-w2GsyukL62IJnlaff/nRegPQR94C/XXamvMWmSHRJ4y7Ts/4ocGRmTHvOs8PSE6pB3dWOrD/nueuU5sduBsQ4w==
 
 react-refresh@^0.14.2:
@@ -2671,7 +2361,7 @@ react@^19.0.0:
 
 regenerator-runtime@^0.14.0:
   version "0.14.1"
-  resolved "https://registry.yarnpkg.com/regenerator-runtime/-/regenerator-runtime-0.14.1.tgz#356ade10263f685dda125100cd862c1db895327f"
+  resolved "https://registry.npmjs.org/regenerator-runtime/-/regenerator-runtime-0.14.1.tgz"
   integrity sha512-dYnhHh0nJoMfnkZs6GmmhFknAGRrLznOu5nc9ML+EJxGvrx6H7teuevqVqCuPcPK//3eDrrjQhehXVx9cnkGdw==
 
 resolve-from@^4.0.0:
@@ -2714,7 +2404,7 @@ rollup@^4.30.1:
 
 rtl-css-js@^1.16.1:
   version "1.16.1"
-  resolved "https://registry.yarnpkg.com/rtl-css-js/-/rtl-css-js-1.16.1.tgz#4b48b4354b0ff917a30488d95100fbf7219a3e80"
+  resolved "https://registry.npmjs.org/rtl-css-js/-/rtl-css-js-1.16.1.tgz"
   integrity sha512-lRQgou1mu19e+Ya0LsTvKrVJ5TYUbqCVPAiImX3UfLTenarvPUl1QFdvu5Z3PYmHT9RCcwIfbjRQBntExyj3Zg==
   dependencies:
     "@babel/runtime" "^7.1.2"
@@ -2770,7 +2460,7 @@ strip-json-comments@^3.1.1:
 
 stylis@^4.2.0:
   version "4.3.6"
-  resolved "https://registry.yarnpkg.com/stylis/-/stylis-4.3.6.tgz#7c7b97191cb4f195f03ecab7d52f7902ed378320"
+  resolved "https://registry.npmjs.org/stylis/-/stylis-4.3.6.tgz"
   integrity sha512-yQ3rwFWRfwNUY7H5vpU0wfdkNSnvnJinhF9830Swlaxl03zsOjCfmX0ugac+3LtK0lYSgwL/KXc8oYL3mG4YFQ==
 
 supports-color@^7.1.0:
@@ -2782,13 +2472,13 @@ supports-color@^7.1.0:
 
 tabster@^8.5.0:
   version "8.5.0"
-  resolved "https://registry.yarnpkg.com/tabster/-/tabster-8.5.0.tgz#ec7a7d2f5965e60d60e68215893e1965abe81156"
+  resolved "https://registry.npmjs.org/tabster/-/tabster-8.5.0.tgz"
   integrity sha512-ePkJm9nycgh4MeW2yXY6QBa4btvwfb4h6+i1uYRAzRxQVf/AJMpN4mHooZKQceM4yQkCjfNibfGtC6DnPmo9vQ==
   dependencies:
     keyborg "2.6.0"
     tslib "^2.3.1"
 
-tailwindcss@4.0.9, tailwindcss@^4.0.9:
+tailwindcss@^4.0.9, tailwindcss@4.0.9:
   version "4.0.9"
   resolved "https://registry.npmjs.org/tailwindcss/-/tailwindcss-4.0.9.tgz"
   integrity sha512-12laZu+fv1ONDRoNR9ipTOpUD7RN9essRVkX36sjxuRUInpN7hIiHN4lBd/SIFjbISvnXzp8h/hXzmU8SQQYhw==
@@ -2812,7 +2502,7 @@ ts-api-utils@^2.0.1:
 
 tslib@^2.1.0, tslib@^2.3.1, tslib@^2.8.0:
   version "2.8.1"
-  resolved "https://registry.yarnpkg.com/tslib/-/tslib-2.8.1.tgz#612efe4ed235d567e8aba5f2a5fab70280ade83f"
+  resolved "https://registry.npmjs.org/tslib/-/tslib-2.8.1.tgz"
   integrity sha512-oJFu94HQb+KVduSUQL7wnpmqnfmLsOA/nAh6b6EH0wCEoK0/mPeXU6c3wKDV83MkOuHPRHtSXKKU99IBazS/2w==
 
 turbo-stream@2.4.0:
@@ -2843,7 +2533,7 @@ typescript@~5.7.2:
 
 undici-types@~6.21.0:
   version "6.21.0"
-  resolved "https://registry.yarnpkg.com/undici-types/-/undici-types-6.21.0.tgz#691d00af3909be93a7faa13be61b3a5b50ef12cb"
+  resolved "https://registry.npmjs.org/undici-types/-/undici-types-6.21.0.tgz"
   integrity sha512-iwDZqg0QAGrg9Rav5H4n0M64c3mkR59cJ6wQp+7C4nI0gsmExaedaYLNO44eT4AtBBwjbTiGPMlt2Md0T9H9JQ==
 
 update-browserslist-db@^1.1.1:
@@ -2863,12 +2553,12 @@ uri-js@^4.2.2:
 
 use-disposable@^1.0.1:
   version "1.0.4"
-  resolved "https://registry.yarnpkg.com/use-disposable/-/use-disposable-1.0.4.tgz#9fb7b0cd4828fc8a271be16c136daefa2fd9ebca"
+  resolved "https://registry.npmjs.org/use-disposable/-/use-disposable-1.0.4.tgz"
   integrity sha512-j83t6AMLWUyb5zwlTDqf6dP9LezM9R0yTbI/b6olmdaGtCKQUe9pgJWV6dRaaQLcozypjIEp4EmZr2DkZGKLSg==
 
 use-sync-external-store@^1.2.0:
   version "1.4.0"
-  resolved "https://registry.yarnpkg.com/use-sync-external-store/-/use-sync-external-store-1.4.0.tgz#adbc795d8eeb47029963016cefdf89dc799fcebc"
+  resolved "https://registry.npmjs.org/use-sync-external-store/-/use-sync-external-store-1.4.0.tgz"
   integrity sha512-9WXSPC5fMv61vaupRkCKCxsPxBocVnwakBEkMIHHpkTTg6icbJtg6jzgtLDm4bl3cSHAca52rYWih0k4K3PfHw==
 
 vite@^6.2.0:

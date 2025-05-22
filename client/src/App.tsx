@@ -7,9 +7,14 @@ import StudentSignUp from './pages/StudentSignUp';
 import ProfessorSignUp from './pages/ProfessorSignUp';
 import Otp from './pages/Otp';
 import Application from './pages/Application';
-import MyProgram from './pages/MyProgram';
 import Team from './pages/Team'; 
 import DashboardLayout from './pages/components/DashboardLayout';
+import Progress from './pages/Progress';
+import Training from './pages/Training';
+import ResetPassword from './pages/ResetPassword';
+import ForgotPassword from './pages/forgot_password';
+import ProjectsManagement from './pages/mentor/project-management';
+import ProjectDetail from './pages/mentor/project-details';
 
 const App: React.FC = () => {
   return (
@@ -21,16 +26,19 @@ const App: React.FC = () => {
       <Route path="/signup/professor" element={<ProfessorSignUp />} />
       <Route path="/verifyEmail" element={<Otp />} />
       <Route path="/application" element={<Application />} />
-
+      <Route path="/forgot-password" element={<ForgotPassword/>} />
+      <Route path="/reset-password" element={<ResetPassword/>} />
       <Route element={<DashboardLayout />}>
         <Route path="/dashboard" element={<div>Dashboard Page</div>} /> 
-        <Route path="/incubation-program" element={<MyProgram />} />
-        <Route path="/startup" element={<div>Startup Page</div>} />
+        <Route path="/Progress" element={<Progress />} />
         <Route path="/team" element={<Team />} />
-        <Route path="/training" element={<div>Training Page</div>} />
+        <Route path="/training" element={<Training/>} />
         <Route path="/support" element={<div>Support Page</div>} />
         <Route path="/settings" element={<div>Settings Page</div>} />
+        
       </Route>
+      <Route path="/mentor/projects-management" element={<ProjectsManagement />} />
+        <Route path="/mentor/projects/:projectId" element={<ProjectDetail />} />
     </Routes>
   );
 };

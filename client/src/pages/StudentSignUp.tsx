@@ -1,4 +1,4 @@
-
+"use client"
 
 import type React from "react"
 
@@ -7,7 +7,8 @@ import logo from "../assets/Logo Image.svg"
 import { Link, useNavigate } from "react-router-dom"
 import Input from "./components/Input"
 import { useState } from "react"
-import { useTheme } from '../main'; 
+import { useTheme } from "../main"
+import { Eye24Filled, EyeOff24Filled, EyeOffRegular, EyeRegular } from "@fluentui/react-icons"
 
 const useStyles = makeStyles({
   background: {
@@ -42,11 +43,11 @@ const useStyles = makeStyles({
     width: "100%",
   },
   title: {
-    fontSize: tokens.fontSizeHero800, 
+    fontSize: tokens.fontSizeHero800,
     fontFamily: tokens.fontFamilyBase,
     fontWeight: tokens.fontWeightSemibold,
     color: tokens.colorNeutralForeground1,
-    lineHeight: "1", 
+    lineHeight: "1",
     margin: "0.5rem 0",
   },
   button: {
@@ -80,19 +81,36 @@ const useStyles = makeStyles({
     },
   },
   logo: {
-    width:'50px'
+    width: "50px",
   },
-  
   logoDark: {
-    filter: 'brightness(0) invert(1)', 
+    filter: "brightness(0) invert(1)",
+  },
+  inputWrapper: {
+    position: "relative",
+    width: "100%",
+  },
+  passwordToggle: {
+    position: "absolute",
+    right: "10px",
+    top: "calc(50% + 10px)",
+    transform: "translateY(-50%)",
+    background: "none",
+    border: "none",
+    cursor: "pointer",
+    color: tokens.colorNeutralForeground3,
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "center",
+    padding: "4px",
+    zIndex: 1,
   },
 })
 
 const StudentSignUp = () => {
   const classes = useStyles()
   const navigate = useNavigate()
-
- const backendUrl = import.meta.env.VITE_BACKEND_URL  
+  const backendUrl = import.meta.env.VITE_BACKEND_URL
 
   const [firstName, setFirstName] = useState<string>("")
   const [lastName, setLastName] = useState<string>("")
@@ -100,7 +118,9 @@ const StudentSignUp = () => {
   const [password, setPassword] = useState<string>("")
   const [error, setError] = useState<string | null>(null)
   const [loading, setLoading] = useState<boolean>(false)
-  const { isDarkMode } = useTheme();
+  const [showPassword, setShowPassword] = useState<boolean>(false)
+  const { isDarkMode } = useTheme()
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
     setError(null)
@@ -118,7 +138,7 @@ const StudentSignUp = () => {
           firstName,
           lastName,
           password,
-          role: "SUPERVISOR",
+          role: "MEMBER",
         }),
       })
 
@@ -129,7 +149,7 @@ const StudentSignUp = () => {
 
       const data = await res.json()
       console.log("Register success:", data)
-      navigate("/login")
+      navigate("/verifyEmail")
     } catch (err: any) {
       setError(err.message)
     } finally {
@@ -137,13 +157,20 @@ const StudentSignUp = () => {
     }
   }
 
+  const togglePasswordVisibility = () => {
+    setShowPassword(!showPassword)
+  }
 
   return (
     <div className={classes.background}>
       <form className={classes.container} onSubmit={handleSubmit}>
         <div className={classes.header}>
           <div>
-          <Image src={logo} alt="logo" className={mergeClasses(classes.logo, isDarkMode && classes.logoDark)} />
+            <Image
+              src={logo || "/placeholder.svg"}
+              alt="logo"
+              className={mergeClasses(classes.logo, isDarkMode && classes.logoDark)}
+            />
           </div>
           <Text as="h1" className={classes.title}>
             Create Your Student Account
@@ -173,13 +200,24 @@ const StudentSignUp = () => {
             value={email}
             onChange={(e: React.ChangeEvent<HTMLInputElement>) => setEmail(e.target.value)}
           />
-          <Input
-            label="Password"
-            placeholder="Password"
-            type="password"
-            value={password}
-            onChange={(e: React.ChangeEvent<HTMLInputElement>) => setPassword(e.target.value)}
-          />
+
+          <div className={classes.inputWrapper}>
+            <Input
+              label="Password"
+              placeholder="Password"
+              type={showPassword ? "text" : "password"}
+              value={password}
+              onChange={(e: React.ChangeEvent<HTMLInputElement>) => setPassword(e.target.value)}
+            />
+            <button
+              type="button"
+              className={classes.passwordToggle}
+              onClick={togglePasswordVisibility}
+              aria-label={showPassword ? "Hide password" : "Show password"}
+            >
+              {showPassword ? <Eye24Filled /> : <EyeOff24Filled />}
+            </button>
+          </div>
 
           <Button type="submit" className={classes.button} disabled={loading}>
             {loading ? "Signing Up..." : "Sign Up"}
@@ -201,4 +239,3 @@ const StudentSignUp = () => {
 }
 
 export default StudentSignUp
-

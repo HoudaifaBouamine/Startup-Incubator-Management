@@ -1,316 +1,297 @@
-import { useState } from 'react';
-import { makeStyles, tokens, Button, Checkbox, Text, Image, Input } from '@fluentui/react-components';
-import { MoreHorizontal20Regular, Dismiss20Regular, Copy20Regular, Share20Regular } from '@fluentui/react-icons';
+"use client"
 
-import profilePicture from '../../src/assets/Profile Picture.jpg';
+import { useState } from "react"
+import { makeStyles, tokens, Button, Checkbox, Input, Avatar } from "@fluentui/react-components"
+import { MoreHorizontalRegular, CopyRegular, ShareRegular, PersonAddRegular } from "@fluentui/react-icons"
 
 const useStyles = makeStyles({
   root: {
-    display: 'flex',
-    height: '100vh',
+    display: "flex",
+    height: "100vh",
     backgroundColor: tokens.colorNeutralBackground2,
   },
   mainContent: {
     flex: 1,
-    display: 'flex',
-    flexDirection: 'column',
-    overflow: 'auto',
+    display: "flex",
+    flexDirection: "column",
+    overflow: "auto",
   },
   content: {
-    padding: '2rem',
-    display: 'flex',
-    flexDirection: 'column',
-    gap: '2rem',
+    padding: "2rem",
+    display: "flex",
+    flexDirection: "column",
+    gap: "2rem",
   },
   headerSection: {
-    display: 'flex',
-    justifyContent: 'space-between',
-    alignItems: 'center',
+    display: "flex",
+    justifyContent: "space-between",
+    alignItems: "center",
+    marginBottom: "1.5rem",
   },
   title: {
-    fontSize: '24px',
-    fontWeight: '600',
+    fontSize: "24px",
+    fontWeight: "600",
     color: tokens.colorNeutralForeground1,
+    margin: 0,
   },
   subtext: {
-    fontSize: '14px',
+    fontSize: "14px",
     color: tokens.colorNeutralForeground2,
-    marginTop: '0.5rem',
+    marginTop: "0.5rem",
   },
   inviteButton: {
     backgroundColor: tokens.colorBrandBackground,
     color: tokens.colorNeutralForegroundOnBrand,
-    fontWeight: '600',
-    padding: '0.5rem 1rem',
-    borderRadius: '4px',
-    ':hover': {
+    fontWeight: "600",
+    padding: "0.5rem 1rem",
+    borderRadius: "4px",
+    ":hover": {
       backgroundColor: tokens.colorBrandBackgroundHover,
     },
   },
   section: {
-    display: 'flex',
-    flexDirection: 'column',
-    gap: '1rem',
+    display: "flex",
+    flexDirection: "column",
+    gap: "1rem",
+    marginBottom: "2rem",
   },
   sectionTitle: {
-    fontSize: '18px',
-    fontWeight: '600',
+    fontSize: "18px",
+    fontWeight: "600",
     color: tokens.colorNeutralForeground1,
+    margin: 0,
   },
-  list: {
-    display: 'flex',
-    flexDirection: 'column',
-    gap: '0.5rem',
+  table: {
+    width: "100%",
+    borderCollapse: "separate",
+    borderSpacing: "0 4px",
   },
-  listHeader: {
-    display: 'flex',
-    alignItems: 'center',
-    padding: '0.5rem 1rem',
-    fontSize: '12px',
-    fontWeight: '600',
+  tableHeader: {
+    textAlign: "left",
+    padding: "0.5rem 1rem",
+    fontSize: "12px",
+    fontWeight: "600",
     color: tokens.colorNeutralForeground2,
   },
-  listItem: {
-    display: 'flex',
-    alignItems: 'center',
-    padding: '0.5rem 1rem',
+  tableRow: {
     backgroundColor: tokens.colorNeutralBackground1,
-    borderRadius: '4px',
-    ':hover': {
+    ":hover": {
       backgroundColor: tokens.colorNeutralBackground3,
     },
   },
-  checkbox: {
-    marginRight: '1rem',
+  tableCell: {
+    padding: "0.75rem 1rem",
+    fontSize: "14px",
+    color: tokens.colorNeutralForeground1,
+    verticalAlign: "middle",
   },
-  profileWrapper: {
-    display: 'flex',
-    alignItems: 'center',
-    gap: '0.75rem',
-    flex: 1,
+  checkboxCell: {
+    width: "40px",
+    padding: "0.5rem 1rem",
   },
-  profilePicture: {
-    borderRadius: '50%',
-    width: '32px',
-    height: '32px',
-    objectFit: 'cover',
-    position: 'relative',
+  profileCell: {
+    display: "flex",
+    alignItems: "center",
+    gap: "0.75rem",
+  },
+  avatar: {
+    position: "relative",
   },
   onlineIndicator: {
-    position: 'absolute',
-    bottom: 0,
-    right: 0,
-    width: '12px',
-    height: '12px',
-    borderRadius: '50%',
+    position: "absolute",
+    bottom: "0",
+    right: "0",
+    width: "10px",
+    height: "10px",
+    borderRadius: "50%",
     backgroundColor: tokens.colorStatusSuccessBackground3,
     border: `2px solid ${tokens.colorNeutralBackground1}`,
   },
   name: {
-    fontSize: '14px',
-    fontWeight: '500',
+    fontSize: "14px",
+    fontWeight: "500",
     color: tokens.colorNeutralForeground1,
   },
-  lastActive: {
-    fontSize: '14px',
+  yearCell: {
+    fontSize: "14px",
     color: tokens.colorNeutralForeground2,
-    flex: 1,
   },
-  role: {
-    fontSize: '14px',
+  emailCell: {
+    fontSize: "14px",
     color: tokens.colorNeutralForeground2,
-    flex: 1,
+  },
+  actionsCell: {
+    width: "40px",
+    textAlign: "center",
   },
   menuButton: {
-    background: 'transparent',
-    border: 'none',
+    background: "transparent",
+    border: "none",
     color: tokens.colorNeutralForeground2,
-    ':hover': {
+    padding: "4px",
+    ":hover": {
       backgroundColor: tokens.colorNeutralBackground3,
-      borderRadius: '4px',
+      borderRadius: "4px",
     },
   },
   // Modal styles
-  modalBackdrop: {
-    position: 'fixed',
-    top: 0,
-    left: 0,
-    right: 0,
-    bottom: 0,
-    backgroundColor: 'rgba(0, 0, 0, 0.5)',
-    display: 'flex',
-    justifyContent: 'center',
-    alignItems: 'center',
-    zIndex: 1000,
-  },
-  modalSurface: {
-    backgroundColor: tokens.colorNeutralBackground1,
-    borderRadius: '8px',
-    padding: '1.5rem',
-    width: '400px',
-    maxWidth: '90vw',
-    boxShadow: tokens.shadow16,
-  },
-  modalHeader: {
-    display: 'flex',
-    justifyContent: 'space-between',
-    alignItems: 'center',
-    marginBottom: '1rem',
-  },
-  modalTitle: {
-    fontSize: '18px',
-    fontWeight: '600',
-    color: tokens.colorNeutralForeground1,
-  },
-  closeButton: {
-    background: 'transparent',
-    border: 'none',
-    color: tokens.colorNeutralForeground2,
-    ':hover': {
-      backgroundColor: tokens.colorNeutralBackground3,
-      borderRadius: '4px',
-    },
+  modalContent: {
+    display: "flex",
+    flexDirection: "column",
+    gap: "1.5rem",
   },
   modalSection: {
-    display: 'flex',
-    flexDirection: 'column',
-    gap: '1rem',
-    marginBottom: '1.5rem',
+    display: "flex",
+    flexDirection: "column",
+    gap: "1rem",
   },
   modalSectionTitle: {
-    fontSize: '14px',
-    fontWeight: '600',
+    fontSize: "14px",
+    fontWeight: "600",
     color: tokens.colorNeutralForeground2,
-    textTransform: 'uppercase',
+    textTransform: "uppercase",
+    margin: 0,
   },
   emailInputWrapper: {
-    display: 'flex',
-    alignItems: 'center',
-    gap: '0.5rem',
+    display: "flex",
+    alignItems: "center",
+    gap: "0.5rem",
   },
   emailInput: {
     flex: 1,
-    backgroundColor: tokens.colorNeutralBackground3,
-    padding: '0.5rem 1rem',
-    borderRadius: '4px',
-    color: tokens.colorNeutralForeground4,
   },
   sendInviteButton: {
     backgroundColor: tokens.colorBrandBackground,
     color: tokens.colorNeutralForegroundOnBrand,
-    fontWeight: '600',
-    padding: '0.5rem 1rem',
-    borderRadius: '4px',
-    ':hover': {
-      backgroundColor: tokens.colorBrandBackgroundHover,
-    },
+    fontWeight: "600",
   },
   memberItem: {
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'space-between',
-    padding: '0.5rem 0',
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "space-between",
+    padding: "0.5rem 0",
   },
   memberInfo: {
-    display: 'flex',
-    alignItems: 'center',
-    gap: '0.75rem',
+    display: "flex",
+    alignItems: "center",
+    gap: "0.75rem",
   },
   memberName: {
-    fontSize: '14px',
+    fontSize: "14px",
     color: tokens.colorNeutralForeground1,
+    margin: 0,
   },
   memberEmail: {
-    fontSize: '12px',
+    fontSize: "12px",
     color: tokens.colorNeutralForeground2,
+    margin: 0,
   },
   roleSelect: {
     backgroundColor: tokens.colorNeutralBackground3,
-    border: 'none',
-    borderRadius: '4px',
-    padding: '0.25rem 0.5rem',
+    border: "none",
+    borderRadius: "4px",
+    padding: "0.25rem 0.5rem",
     color: tokens.colorNeutralForeground1,
-    fontSize: '14px',
+    fontSize: "14px",
   },
   inviteLinkWrapper: {
-    display: 'flex',
-    alignItems: 'center',
-    gap: '0.5rem',
+    display: "flex",
+    alignItems: "center",
+    gap: "0.5rem",
     backgroundColor: tokens.colorNeutralBackground3,
-    padding: '0.5rem 1rem',
-    borderRadius: '4px',
+    padding: "0.5rem 1rem",
+    borderRadius: "4px",
   },
   inviteLink: {
-    fontSize: '14px',
+    fontSize: "14px",
     color: tokens.colorNeutralForeground2,
     flex: 1,
-    overflow: 'hidden',
-    textOverflow: 'ellipsis',
-    whiteSpace: 'nowrap',
+    overflow: "hidden",
+    textOverflow: "ellipsis",
+    whiteSpace: "nowrap",
   },
-  copyButton: {
-    background: 'transparent',
-    border: 'none',
+  actionButton: {
+    background: "transparent",
+    border: "none",
     color: tokens.colorNeutralForeground2,
-    ':hover': {
+    padding: "4px",
+    ":hover": {
       backgroundColor: tokens.colorNeutralBackground4,
-      borderRadius: '4px',
+      borderRadius: "4px",
     },
   },
-  shareButton: {
-    background: 'transparent',
-    border: 'none',
-    color: tokens.colorNeutralForeground2,
-    ':hover': {
-      backgroundColor: tokens.colorNeutralBackground4,
-      borderRadius: '4px',
+  pagination: {
+    display: "flex",
+    justifyContent: "center",
+    gap: "0.5rem",
+    marginTop: "1rem",
+  },
+  paginationItem: {
+    width: "28px",
+    height: "28px",
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "center",
+    borderRadius: "4px",
+    cursor: "pointer",
+    fontSize: "14px",
+    ":hover": {
+      backgroundColor: tokens.colorNeutralBackground3,
     },
   },
-});
+  paginationItemActive: {
+    backgroundColor: tokens.colorNeutralBackground3,
+    fontWeight: tokens.fontWeightSemibold,
+  },
+})
 
 const Team = () => {
-  const styles = useStyles();
-  const [selectedMembers, setSelectedMembers] = useState<string[]>([]);
-  const [isModalOpen, setIsModalOpen] = useState(false);
-  const [email, setEmail] = useState('');
+  const styles = useStyles()
+  const [selectedMembers, setSelectedMembers] = useState<string[]>([])
+  const [isModalOpen, setIsModalOpen] = useState(false)
+  const [email, setEmail] = useState("")
 
+  // Members data matching the screenshot
   const members = [
-    { name: 'Arlene McCoy', lastActive: 'Yesterday', role: 'Product management', isOnline: false, isOwner: true },
-    { name: 'Arlene McCoy', lastActive: 'Yesterday', role: 'Product management', isOnline: true },
-    { name: 'Arlene McCoy', lastActive: 'Yesterday', role: 'Product management', isOnline: true },
-    { name: 'Arlene McCoy', lastActive: 'Yesterday', role: 'Product management', isOnline: true },
-    { name: 'Arlene McCoy', lastActive: 'Yesterday', role: 'Product management', isOnline: true },
-  ];
+    { id: 1, name: "Mia Johnson", year: "1CS", email: "jo@esi-sba.dz", isOnline: true },
+    { id: 2, name: "Liam Carter", year: "1CS", email: "ca@esi-sba.dz", isOnline: true },
+    { id: 3, name: "Sophie Brown", year: "2CS", email: "br@esi-sba.dz", isOnline: true },
+    { id: 4, name: "Noah Smith", year: "1CS", email: "sm@esi-sba.dz", isOnline: true },
+    { id: 5, name: "Emma Davis", year: "2CS", email: "da@esi-sba.dz", isOnline: true },
+    { id: 6, name: "Oliver Wilson", year: "1CS", email: "wi@esi-sba.dz", isOnline: true },
+  ]
 
+  // Mentors data matching the screenshot
   const mentors = [
-    { name: 'Arlene McCoy', lastActive: 'Yesterday', role: 'Product management', isOnline: true },
-    { name: 'Arlene McCoy', lastActive: 'Yesterday', role: 'Product management', isOnline: true },
-  ];
+    { id: 7, name: "Ella Thompson", year: "1CS", email: "th@esi-sba.dz", isOnline: true },
+    { id: 8, name: "James Taylor", year: "1CS", email: "ta@esi-sba.dz", isOnline: true },
+  ]
 
+  // Project members for the invite modal
   const projectMembers = [
-    { name: 'User name', email: 'email@esi-sba.dz', role: 'Founder' },
-    { name: 'User name', email: 'email@esi-sba.dz', role: 'Co-Founder' },
-    { name: 'User name', email: 'email@esi-sba.dz', role: 'Tech Lead' },
-  ];
+    { name: "User name", email: "email@esi-sba.dz", role: "Founder" },
+    { name: "User name", email: "email@esi-sba.dz", role: "Co-Founder" },
+    { name: "User name", email: "email@esi-sba.dz", role: "Tech Lead" },
+  ]
 
-  const handleCheckboxChange = (name: string) => {
+  const handleCheckboxChange = (id: number) => {
     setSelectedMembers((prev) =>
-      prev.includes(name) ? prev.filter((item) => item !== name) : [...prev, name]
-    );
-  };
+      prev.includes(id.toString()) ? prev.filter((item) => item !== id.toString()) : [...prev, id.toString()],
+    )
+  }
 
   const handleInvite = () => {
     if (email) {
-      console.log(`Inviting ${email}`);
-      setEmail('');
-      setIsModalOpen(false);
+      console.log(`Inviting ${email}`)
+      setEmail("")
+      setIsModalOpen(false)
     }
-  };
+  }
 
   const handleCopyLink = () => {
-    navigator.clipboard.writeText('https://www.starthub.com/user/example@');
-    console.log('Link copied to clipboard');
-  };
+    navigator.clipboard.writeText("https://www.starthub.com/user/example@")
+    console.log("Link copied to clipboard")
+  }
 
   return (
     <div className={styles.root}>
@@ -318,158 +299,256 @@ const Team = () => {
         <div className={styles.content}>
           <div className={styles.headerSection}>
             <div>
-              <Text className={styles.title}>My Team</Text>
-              <Text className={styles.subtext}>Upload your file before the deadline to submit for review</Text>
+              <h1 className={styles.title}>My Team</h1>
+              <p className={styles.subtext}>Upload your file before the deadline to submit for review</p>
             </div>
-            <Button
-              className={styles.inviteButton}
-              icon={<MoreHorizontal20Regular />}
-              onClick={() => setIsModalOpen(true)}
-            >
+            <Button className={styles.inviteButton} icon={<PersonAddRegular />} onClick={() => setIsModalOpen(true)}>
               Invite Member
             </Button>
           </div>
 
           <div className={styles.section}>
-            <Text className={styles.sectionTitle}>Members ({members.length})</Text>
-            <div className={styles.list}>
-              <div className={styles.listHeader}>
-                <div className={styles.checkbox}></div>
-                <Text style={{ flex: 1 }}>Owner</Text>
-                <Text style={{ flex: 1 }}>Last active time</Text>
-                <Text style={{ flex: 1 }}>Role</Text>
-                <div style={{ width: '24px' }}></div>
-              </div>
-              {members.map((member, index) => (
-                <div key={index} className={styles.listItem}>
-                  <Checkbox
-                    className={styles.checkbox}
-                    checked={selectedMembers.includes(member.name)}
-                    onChange={() => handleCheckboxChange(member.name)}
-                  />
-                  <div className={styles.profileWrapper}>
-                    <div style={{ position: 'relative' }}>
-                      <Image
-                        src={profilePicture}
-                        alt={member.name}
-                        className={styles.profilePicture}
+            <h2 className={styles.sectionTitle}>Members ({members.length})</h2>
+            <table className={styles.table}>
+              <thead>
+                <tr>
+                  <th className={styles.tableHeader} style={{ width: "40px" }}>
+                    <Checkbox />
+                  </th>
+                  <th className={styles.tableHeader}>Administrator</th>
+                  <th className={styles.tableHeader}>Year Of Study</th>
+                  <th className={styles.tableHeader}>Email</th>
+                  <th className={styles.tableHeader} style={{ width: "40px" }}></th>
+                </tr>
+              </thead>
+              <tbody>
+                {members.map((member) => (
+                  <tr key={member.id} className={styles.tableRow}>
+                    <td className={`${styles.tableCell} ${styles.checkboxCell}`}>
+                      <Checkbox
+                        checked={selectedMembers.includes(member.id.toString())}
+                        onChange={() => handleCheckboxChange(member.id)}
                       />
-                      {member.isOnline && <div className={styles.onlineIndicator}></div>}
-                    </div>
-                    <Text className={styles.name}>{member.name}</Text>
-                  </div>
-                  <Text className={styles.lastActive}>{member.lastActive}</Text>
-                  <Text className={styles.role}>{member.role}</Text>
-                  <Button className={styles.menuButton}>
-                    <MoreHorizontal20Regular />
-                  </Button>
-                </div>
-              ))}
-            </div>
+                    </td>
+                    <td className={styles.tableCell}>
+                      <div className={styles.profileCell}>
+                        <div className={styles.avatar}>
+                          <Avatar name={member.name} size={32} color="colorful" />
+                          {member.isOnline && <div className={styles.onlineIndicator}></div>}
+                        </div>
+                        <span className={styles.name}>{member.name}</span>
+                      </div>
+                    </td>
+                    <td className={`${styles.tableCell} ${styles.yearCell}`}>{member.year}</td>
+                    <td className={`${styles.tableCell} ${styles.emailCell}`}>{member.email}</td>
+                    <td className={`${styles.tableCell} ${styles.actionsCell}`}>
+                      <Button className={styles.menuButton} icon={<MoreHorizontalRegular />} />
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
           </div>
 
           <div className={styles.section}>
-            <Text className={styles.sectionTitle}>Mentors ({mentors.length})</Text>
-            <div className={styles.list}>
-              {mentors.map((mentor, index) => (
-                <div key={index} className={styles.listItem}>
-                  <Checkbox
-                    className={styles.checkbox}
-                    checked={selectedMembers.includes(mentor.name)}
-                    onChange={() => handleCheckboxChange(mentor.name)}
-                  />
-                  <div className={styles.profileWrapper}>
-                    <div style={{ position: 'relative' }}>
-                      <Image
-                        src={profilePicture}
-                        alt={mentor.name}
-                        className={styles.profilePicture}
+            <h2 className={styles.sectionTitle}>Mentors ({mentors.length})</h2>
+            <table className={styles.table}>
+              <tbody>
+                {mentors.map((mentor) => (
+                  <tr key={mentor.id} className={styles.tableRow}>
+                    <td className={`${styles.tableCell} ${styles.checkboxCell}`}>
+                      <Checkbox
+                        checked={selectedMembers.includes(mentor.id.toString())}
+                        onChange={() => handleCheckboxChange(mentor.id)}
                       />
-                      {mentor.isOnline && <div className={styles.onlineIndicator}></div>}
-                    </div>
-                    <Text className={styles.name}>{mentor.name}</Text>
-                  </div>
-                  <Text className={styles.lastActive}>{mentor.lastActive}</Text>
-                  <Text className={styles.role}>{mentor.role}</Text>
-                  <Button className={styles.menuButton}>
-                    <MoreHorizontal20Regular />
-                  </Button>
-                </div>
-              ))}
-            </div>
+                    </td>
+                    <td className={styles.tableCell}>
+                      <div className={styles.profileCell}>
+                        <div className={styles.avatar}>
+                          <Avatar name={mentor.name} size={32} color="colorful" />
+                          {mentor.isOnline && <div className={styles.onlineIndicator}></div>}
+                        </div>
+                        <span className={styles.name}>{mentor.name}</span>
+                      </div>
+                    </td>
+                    <td className={`${styles.tableCell} ${styles.yearCell}`}>{mentor.year}</td>
+                    <td className={`${styles.tableCell} ${styles.emailCell}`}>{mentor.email}</td>
+                    <td className={`${styles.tableCell} ${styles.actionsCell}`}>
+                      <Button className={styles.menuButton} icon={<MoreHorizontalRegular />} />
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
           </div>
         </div>
       </div>
 
+      {/* Custom Modal Implementation instead of using Dialog component */}
       {isModalOpen && (
         <div
-          className={styles.modalBackdrop}
+          style={{
+            position: "fixed",
+            top: 0,
+            left: 0,
+            right: 0,
+            bottom: 0,
+            backgroundColor: "rgba(0, 0, 0, 0.5)",
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+            zIndex: 1000,
+          }}
           onClick={() => setIsModalOpen(false)}
         >
           <div
-            className={styles.modalSurface}
-            onClick={(e) => e.stopPropagation()} // Prevent closing when clicking inside the modal
+            style={{
+              backgroundColor: tokens.colorNeutralBackground1,
+              borderRadius: "8px",
+              padding: "1.5rem",
+              width: "450px",
+              maxWidth: "90vw",
+              boxShadow: "0 4px 12px rgba(0, 0, 0, 0.1)",
+            }}
+            onClick={(e) => e.stopPropagation()}
           >
-            <div className={styles.modalHeader}>
-              <Text className={styles.modalTitle}>Invite a New Member</Text>
+            <div
+              style={{
+                display: "flex",
+                justifyContent: "space-between",
+                alignItems: "center",
+                marginBottom: "1.5rem",
+              }}
+            >
+              <h2 style={{ margin: 0, fontSize: "18px", fontWeight: "600" }}>Invite a New Member</h2>
               <Button
-                className={styles.closeButton}
+                appearance="subtle"
+                size="small"
                 onClick={() => setIsModalOpen(false)}
-                aria-label="Close dialog"
-              >
-                <Dismiss20Regular />
-              </Button>
+                aria-label="Close"
+                icon={<span style={{ fontSize: "16px" }}>×</span>}
+              />
             </div>
-            <div>
-              <div className={styles.modalSection}>
-                <Text className={styles.modalSectionTitle}>Invite via Email</Text>
-                <div className={styles.emailInputWrapper}>
+
+            <div style={{ display: "flex", flexDirection: "column", gap: "1.5rem" }}>
+              {/* Invite via Email */}
+              <div>
+                <h3 style={{ fontSize: "14px", fontWeight: "600", marginBottom: "0.75rem" }}>Invite via Email</h3>
+                <div style={{ display: "flex", gap: "0.5rem" }}>
                   <Input
-                    className={styles.emailInput}
+                    style={{ flex: 1 }}
                     placeholder="example@esi-sba.dz"
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
                   />
-                  <Button className={styles.sendInviteButton} onClick={handleInvite}>
-                    Send Invite
+                  <Button
+                    style={{
+                      backgroundColor: tokens.colorBrandBackground,
+                      color: tokens.colorNeutralForegroundOnBrand,
+                      minWidth: "100px",
+                    }}
+                    onClick={handleInvite}
+                  >
+                    Send invite
                   </Button>
                 </div>
               </div>
 
-              <div className={styles.modalSection}>
-                <Text className={styles.modalSectionTitle}>Project Members</Text>
-                {projectMembers.map((member, index) => (
-                  <div key={index} className={styles.memberItem}>
-                    <div className={styles.memberInfo}>
-                      <Image
-                        src={profilePicture}
-                        alt={member.name}
-                        className={styles.profilePicture}
-                      />
-                      <div>
-                        <Text className={styles.memberName}>{member.name}</Text>
-                        <Text className={styles.memberEmail}>{member.email}</Text>
+              {/* Registered Users */}
+              <div>
+                <h3 style={{ fontSize: "14px", fontWeight: "600", marginBottom: "0.75rem" }}>Registered Users</h3>
+                <div style={{ display: "flex", flexDirection: "column", gap: "0.75rem" }}>
+                  {[
+                    { name: "User name", email: "email@esi-sba.dz", invited: false },
+                    { name: "User name", email: "email@esi-sba.dz", invited: false },
+                    { name: "User name", email: "email@esi-sba.dz", invited: true },
+                    { name: "User name", email: "email@esi-sba.dz", invited: false },
+                    { name: "User name", email: "email@esi-sba.dz", invited: false },
+                  ].map((user, index) => (
+                    <div key={index} style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
+                      <div style={{ display: "flex", alignItems: "center", gap: "0.75rem" }}>
+                        <div
+                          style={{
+                            width: "32px",
+                            height: "32px",
+                            borderRadius: "50%",
+                            backgroundColor: tokens.colorNeutralBackground3,
+                            display: "flex",
+                            alignItems: "center",
+                            justifyContent: "center",
+                          }}
+                        >
+                          <PersonAddRegular style={{ fontSize: "16px", color: tokens.colorNeutralForeground3 }} />
+                        </div>
+                        <div>
+                          <div style={{ fontSize: "14px", fontWeight: "500" }}>{user.name}</div>
+                          <div style={{ fontSize: "12px", color: tokens.colorNeutralForeground2 }}>{user.email}</div>
+                        </div>
                       </div>
+                      <Button
+                        appearance={user.invited ? "subtle" : "outline"}
+                        icon={
+                          user.invited ? (
+                            <span
+                              style={{
+                                width: "16px",
+                                height: "16px",
+                                borderRadius: "50%",
+                                backgroundColor: tokens.colorStatusSuccessBackground1,
+                                display: "flex",
+                                alignItems: "center",
+                                justifyContent: "center",
+                                color: "white",
+                                fontSize: "10px",
+                              }}
+                            >
+                              ✓
+                            </span>
+                          ) : (
+                            <span>+</span>
+                          )
+                        }
+                      >
+                        {user.invited ? "Invited" : "Invite"}
+                      </Button>
                     </div>
-                    <select className={styles.roleSelect} defaultValue={member.role}>
-                      <option value="Founder">Founder</option>
-                      <option value="Co-Founder">Co-Founder</option>
-                      <option value="Tech Lead">Tech Lead</option>
-                    </select>
-                  </div>
-                ))}
+                  ))}
+                </div>
               </div>
 
-              <div className={styles.modalSection}>
-                <Text className={styles.modalSectionTitle}>Invite via Link</Text>
-                <div className={styles.inviteLinkWrapper}>
-                  <Text className={styles.inviteLink}>https://www.starthub.com/user/example@</Text>
-                  <Button className={styles.copyButton} onClick={handleCopyLink}>
-                    <Copy20Regular />
-                  </Button>
-                  <Button className={styles.shareButton}>
-                    <Share20Regular />
-                  </Button>
+              {/* Invite via Link */}
+              <div>
+                <h3 style={{ fontSize: "14px", fontWeight: "600", marginBottom: "0.75rem" }}>Invite via Link</h3>
+                <div
+                  style={{
+                    display: "flex",
+                    border: `1px solid ${tokens.colorNeutralStroke1}`,
+                    borderRadius: "4px",
+                    overflow: "hidden",
+                  }}
+                >
+                  <input
+                    style={{
+                      flex: 1,
+                      padding: "0.5rem 0.75rem",
+                      border: "none",
+                      outline: "none",
+                      fontSize: "14px",
+                    }}
+                    value="https://www.starthub.com/user/example@"
+                    readOnly
+                  />
+                  <Button
+                    appearance="subtle"
+                    icon={<CopyRegular />}
+                    onClick={handleCopyLink}
+                    style={{ borderLeft: `1px solid ${tokens.colorNeutralStroke1}` }}
+                  />
+                  <Button
+                    appearance="subtle"
+                    icon={<ShareRegular />}
+                    style={{ borderLeft: `1px solid ${tokens.colorNeutralStroke1}` }}
+                  />
                 </div>
               </div>
             </div>
@@ -477,7 +556,7 @@ const Team = () => {
         </div>
       )}
     </div>
-  );
-};
+  )
+}
 
-export default Team;
+export default Team
