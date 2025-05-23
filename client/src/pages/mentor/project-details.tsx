@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from "react"
 import { useParams, useNavigate, Link } from "react-router-dom"
-import { makeStyles, tokens, Button, Spinner, TabList, Tab, ProgressBar } from "@fluentui/react-components"
+import { makeStyles, tokens, Button, Spinner, TabList, Tab, ProgressBar, SelectTabEventHandler } from "@fluentui/react-components"
 import {
   ChevronRight20Regular,
   DocumentRegular,
@@ -453,8 +453,8 @@ const ProjectDetail = () => {
     }
   }, [projectId])
 
-  const handleTabChange = (value: string) => {
-    setActiveTab(value)
+  const handleTabChange: SelectTabEventHandler = (_, data) => {
+    setActiveTab(data.value as string)
   }
 
   const handleSessionClick = (index: number) => {
@@ -621,7 +621,7 @@ const ProjectDetail = () => {
             <TabList
               defaultSelectedValue="deliverables"
               selectedValue={activeTab}
-              onTabSelect={(_: any, data: { value: string }) => handleTabChange(data.value)}
+              onTabSelect={handleTabChange}
             >
               <Tab value="deliverables">
                 <div className={styles.tabContent}>

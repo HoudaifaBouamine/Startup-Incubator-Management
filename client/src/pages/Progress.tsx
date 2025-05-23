@@ -1,9 +1,8 @@
 "use client"
 
 import type React from "react"
-
 import { useState, useEffect } from "react"
-import { makeStyles, tokens, ProgressBar, TabList, Tab, Spinner } from "@fluentui/react-components"
+import { makeStyles, tokens, ProgressBar, TabList, Tab, Spinner, SelectTabEventHandler } from "@fluentui/react-components"
 import {
   ChevronRightRegular,
   DocumentRegular,
@@ -442,8 +441,8 @@ const Progress: React.FC<ProgressProps> = ({ projectId }) => {
     }
   }, [projectId])
 
-  const handleTabChange = (value: string) => {
-    setActiveTab(value)
+  const handleTabChange: SelectTabEventHandler = (_event, data) => {
+    setActiveTab(data.value as string)
   }
 
   const handleSessionClick = (index: number) => {
@@ -551,7 +550,7 @@ const Progress: React.FC<ProgressProps> = ({ projectId }) => {
                   <TabList
                     defaultSelectedValue="deliverables"
                     selectedValue={activeTab}
-                    onTabSelect={(_event: any, data: { value: string }) => handleTabChange(data.value)}
+                    onTabSelect={handleTabChange}
                   >
                     <Tab value="deliverables">
                       <div className={styles.statItem}>
@@ -645,7 +644,7 @@ const Progress: React.FC<ProgressProps> = ({ projectId }) => {
                   <TabList
                     defaultSelectedValue="deliverables"
                     selectedValue={activeTab}
-                    onTabSelect={(_event: any, data: { value: string }) => handleTabChange(data.value)}
+                    onTabSelect={handleTabChange}
                   >
                     <Tab value="deliverables">
                       <div className={styles.statItem}>

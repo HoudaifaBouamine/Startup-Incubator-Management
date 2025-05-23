@@ -73,7 +73,7 @@ const Input = ({
         <Label className={classes.Text}>
           {label}
         </Label>
-        {errorMessage && <Text className={classes.errorText}>{errorMessage}</Text>}
+        {errorMessage && <span className={classes.errorText}>{errorMessage}</span>}
       </div>
       <input
         type={type}
