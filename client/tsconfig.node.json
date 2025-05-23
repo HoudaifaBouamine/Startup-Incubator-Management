@@ -2,14 +2,9 @@
   "compilerOptions": {
     "composite": true,
     "module": "ESNext",
-    "moduleResolution": "Node",
-    "target": "ESNext",
-    "allowSyntheticDefaultImports": true,
-    "esModuleInterop": true,
-    "jsx": "preserve",
-    "outDir": "dist",
-    "declaration": true,
-    "declarationMap": true
+    "moduleResolution": "bundler",
+    "types": ["node"],
+    "allowSyntheticDefaultImports": true
   },
   "include": ["vite.config.ts"]
 }
