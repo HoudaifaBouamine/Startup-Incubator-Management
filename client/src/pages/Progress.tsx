@@ -199,8 +199,8 @@ const useStyles = makeStyles({
   feedbackCard: {
     backgroundColor: tokens.colorNeutralBackground1,
     borderRadius: "8px",
-    padding: "0.75rem 1rem", // Reduced padding
-    marginBottom: "0.5rem", // Reduced margin
+    padding: "0.75rem 1rem", 
+    marginBottom: "0.5rem",
     display: "flex",
     alignItems: "center",
     gap: "1rem",
@@ -222,10 +222,10 @@ const useStyles = makeStyles({
     display: "flex",
     justifyContent: "center",
     gap: "0.5rem",
-    marginTop: "0.5rem", // Reduced margin
+    marginTop: "0.5rem",
   },
   paginationItem: {
-    width: "28px", // Smaller pagination items
+    width: "28px",
     height: "28px",
     display: "flex",
     alignItems: "center",
