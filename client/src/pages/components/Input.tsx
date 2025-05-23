@@ -1,4 +1,4 @@
-import { Text, tokens, makeStyles } from '@fluentui/react-components';
+import { Label, tokens, makeStyles } from '@fluentui/react-components';
 
 const useStyles = makeStyles({
   inputWrapper: {
@@ -70,9 +70,9 @@ const Input = ({
   return (
     <div className={classes.inputWrapper}>
       <div className={classes.labelWrapper}>
-        <Text as="label" className={classes.Text}>
+        <Label className={classes.Text}>
           {label}
-        </Text>
+        </Label>
         {errorMessage && <Text className={classes.errorText}>{errorMessage}</Text>}
       </div>
       <input

@@ -1,6 +1,6 @@
-"use client";
+"use client"
 
-import React, { useState } from "react";
+import React, { useState } from "react"
 import {
   makeStyles,
   mergeClasses,
@@ -9,12 +9,13 @@ import {
   Text,
   Image,
   Checkbox,
-} from "@fluentui/react-components";
-import logo from "../assets/Logo Image.svg";
-import { Link, useNavigate } from "react-router-dom";
-import Input from "./components/Input";
-import { useTheme } from "../main";
-import { Eye24Filled, EyeOff24Filled } from "@fluentui/react-icons";
+  Label,
+} from "@fluentui/react-components"
+import logo from "../assets/Logo Image.svg"
+import { Link, useNavigate } from "react-router-dom"
+import Input from "./components/Input"
+import { useTheme } from "../main"
+import { Eye24Filled, EyeOff24Filled } from "@fluentui/react-icons"
 
 const useStyles = makeStyles({
   background: {
@@ -151,25 +152,25 @@ const useStyles = makeStyles({
     gap: "0.5rem",
     marginBottom: "0.25rem",
   },
-});
+})
 
 const Login = () => {
-  const classes = useStyles();
-  const navigate = useNavigate();
-  const backendUrl = import.meta.env.VITE_BACKEND_URL;
-  const { isDarkMode } = useTheme();
+  const classes = useStyles()
+  const navigate = useNavigate()
+  const backendUrl = import.meta.env.VITE_BACKEND_URL
+  const { isDarkMode } = useTheme()
 
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [error, setError] = useState<string | null>(null);
-  const [loading, setLoading] = useState(false);
-  const [showPassword, setShowPassword] = useState(false);
-  const [rememberMe, setRememberMe] = useState(false);
+  const [email, setEmail] = useState("")
+  const [password, setPassword] = useState("")
+  const [error, setError] = useState<string | null>(null)
+  const [loading, setLoading] = useState(false)
+  const [showPassword, setShowPassword] = useState(false)
+  const [rememberMe, setRememberMe] = useState(false)
 
   const handleSubmit = async (_e: React.FormEvent) => {
-    _e.preventDefault();
-    setError(null);
-    setLoading(true);
+    _e.preventDefault()
+    setError(null)
+    setLoading(true)
 
     try {
       const res = await fetch(`${backendUrl}/auth/signin`, {
@@ -179,23 +180,23 @@ const Login = () => {
           Accept: "application/json",
         },
         body: JSON.stringify({ email, password }),
-      });
+      })
 
-      const data = await res.json();
+      const data = await res.json()
 
       if (!res.ok) {
-        throw new Error(data.message || "Login failed");
+        throw new Error(data.message || "Login failed")
       }
 
-      navigate("/dashboard");
+      navigate("/dashboard")
     } catch (err: any) {
-      setError(err.message);
+      setError(err.message)
     } finally {
-      setLoading(false);
+      setLoading(false)
     }
-  };
+  }
 
-  console.log("Password input type:", showPassword ? "text" : "password");
+  console.log("Password input type:", showPassword ? "text" : "password")
 
   return (
     <div className={classes.background}>
@@ -222,9 +223,9 @@ const Login = () => {
 
           <div className={classes.passwordWrapper}>
             <div className={classes.labelWrapper}>
-              <Text as="label" style={{ fontWeight: tokens.fontWeightSemibold }}>
+              <Label style={{ fontWeight: tokens.fontWeightSemibold }}>
                 Password
-              </Text>
+              </Label>
             </div>
             <div className={classes.passwordInputContainer}>
               <input
@@ -272,7 +273,7 @@ const Login = () => {
         </div>
       </form>
     </div>
-  );
-};
+  )
+}
 
-export default Login;
+export default Login

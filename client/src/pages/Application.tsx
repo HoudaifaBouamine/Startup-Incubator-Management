@@ -13,6 +13,7 @@ import {
   Select,
   Label,
   Tag,
+  TagGroup,
   Avatar,
   useId,
   Badge,
@@ -26,6 +27,7 @@ import {
   MegaphoneRegular,
   DesignIdeas24Filled,
   ErrorCircleRegular,
+  DismissRegular,
 } from "@fluentui/react-icons"
 import { useNavigate } from "react-router-dom"
 import Input from "./components/Input"
@@ -77,7 +79,7 @@ const useStyles = makeStyles({
     alignItems: "center",
     gap: "1.25rem",
     padding: "2rem",
-    paddingTop: "2.5rem", // Added extra padding at top for the absolute error message
+    paddingTop: "2.5rem",
     borderRadius: "1rem",
     width: "450px",
     minHeight: "60vh",
@@ -86,7 +88,7 @@ const useStyles = makeStyles({
     boxShadow: tokens.shadow8,
     boxSizing: "border-box",
     overflow: "auto",
-    position: "relative", // Added for absolute positioning context
+    position: "relative",
     "@media (max-width: 768px)": {
       width: "80%",
       padding: "1.5rem",
@@ -369,6 +371,9 @@ const useStyles = makeStyles({
     width: "100%",
     overflow: "hidden",
     textOverflow: "ellipsis",
+    display: "flex",
+    alignItems: "center",
+    gap: "8px",
     "@media (max-width: 480px)": {
       fontSize: tokens.fontSizeBase200,
     },
@@ -808,20 +813,27 @@ const Application: React.FC = () => {
                 Add Team Member
               </Button>
               {formData.memberEmails.length > 0 && (
-                <div className={classes.teamMembersGrid}>
-                  {formData.memberEmails.map((email) => (
-                    <Tag
-                      key={email}
-                      dismissible
-                      dismissIcon={{ "aria-label": "remove" }}
-                      media={<Avatar name={email.split("@")[0]} />}
-                      onDismiss={() => removeTeamMember(email)}
-                      className={classes.teamMemberTag}
-                    >
-                      <Text style={{ fontSize: tokens.fontSizeBase100 }}>{email}</Text>
-                    </Tag>
-                  ))}
-                </div>
+                <TagGroup onDismiss={(__e: any, { value }: { value: string }) => removeTeamMember(value)}>
+                  <div className={classes.teamMembersGrid}>
+                    {formData.memberEmails.map((email) => (
+                      <Tag
+                        key={email}
+                        value={email}
+                        className={classes.teamMemberTag}
+                        icon={<Avatar name={email.split("@")[0]} />}
+                      >
+                        <Text style={{ fontSize: tokens.fontSizeBase100 }}>{email}</Text>
+                        <DismissRegular
+                          aria-label="remove"
+                          onClick={(e) => {
+                            e.stopPropagation();
+                            removeTeamMember(email);
+                          }}
+                        />
+                      </Tag>
+                    ))}
+                  </div>
+                </TagGroup>
               )}
             </div>
             <div className={classes.inputWrapper}>
@@ -837,20 +849,27 @@ const Application: React.FC = () => {
                 Add Mentor
               </Button>
               {formData.encadrantEmails.length > 0 && (
-                <div className={classes.teamMembersGrid}>
-                  {formData.encadrantEmails.map((email) => (
-                    <Tag
-                      key={email}
-                      dismissible
-                      dismissIcon={{ "aria-label": "remove" }}
-                      media={<Avatar name={email.split("@")[0]} />}
-                      onDismiss={() => removeMentor(email)}
-                      className={classes.teamMemberTag}
-                    >
-                      <Text style={{ fontSize: tokens.fontSizeBase100 }}>{email}</Text>
-                    </Tag>
-                  ))}
-                </div>
+                <TagGroup onDismiss={(_e: any, { value }: { value: string }) => removeMentor(value)}>
+                  <div className={classes.teamMembersGrid}>
+                    {formData.encadrantEmails.map((email) => (
+                      <Tag
+                        key={email}
+                        value={email}
+                        className={classes.teamMemberTag}
+                        icon={<Avatar name={email.split("@")[0]} />}
+                      >
+                        <Text style={{ fontSize: tokens.fontSizeBase100 }}>{email}</Text>
+                        <DismissRegular
+                          aria-label="remove"
+                          onClick={(e) => {
+                            e.stopPropagation();
+                            removeMentor(email);
+                          }}
+                        />
+                      </Tag>
+                    ))}
+                  </div>
+                </TagGroup>
               )}
             </div>
           </div>

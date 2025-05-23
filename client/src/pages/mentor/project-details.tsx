@@ -383,9 +383,7 @@ const ProjectDetail = () => {
   const [tempDeliverables, setTempDeliverables] = useState<Deliverable[]>([])
 
   useEffect(() => {
-    // Check if user is a mentor
     if (!isLoading && user && user.role !== "MENTOR") {
-      // Redirect non-mentors
       navigate("/dashboard")
     }
   }, [user, isLoading, navigate])
@@ -393,8 +391,6 @@ const ProjectDetail = () => {
   useEffect(() => {
     const fetchProject = async () => {
       try {
-        // In a real app, you would fetch from your API
-        // For now, we'll use mock data
         setTimeout(() => {
           const mockProject: Project = {
             id: projectId || "1",
@@ -467,7 +463,6 @@ const ProjectDetail = () => {
 
   const handleEditToggle = () => {
     if (editMode) {
-      // Save changes
       if (project && project.sessions[selectedSessionIndex]) {
         const updatedSessions = [...project.sessions]
         updatedSessions[selectedSessionIndex] = {
@@ -475,7 +470,6 @@ const ProjectDetail = () => {
           deliverables: tempDeliverables,
         }
 
-        // Calculate new project progress
         let totalProgress = 0
         let totalDeliverables = 0
 
@@ -495,7 +489,6 @@ const ProjectDetail = () => {
         })
       }
     } else {
-      // Enter edit mode
       if (project && project.sessions[selectedSessionIndex]) {
         setTempDeliverables([...project.sessions[selectedSessionIndex].deliverables])
       }
@@ -510,7 +503,6 @@ const ProjectDetail = () => {
     const updatedDeliverables = [...tempDeliverables]
     const currentProgress = updatedDeliverables[deliverableIndex].progress
 
-    // Increment by 10%, max 100%
     const newProgress = Math.min(currentProgress + 10, 100)
 
     updatedDeliverables[deliverableIndex] = {
@@ -536,7 +528,6 @@ const ProjectDetail = () => {
     }
   }
 
-  // If user is not a mentor, show unauthorized message
   if (!isLoading && user && user.role !== "MENTOR") {
     return (
       <div className={styles.unauthorizedContainer}>
@@ -630,7 +621,7 @@ const ProjectDetail = () => {
             <TabList
               defaultSelectedValue="deliverables"
               selectedValue={activeTab}
-              onTabSelect={(_: any, data: { value: string }) => handleTabChange(data.value as string)}
+              onTabSelect={(_: any, data: { value: string }) => handleTabChange(data.value)}
             >
               <Tab value="deliverables">
                 <div className={styles.tabContent}>
@@ -666,7 +657,7 @@ const ProjectDetail = () => {
               </Button>
 
               <div className={styles.deliverablesList}>
-                {deliverablesToDisplay.map((deliverable, index) => (
+                {deliverablesToDisplay.map((deliverable: Deliverable, index: number) => (
                   <div key={deliverable.id} className={styles.deliverableItem}>
                     <div className={styles.deliverableInfo}>
                       <div className={styles.deliverableHeader}>
@@ -702,7 +693,7 @@ const ProjectDetail = () => {
 
               {currentSession.feedbacks && currentSession.feedbacks.length > 0 ? (
                 <div className={styles.deliverablesList}>
-                  {currentSession.feedbacks.map((feedback) => (
+                  {currentSession.feedbacks.map((feedback: Feedback) => (
                     <div key={feedback.id} className={styles.feedbackItem}>
                       <div className={styles.feedbackAvatar}>
                         <DocumentRegular />

@@ -78,14 +78,13 @@ const useStyles = makeStyles({
     height: "100%",
     position: "relative",
   },
-  // Left panel - Sessions
   sessionsSection: {
     display: "flex",
     flexDirection: "column",
     gap: "0.25rem",
     flex: "1 1 33%",
     padding: "0",
-    maxHeight: "calc(100vh - 120px)", // Ensure it fits in viewport
+    maxHeight: "calc(100vh - 120px)",
   },
   sessionHeader: {
     fontSize: "16px",
@@ -146,7 +145,7 @@ const useStyles = makeStyles({
     display: "flex",
     justifyContent: "space-between",
     alignItems: "center",
-    marginBottom: "0.25rem", // Reduced margin
+    marginBottom: "0.25rem",
   },
   deliverableName: {
     fontSize: tokens.fontSizeBase500,
@@ -161,7 +160,7 @@ const useStyles = makeStyles({
   },
   statusBadge: {
     fontSize: "12px",
-    padding: "2px 8px", // Smaller padding
+    padding: "2px 8px",
     borderRadius: "16px",
     backgroundColor: "transparent",
     border: `1px solid ${tokens.colorBrandStroke1}`,
@@ -339,11 +338,24 @@ const useStyles = makeStyles({
   },
 })
 
+interface Deliverable {
+  title: string
+  description: string
+  status: string
+  progress: number
+  change: string
+}
+
+interface Feedback {
+  author: string
+  text: string
+}
+
 interface ProgressProps {
   projectId: string
 }
 
-const defaultDeliverables = [
+const defaultDeliverables: Deliverable[] = [
   {
     title: "Prototype",
     description: "Is the MVP of your product?",
@@ -457,7 +469,7 @@ const Progress: React.FC<ProgressProps> = ({ projectId }) => {
     let totalDeliverables = 0
 
     sessions.forEach((session) => {
-      session.deliverables.forEach((deliverable: { progress: number }) => {
+      session.deliverables.forEach((deliverable: Deliverable) => {
         totalProgress += deliverable.progress
         totalDeliverables++
       })
@@ -470,8 +482,8 @@ const Progress: React.FC<ProgressProps> = ({ projectId }) => {
 
   const hasNoSessions = sessions.length === 0
   const currentSession = hasNoSessions ? null : sessions[selectedSession]
-  const currentDeliverables = hasNoSessions ? [] : currentSession?.deliverables || []
-  const currentFeedbacks = hasNoSessions ? [] : currentSession?.feedbacks || []
+  const currentDeliverables: Deliverable[] = hasNoSessions ? [] : currentSession?.deliverables || []
+  const currentFeedbacks: Feedback[] = hasNoSessions ? [] : currentSession?.feedbacks || []
   const totalDeliverables = hasNoSessions
     ? defaultDeliverables.length
     : sessions.reduce((total, session) => total + session.deliverables.length, 0)
@@ -669,7 +681,7 @@ const Progress: React.FC<ProgressProps> = ({ projectId }) => {
                       )}
                     </div>
                     {currentDeliverables.length > 0 ? (
-                      currentDeliverables.map((item: { title: string | number | bigint | boolean | React.ReactElement<unknown, string | React.JSXElementConstructor<any>> | Iterable<React.ReactNode> | React.ReactPortal | Promise<string | number | bigint | boolean | React.ReactPortal | React.ReactElement<unknown, string | React.JSXElementConstructor<any>> | Iterable<React.ReactNode> | null | undefined> | null | undefined; status: string | number | bigint | boolean | React.ReactElement<unknown, string | React.JSXElementConstructor<any>> | Iterable<React.ReactNode> | React.ReactPortal | Promise<string | number | bigint | boolean | React.ReactPortal | React.ReactElement<unknown, string | React.JSXElementConstructor<any>> | Iterable<React.ReactNode> | null | undefined> | null | undefined; description: string | number | bigint | boolean | React.ReactElement<unknown, string | React.JSXElementConstructor<any>> | Iterable<React.ReactNode> | React.ReactPortal | Promise<string | number | bigint | boolean | React.ReactPortal | React.ReactElement<unknown, string | React.JSXElementConstructor<any>> | Iterable<React.ReactNode> | null | undefined> | null | undefined; progress: string | number | bigint | boolean | React.ReactElement<unknown, string | React.JSXElementConstructor<any>> | Iterable<React.ReactNode> | React.ReactPortal | Promise<string | number | bigint | boolean | React.ReactPortal | React.ReactElement<unknown, string | React.JSXElementConstructor<any>> | Iterable<React.ReactNode> | null | undefined> | null | undefined; change: string | number | bigint | boolean | React.ReactElement<unknown, string | React.JSXElementConstructor<any>> | Iterable<React.ReactNode> | React.ReactPortal | Promise<string | number | bigint | boolean | React.ReactPortal | React.ReactElement<unknown, string | React.JSXElementConstructor<any>> | Iterable<React.ReactNode> | null | undefined> | null | undefined }, index: React.Key | null | undefined) => (
+                      currentDeliverables.map((item: Deliverable, index: number) => (
                         <div key={index} className={styles.deliverableCard}>
                           <div className={styles.deliverableInfo}>
                             <div className={styles.deliverableHeader}>
@@ -704,7 +716,7 @@ const Progress: React.FC<ProgressProps> = ({ projectId }) => {
                       )}
                     </div>
                     {currentFeedbacks.length > 0 ? (
-                      currentFeedbacks.map((feedback: { author: string | number | bigint | boolean | React.ReactElement<unknown, string | React.JSXElementConstructor<any>> | Iterable<React.ReactNode> | React.ReactPortal | Promise<string | number | bigint | boolean | React.ReactPortal | React.ReactElement<unknown, string | React.JSXElementConstructor<any>> | Iterable<React.ReactNode> | null | undefined> | null | undefined; text: string | number | bigint | boolean | React.ReactElement<unknown, string | React.JSXElementConstructor<any>> | Iterable<React.ReactNode> | React.ReactPortal | Promise<string | number | bigint | boolean | React.ReactPortal | React.ReactElement<unknown, string | React.JSXElementConstructor<any>> | Iterable<React.ReactNode> | null | undefined> | null | undefined }, index: React.Key | null | undefined) => (
+                      currentFeedbacks.map((feedback: Feedback, index: number) => (
                         <div key={index} className={styles.feedbackCard}>
                           <div className={styles.feedbackAvatar}>
                             <DocumentRegular />
