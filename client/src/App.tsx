@@ -7,7 +7,7 @@ import StudentSignUp from './pages/StudentSignUp';
 import ProfessorSignUp from './pages/ProfessorSignUp';
 import Otp from './pages/Otp';
 import Application from './pages/Application';
-import Team from './pages/Team'; 
+import Team from './pages/Team';
 import DashboardLayout from './pages/components/DashboardLayout';
 import Progress from './pages/Progress';
 import Training from './pages/Training';
@@ -26,19 +26,18 @@ const App: React.FC = () => {
       <Route path="/signup/professor" element={<ProfessorSignUp />} />
       <Route path="/verifyEmail" element={<Otp />} />
       <Route path="/application" element={<Application />} />
-      <Route path="/forgot-password" element={<ForgotPassword/>} />
-      <Route path="/reset-password" element={<ResetPassword/>} />
+      <Route path="/forgot-password" element={<ForgotPassword />} />
+      <Route path="/reset-password" element={<ResetPassword />} />
       <Route element={<DashboardLayout />}>
-        <Route path="/dashboard" element={<div>Dashboard Page</div>} /> 
-        <Route path="/Progress" element={<Progress />} />
+        <Route path="/dashboard" element={<div>Dashboard Page</div>} />
+        <Route path="/progress" element={<Progress projectId="default-project-id" />} />
         <Route path="/team" element={<Team />} />
-        <Route path="/training" element={<Training/>} />
+        <Route path="/training" element={<Training />} />
         <Route path="/support" element={<div>Support Page</div>} />
         <Route path="/settings" element={<div>Settings Page</div>} />
-        
       </Route>
       <Route path="/mentor/projects-management" element={<ProjectsManagement />} />
-        <Route path="/mentor/projects/:projectId" element={<ProjectDetail />} />
+      <Route path="/mentor/projects/:projectId" element={<ProjectDetail />} />
     </Routes>
   );
 };

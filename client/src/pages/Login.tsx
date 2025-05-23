@@ -14,7 +14,7 @@ import logo from "../assets/Logo Image.svg";
 import { Link, useNavigate } from "react-router-dom";
 import Input from "./components/Input";
 import { useTheme } from "../main";
-import { Eye24Filled, EyeOff24Filled,  } from "@fluentui/react-icons";
+import { Eye24Filled, EyeOff24Filled } from "@fluentui/react-icons";
 
 const useStyles = makeStyles({
   background: {
@@ -166,8 +166,8 @@ const Login = () => {
   const [showPassword, setShowPassword] = useState(false);
   const [rememberMe, setRememberMe] = useState(false);
 
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
+  const handleSubmit = async (_e: React.FormEvent) => {
+    _e.preventDefault();
     setError(null);
     setLoading(true);
 
@@ -254,7 +254,7 @@ const Login = () => {
             <Checkbox
               label="Remember Me"
               checked={rememberMe}
-              onChange={(e, data) => setRememberMe(!!data.checked)}
+              onChange={(_e, data) => setRememberMe(!!data.checked)}
             />
             <Link to="/forgot-password" className={classes.forgotPassword}>
               Forgot Password?
@@ -276,4 +276,3 @@ const Login = () => {
 };
 
 export default Login;
-

@@ -25,7 +25,7 @@ export const useAuth = () => {
     }, 500)
   }, [])
 
-  const login = async (email: string, password: string) => {
+  const login = async () => {
   }
 
   const logout = async () => {
