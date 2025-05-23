@@ -1,14 +1,16 @@
 "use client"
 
-import { useState } from "react"
+import { useState, useEffect } from "react"
 import { makeStyles, tokens, Button } from "@fluentui/react-components"
 import {
   ChevronRight20Regular,
   Clock20Regular,
   Map20Regular,
-  ChevronDown20Regular,
   ChevronUp20Regular,
+  ChevronDown20Regular,
 } from "@fluentui/react-icons"
+import { getProjectSessions } from "../../api/project-service"
+import { Session } from "../types"
 
 const useStyles = makeStyles({
   root: {
@@ -16,107 +18,11 @@ const useStyles = makeStyles({
     height: "100vh",
     backgroundColor: tokens.colorNeutralBackground2,
   },
-  sidebar: {
-    width: "200px",
-    backgroundColor: tokens.colorNeutralBackground1,
-    borderRight: `1px solid ${tokens.colorNeutralStroke2}`,
-    padding: "20px 0",
-    display: "flex",
-    flexDirection: "column",
-  },
-  sidebarLogo: {
-    display: "flex",
-    alignItems: "center",
-    gap: "8px",
-    padding: "0 20px",
-    marginBottom: "20px",
-  },
-  logoText: {
-    fontSize: "16px",
-    fontWeight: "600",
-    color: tokens.colorNeutralForeground1,
-  },
-  sidebarItem: {
-    display: "flex",
-    alignItems: "center",
-    padding: "10px 20px",
-    fontSize: "14px",
-    color: tokens.colorNeutralForeground1,
-    cursor: "pointer",
-    gap: "10px",
-    ":hover": {
-      backgroundColor: tokens.colorNeutralBackground3,
-    },
-  },
-  sidebarItemActive: {
-    backgroundColor: tokens.colorNeutralBackground3,
-    borderLeft: `3px solid ${tokens.colorBrandBackground}`,
-    paddingLeft: "17px",
-    fontWeight: "600",
-  },
-  sidebarIcon: {
-    width: "20px",
-    height: "20px",
-    display: "flex",
-    alignItems: "center",
-    justifyContent: "center",
-  },
   mainContent: {
     flex: 1,
     display: "flex",
     flexDirection: "column",
     overflow: "auto",
-  },
-  header: {
-    height: "64px",
-    padding: "0 24px",
-    display: "flex",
-    alignItems: "center",
-    justifyContent: "space-between",
-    borderBottom: `1px solid ${tokens.colorNeutralStroke2}`,
-    backgroundColor: tokens.colorNeutralBackground1,
-  },
-  searchContainer: {
-    position: "relative",
-    width: "400px",
-  },
-  searchIcon: {
-    position: "absolute",
-    left: "12px",
-    top: "50%",
-    transform: "translateY(-50%)",
-    color: tokens.colorNeutralForeground3,
-  },
-  searchInput: {
-    width: "100%",
-    padding: "8px 12px 8px 40px",
-    backgroundColor: tokens.colorNeutralBackground2,
-    border: "none",
-    borderRadius: "4px",
-    fontSize: "14px",
-  },
-  headerActions: {
-    display: "flex",
-    alignItems: "center",
-    gap: "16px",
-  },
-  iconButton: {
-    backgroundColor: "transparent",
-    border: "none",
-    color: tokens.colorNeutralForeground2,
-    cursor: "pointer",
-    display: "flex",
-    alignItems: "center",
-    justifyContent: "center",
-    width: "32px",
-    height: "32px",
-    borderRadius: "4px",
-    ":hover": {
-      backgroundColor: tokens.colorNeutralBackground3,
-    },
-  },
-  avatar: {
-    cursor: "pointer",
   },
   content: {
     padding: "32px",
@@ -272,10 +178,11 @@ const useStyles = makeStyles({
   },
 })
 
-const Training = () => {
+const Training = ({ projectId }: { projectId: string }) => {
   const styles = useStyles()
   const [activeDay, setActiveDay] = useState(11)
   const [selectedDay, setSelectedDay] = useState(26)
+  const [sessions, setSessions] = useState<Session[]>([])
 
   const days = ["Su", "Mo", "Tu", "We", "Th", "Fr", "Sa"]
   const novemberDays = Array.from({ length: 30 }, (_, i) => i + 1)
@@ -284,52 +191,46 @@ const Training = () => {
 
   const calendarDays = [...prevMonthDays, ...novemberDays, ...nextMonthDays]
 
-  const upcomingWorkshops = [
-    {
-      date: "August 17th",
-      time: "9:00 AM to 5:00 PM",
-      location: "ESI SBA Room 04",
-      title: "Workshop title",
-      description:
-        'Come and be part of our session, "Future Innovations Unleashed," where we will explore groundbreaking concepts!',
-      mentor: "@mentor_name",
-    },
-    {
-      date: "August 17th",
-      time: "9:00 AM to 5:00 PM",
-      location: "ESI SBA Room 04",
-      title: "Workshop title",
-      description:
-        'Come and be part of our session, "Future Innovations Unleashed," where we will explore groundbreaking concepts!',
-      mentor: "@mentor_name",
-    },
-    {
-      date: "August 17th",
-      time: "9:00 AM to 5:00 PM",
-      location: "ESI SBA Room 04",
-      title: "Workshop title",
-      description:
-        'Come and be part of our session, "Future Innovations Unleashed," where we will explore groundbreaking concepts!',
-      mentor: "@mentor_name",
-    },
-  ]
+  useEffect(() => {
+    const fetchSessions = async () => {
+      try {
+        const data = await getProjectSessions(projectId)
+        setSessions(data)
+      } catch (error) {
+        console.error("Failed to fetch sessions:", error)
+      }
+    }
+    fetchSessions()
+  }, [projectId])
+
+  const currentDate = new Date("2025-05-23")
+  const upcomingWorkshops = sessions
+    .filter((session) => new Date(session.date) >= currentDate)
+    .map((session) => ({
+      date: new Date(session.date).toLocaleDateString("en-US", { month: "long", day: "numeric" }),
+      time: "9:00 AM to 5:00 PM", // Placeholder, adjust based on API data
+      location: "ESI SBA Room 04", // Placeholder
+      title: `Session ${session.id}`,
+      description: session.feedbacks?.[0]?.text || "No description available",
+      mentor: session.feedbacks?.[0]?.author || "@mentor_name",
+    }))
+
+  const pastWorkshops = sessions
+    .filter((session) => new Date(session.date) < currentDate)
 
   return (
     <div className={styles.root}>
-
       <div className={styles.mainContent}>
-       
-
         <div className={styles.content}>
           <h1 className={styles.pageTitle}>Training</h1>
           <p className={styles.pageSubtitle}>Attend workshops to learn, grow, and advance.</p>
 
-          <h2 className={styles.sectionTitle}>Upcoming Workshops (2)</h2>
+          <h2 className={styles.sectionTitle}>Upcoming Workshops ({upcomingWorkshops.length})</h2>
 
           <div className={styles.calendarContainer}>
             <div className={styles.calendar}>
               <div className={styles.calendarHeader}>
-                <span className={styles.calendarMonth}>November</span> 
+                <span className={styles.calendarMonth}>November</span>
                 <div className={styles.calendarControls}>
                   <Button appearance="subtle" icon={<ChevronUp20Regular />} size="small" />
                   <Button appearance="subtle" icon={<ChevronDown20Regular />} size="small" />
@@ -397,9 +298,9 @@ const Training = () => {
           </div>
 
           <div className={styles.pastWorkshops}>
-            <h2 className={styles.sectionTitle}>Past Workshops (7)</h2>
+            <h2 className={styles.sectionTitle}>Past Workshops ({pastWorkshops.length})</h2>
             <div className={styles.pastWorkshopsGrid}>
-              {Array.from({ length: 3 }).map((_, index) => (
+              {pastWorkshops.map((session, index) => (
                 <div key={index} className={styles.pastWorkshopCard}></div>
               ))}
             </div>

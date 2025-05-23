@@ -3,24 +3,9 @@
 import type React from "react"
 import { useState, useEffect } from "react"
 import { makeStyles, tokens, ProgressBar, TabList, Tab, Spinner, SelectTabEventHandler } from "@fluentui/react-components"
-import {
-  ChevronRightRegular,
-  DocumentRegular,
-  Folder20Filled,
-  Folder20Regular,
-  Comment20Filled,
-  Comment20Regular,
-  CommentDismiss24Regular,
-  CalendarLtr20Regular,
-  ErrorCircleRegular,
+import {ChevronRightRegular,DocumentRegular,Folder20Filled,Folder20Regular,Comment20Filled,Comment20Regular,CommentDismiss24Regular,CalendarLtr20Regular,ErrorCircleRegular,
 } from "@fluentui/react-icons"
-import {
-  getProjectById,
-  getProjectSessions,
-  getProjectMembers,
-  getProjectEncadrants,
-  type Session,
-} from "../../api/project-service"
+import {getProjectById,getProjectSessions,getProjectMembers,getProjectEncadrants,type Session,} from "../../api/project-service"
 import CreateSessionModal from "./components/create-session-modal"
 import AddDeliverableModal from "./components/add-delivrable-modal"
 import AddFeedbackModal from "./components/add-feedbacl-modal"
@@ -54,7 +39,7 @@ const useStyles = makeStyles({
     color: tokens.colorBrandForeground1,
   },
   globalProgressBar: {
-    height: "8px", 
+    height: "8px",
     backgroundColor: tokens.colorNeutralBackground4,
     "& .fui-ProgressBar__bar": {
       backgroundColor: tokens.colorBrandForeground1,
@@ -64,7 +49,7 @@ const useStyles = makeStyles({
   contentWrapper: {
     display: "flex",
     flex: 1,
-    height: "calc(100% - 70px)", 
+    height: "calc(100% - 70px)",
     backgroundColor: tokens.colorNeutralBackground2,
     overflow: "hidden",
     alignItems: "stretch",
@@ -102,10 +87,10 @@ const useStyles = makeStyles({
     display: "flex",
     alignItems: "center",
     justifyContent: "space-between",
-    padding: "0.5rem 0.75rem", 
+    padding: "0.5rem 0.75rem",
     backgroundColor: tokens.colorNeutralBackground1,
     borderRadius: "4px",
-    marginBottom: "1px", 
+    marginBottom: "1px",
     cursor: "pointer",
     ":hover": {
       backgroundColor: tokens.colorNeutralBackground4,
@@ -121,17 +106,17 @@ const useStyles = makeStyles({
     display: "flex",
     flexDirection: "column",
     gap: "0.25rem",
-    maxHeight: "calc(100vh - 120px)", 
+    maxHeight: "calc(100vh - 120px)",
   },
   tabContainer: {
-    marginBottom: "0.5rem", 
+    marginBottom: "0.5rem",
     borderBottom: `1px solid ${tokens.colorNeutralStroke2}`,
   },
   deliverableCard: {
     backgroundColor: tokens.colorNeutralBackground1,
     borderRadius: "8px",
-    padding: "0.75rem 1rem", 
-    marginBottom: "0.5rem", 
+    padding: "0.75rem 1rem",
+    marginBottom: "0.5rem",
     display: "flex",
     alignItems: "center",
     justifyContent: "space-between",
@@ -197,7 +182,7 @@ const useStyles = makeStyles({
   feedbackCard: {
     backgroundColor: tokens.colorNeutralBackground1,
     borderRadius: "8px",
-    padding: "0.75rem 1rem", 
+    padding: "0.75rem 1rem",
     marginBottom: "0.5rem",
     display: "flex",
     alignItems: "center",

@@ -247,9 +247,7 @@ const Otp: React.FC = () => {
     }
   };
 
-  useEffect(() => {
-    console.log('Current OTP:', otp);
-  }, [otp]);
+ 
 
   return (
     <div className={classes.background}>

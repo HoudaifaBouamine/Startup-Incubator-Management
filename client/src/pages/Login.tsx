@@ -167,36 +167,44 @@ const Login = () => {
   const [showPassword, setShowPassword] = useState(false)
   const [rememberMe, setRememberMe] = useState(false)
 
-  const handleSubmit = async (_e: React.FormEvent) => {
-    _e.preventDefault()
-    setError(null)
-    setLoading(true)
+  const handleSubmit = async (e: React.FormEvent) => {
+  e.preventDefault()
+  setError(null)
+  setLoading(true)
 
-    try {
-      const res = await fetch(`${backendUrl}/auth/signin`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          Accept: "application/json",
-        },
-        body: JSON.stringify({ email, password }),
-      })
+  try {
+    const res = await fetch(`${backendUrl}/auth/signin`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Accept: "application/json",
+      },
+      body: JSON.stringify({ email, password }),
+    })
 
-      const data = await res.json()
+    const data = await res.json()
 
-      if (!res.ok) {
-        throw new Error(data.message || "Login failed")
-      }
-
-      navigate("/dashboard")
-    } catch (err: any) {
-      setError(err.message)
-    } finally {
-      setLoading(false)
+    if (!res.ok) {
+      throw new Error(data.message || "Login failed")
     }
-  }
 
-  console.log("Password input type:", showPassword ? "text" : "password")
+    const { token, user } = data
+    const fullName = `${user.firstName} ${user.lastName}`
+
+    localStorage.setItem("authToken", token)
+    localStorage.setItem("userEmail", user.email)
+    localStorage.setItem("userFullName", fullName)
+    localStorage.setItem("userRole", user.role)
+
+    navigate("/dashboard")
+  } catch (err: any) {
+    setError(err.message)
+  } finally {
+    setLoading(false)
+  }
+}
+
+
 
   return (
     <div className={classes.background}>

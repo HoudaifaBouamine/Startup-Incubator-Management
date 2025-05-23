@@ -1,8 +1,10 @@
-"use client"
+"use client";
 
-import { useState } from "react"
-import { makeStyles, tokens, Button, Checkbox, Input, Avatar } from "@fluentui/react-components"
-import { MoreHorizontalRegular, CopyRegular, ShareRegular, PersonAddRegular } from "@fluentui/react-icons"
+import { useState, useEffect } from "react";
+import { makeStyles, tokens, Button, Checkbox, Input, Avatar } from "@fluentui/react-components";
+import { MoreHorizontalRegular, CopyRegular, ShareRegular, PersonAddRegular } from "@fluentui/react-icons";
+import { getProjectMembers, getProjectEncadrants, addMemberToProject } from "../../api/project-service";
+import { ProjectMember } from "../types";
 
 const useStyles = makeStyles({
   root: {
@@ -97,24 +99,10 @@ const useStyles = makeStyles({
   avatar: {
     position: "relative",
   },
-  onlineIndicator: {
-    position: "absolute",
-    bottom: "0",
-    right: "0",
-    width: "10px",
-    height: "10px",
-    borderRadius: "50%",
-    backgroundColor: tokens.colorStatusSuccessBackground3,
-    border: `2px solid ${tokens.colorNeutralBackground1}`,
-  },
   name: {
     fontSize: "14px",
     fontWeight: "500",
     color: tokens.colorNeutralForeground1,
-  },
-  yearCell: {
-    fontSize: "14px",
-    color: tokens.colorNeutralForeground2,
   },
   emailCell: {
     fontSize: "14px",
@@ -134,164 +122,53 @@ const useStyles = makeStyles({
       borderRadius: "4px",
     },
   },
-  // Modal styles
-  modalContent: {
-    display: "flex",
-    flexDirection: "column",
-    gap: "1.5rem",
-  },
-  modalSection: {
-    display: "flex",
-    flexDirection: "column",
-    gap: "1rem",
-  },
-  modalSectionTitle: {
-    fontSize: "14px",
-    fontWeight: "600",
-    color: tokens.colorNeutralForeground2,
-    textTransform: "uppercase",
-    margin: 0,
-  },
-  emailInputWrapper: {
-    display: "flex",
-    alignItems: "center",
-    gap: "0.5rem",
-  },
-  emailInput: {
-    flex: 1,
-  },
-  sendInviteButton: {
-    backgroundColor: tokens.colorBrandBackground,
-    color: tokens.colorNeutralForegroundOnBrand,
-    fontWeight: "600",
-  },
-  memberItem: {
-    display: "flex",
-    alignItems: "center",
-    justifyContent: "space-between",
-    padding: "0.5rem 0",
-  },
-  memberInfo: {
-    display: "flex",
-    alignItems: "center",
-    gap: "0.75rem",
-  },
-  memberName: {
-    fontSize: "14px",
-    color: tokens.colorNeutralForeground1,
-    margin: 0,
-  },
-  memberEmail: {
-    fontSize: "12px",
-    color: tokens.colorNeutralForeground2,
-    margin: 0,
-  },
-  roleSelect: {
-    backgroundColor: tokens.colorNeutralBackground3,
-    border: "none",
-    borderRadius: "4px",
-    padding: "0.25rem 0.5rem",
-    color: tokens.colorNeutralForeground1,
-    fontSize: "14px",
-  },
-  inviteLinkWrapper: {
-    display: "flex",
-    alignItems: "center",
-    gap: "0.5rem",
-    backgroundColor: tokens.colorNeutralBackground3,
-    padding: "0.5rem 1rem",
-    borderRadius: "4px",
-  },
-  inviteLink: {
-    fontSize: "14px",
-    color: tokens.colorNeutralForeground2,
-    flex: 1,
-    overflow: "hidden",
-    textOverflow: "ellipsis",
-    whiteSpace: "nowrap",
-  },
-  actionButton: {
-    background: "transparent",
-    border: "none",
-    color: tokens.colorNeutralForeground2,
-    padding: "4px",
-    ":hover": {
-      backgroundColor: tokens.colorNeutralBackground4,
-      borderRadius: "4px",
-    },
-  },
-  pagination: {
-    display: "flex",
-    justifyContent: "center",
-    gap: "0.5rem",
-    marginTop: "1rem",
-  },
-  paginationItem: {
-    width: "28px",
-    height: "28px",
-    display: "flex",
-    alignItems: "center",
-    justifyContent: "center",
-    borderRadius: "4px",
-    cursor: "pointer",
-    fontSize: "14px",
-    ":hover": {
-      backgroundColor: tokens.colorNeutralBackground3,
-    },
-  },
-  paginationItemActive: {
-    backgroundColor: tokens.colorNeutralBackground3,
-    fontWeight: tokens.fontWeightSemibold,
-  },
-})
+});
 
-const Team = () => {
-  const styles = useStyles()
-  const [selectedMembers, setSelectedMembers] = useState<string[]>([])
-  const [isModalOpen, setIsModalOpen] = useState(false)
-  const [email, setEmail] = useState("")
+const Team = ({ projectId }: { projectId: string }) => {
+  const styles = useStyles();
+  const [selectedMembers, setSelectedMembers] = useState<string[]>([]);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [email, setEmail] = useState("");
+  const [members, setMembers] = useState<ProjectMember[]>([]);
+  const [mentors, setMentors] = useState<ProjectMember[]>([]);
 
-  // Members data matching the screenshot
-  const members = [
-    { id: 1, name: "Mia Johnson", year: "1CS", email: "jo@esi-sba.dz", isOnline: true },
-    { id: 2, name: "Liam Carter", year: "1CS", email: "ca@esi-sba.dz", isOnline: true },
-    { id: 3, name: "Sophie Brown", year: "2CS", email: "br@esi-sba.dz", isOnline: true },
-    { id: 4, name: "Noah Smith", year: "1CS", email: "sm@esi-sba.dz", isOnline: true },
-    { id: 5, name: "Emma Davis", year: "2CS", email: "da@esi-sba.dz", isOnline: true },
-    { id: 6, name: "Oliver Wilson", year: "1CS", email: "wi@esi-sba.dz", isOnline: true },
-  ]
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const membersData = await getProjectMembers(projectId);
+        const encadrantsData = await getProjectEncadrants(projectId);
+        setMembers(membersData.relationData);
+        setMentors(encadrantsData.relationData);
+      } catch (error) {
+        console.error("Failed to fetch project data:", (error as Error).message);
+      }
+    };
+    if (projectId) fetchData();
+  }, [projectId]);
 
-  // Mentors data matching the screenshot
-  const mentors = [
-    { id: 7, name: "Ella Thompson", year: "1CS", email: "th@esi-sba.dz", isOnline: true },
-    { id: 8, name: "James Taylor", year: "1CS", email: "ta@esi-sba.dz", isOnline: true },
-  ]
-
-  // Project members for the invite modal
-  const projectMembers = [
-    { name: "User name", email: "email@esi-sba.dz", role: "Founder" },
-    { name: "User name", email: "email@esi-sba.dz", role: "Co-Founder" },
-    { name: "User name", email: "email@esi-sba.dz", role: "Tech Lead" },
-  ]
-
-  const handleCheckboxChange = (id: number) => {
+  const handleCheckboxChange = (id: string) => {
     setSelectedMembers((prev) =>
-      prev.includes(id.toString()) ? prev.filter((item) => item !== id.toString()) : [...prev, id.toString()],
-    )
-  }
+      prev.includes(id) ? prev.filter((item) => item !== id) : [...prev, id]
+    );
+  };
 
-  const handleInvite = () => {
-    if (email) {
-      console.log(`Inviting ${email}`)
-      setEmail("")
-      setIsModalOpen(false)
+  const handleInvite = async () => {
+    if (!email || !projectId) return;
+    try {
+      await addMemberToProject(projectId, email);
+      setEmail("");
+      setIsModalOpen(false);
+      const membersData = await getProjectMembers(projectId);
+      setMembers(membersData.relationData);
+    } catch (error) {
+      console.error("Invite failed:", (error as Error).message);
     }
-  }
+  };
 
   const handleCopyLink = () => {
-    navigator.clipboard.writeText("https://www.starthub.com/user/example@")
-    console.log("Link copied to clipboard")
-  }
+    navigator.clipboard.writeText(`https://www.starthub.com/project/${projectId}`);
+    console.log("Link copied to clipboard");
+  };
 
   return (
     <div className={styles.root}>
@@ -300,9 +177,13 @@ const Team = () => {
           <div className={styles.headerSection}>
             <div>
               <h1 className={styles.title}>My Team</h1>
-              <p className={styles.subtext}>Upload your file before the deadline to submit for review</p>
+              <p className={styles.subtext}>Manage your project team members and mentors</p>
             </div>
-            <Button className={styles.inviteButton} icon={<PersonAddRegular />} onClick={() => setIsModalOpen(true)}>
+            <Button
+              className={styles.inviteButton}
+              icon={<PersonAddRegular />}
+              onClick={() => setIsModalOpen(true)}
+            >
               Invite Member
             </Button>
           </div>
@@ -315,8 +196,7 @@ const Team = () => {
                   <th className={styles.tableHeader} style={{ width: "40px" }}>
                     <Checkbox />
                   </th>
-                  <th className={styles.tableHeader}>Administrator</th>
-                  <th className={styles.tableHeader}>Year Of Study</th>
+                  <th className={styles.tableHeader}>Name</th>
                   <th className={styles.tableHeader}>Email</th>
                   <th className={styles.tableHeader} style={{ width: "40px" }}></th>
                 </tr>
@@ -326,20 +206,22 @@ const Team = () => {
                   <tr key={member.id} className={styles.tableRow}>
                     <td className={`${styles.tableCell} ${styles.checkboxCell}`}>
                       <Checkbox
-                        checked={selectedMembers.includes(member.id.toString())}
+                        checked={selectedMembers.includes(member.id)}
                         onChange={() => handleCheckboxChange(member.id)}
                       />
                     </td>
                     <td className={styles.tableCell}>
                       <div className={styles.profileCell}>
                         <div className={styles.avatar}>
-                          <Avatar name={member.name} size={32} color="colorful" />
-                          {member.isOnline && <div className={styles.onlineIndicator}></div>}
+                          <Avatar
+                            name={`${member.firstName} ${member.lastName}`}
+                            size={32}
+                            color="colorful"
+                          />
                         </div>
-                        <span className={styles.name}>{member.name}</span>
+                        <span className={styles.name}>{`${member.firstName} ${member.lastName}`}</span>
                       </div>
                     </td>
-                    <td className={`${styles.tableCell} ${styles.yearCell}`}>{member.year}</td>
                     <td className={`${styles.tableCell} ${styles.emailCell}`}>{member.email}</td>
                     <td className={`${styles.tableCell} ${styles.actionsCell}`}>
                       <Button className={styles.menuButton} icon={<MoreHorizontalRegular />} />
@@ -358,20 +240,22 @@ const Team = () => {
                   <tr key={mentor.id} className={styles.tableRow}>
                     <td className={`${styles.tableCell} ${styles.checkboxCell}`}>
                       <Checkbox
-                        checked={selectedMembers.includes(mentor.id.toString())}
+                        checked={selectedMembers.includes(mentor.id)}
                         onChange={() => handleCheckboxChange(mentor.id)}
                       />
                     </td>
                     <td className={styles.tableCell}>
                       <div className={styles.profileCell}>
                         <div className={styles.avatar}>
-                          <Avatar name={mentor.name} size={32} color="colorful" />
-                          {mentor.isOnline && <div className={styles.onlineIndicator}></div>}
+                          <Avatar
+                            name={`${mentor.firstName} ${mentor.lastName}`}
+                            size={32}
+                            color="colorful"
+                          />
                         </div>
-                        <span className={styles.name}>{mentor.name}</span>
+                        <span className={styles.name}>{`${mentor.firstName} ${mentor.lastName}`}</span>
                       </div>
                     </td>
-                    <td className={`${styles.tableCell} ${styles.yearCell}`}>{mentor.year}</td>
                     <td className={`${styles.tableCell} ${styles.emailCell}`}>{mentor.email}</td>
                     <td className={`${styles.tableCell} ${styles.actionsCell}`}>
                       <Button className={styles.menuButton} icon={<MoreHorizontalRegular />} />
@@ -384,7 +268,6 @@ const Team = () => {
         </div>
       </div>
 
-      {/* Custom Modal Implementation instead of using Dialog component */}
       {isModalOpen && (
         <div
           style={{
@@ -431,9 +314,10 @@ const Team = () => {
             </div>
 
             <div style={{ display: "flex", flexDirection: "column", gap: "1.5rem" }}>
-              {/* Invite via Email */}
               <div>
-                <h3 style={{ fontSize: "14px", fontWeight: "600", marginBottom: "0.75rem" }}>Invite via Email</h3>
+                <h3 style={{ fontSize: "14px", fontWeight: "600", marginBottom: "0.75rem" }}>
+                  Invite via Email
+                </h3>
                 <div style={{ display: "flex", gap: "0.5rem" }}>
                   <Input
                     style={{ flex: 1 }}
@@ -454,18 +338,16 @@ const Team = () => {
                 </div>
               </div>
 
-              {/* Registered Users */}
               <div>
-                <h3 style={{ fontSize: "14px", fontWeight: "600", marginBottom: "0.75rem" }}>Registered Users</h3>
+                <h3 style={{ fontSize: "14px", fontWeight: "600", marginBottom: "0.75rem" }}>
+                  Registered Users
+                </h3>
                 <div style={{ display: "flex", flexDirection: "column", gap: "0.75rem" }}>
-                  {[
-                    { name: "User name", email: "email@esi-sba.dz", invited: false },
-                    { name: "User name", email: "email@esi-sba.dz", invited: false },
-                    { name: "User name", email: "email@esi-sba.dz", invited: true },
-                    { name: "User name", email: "email@esi-sba.dz", invited: false },
-                    { name: "User name", email: "email@esi-sba.dz", invited: false },
-                  ].map((user, index) => (
-                    <div key={index} style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
+                  {members.map((user) => (
+                    <div
+                      key={user.id}
+                      style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}
+                    >
                       <div style={{ display: "flex", alignItems: "center", gap: "0.75rem" }}>
                         <div
                           style={{
@@ -481,44 +363,30 @@ const Team = () => {
                           <PersonAddRegular style={{ fontSize: "16px", color: tokens.colorNeutralForeground3 }} />
                         </div>
                         <div>
-                          <div style={{ fontSize: "14px", fontWeight: "500" }}>{user.name}</div>
-                          <div style={{ fontSize: "12px", color: tokens.colorNeutralForeground2 }}>{user.email}</div>
+                          <div style={{ fontSize: "14px", fontWeight: "500" }}>
+                            {`${user.firstName} ${user.lastName}`}
+                          </div>
+                          <div style={{ fontSize: "12px", color: tokens.colorNeutralForeground2 }}>
+                            {user.email}
+                          </div>
                         </div>
                       </div>
                       <Button
-                        appearance={user.invited ? "subtle" : "outline"}
-                        icon={
-                          user.invited ? (
-                            <span
-                              style={{
-                                width: "16px",
-                                height: "16px",
-                                borderRadius: "50%",
-                                backgroundColor: tokens.colorStatusSuccessBackground1,
-                                display: "flex",
-                                alignItems: "center",
-                                justifyContent: "center",
-                                color: "white",
-                                fontSize: "10px",
-                              }}
-                            >
-                              ✓
-                            </span>
-                          ) : (
-                            <span>+</span>
-                          )
-                        }
+                        appearance="outline"
+                        icon={<span>+</span>}
+                        onClick={() => addMemberToProject(projectId, user.email)}
                       >
-                        {user.invited ? "Invited" : "Invite"}
+                        Invite
                       </Button>
                     </div>
                   ))}
                 </div>
               </div>
 
-              {/* Invite via Link */}
               <div>
-                <h3 style={{ fontSize: "14px", fontWeight: "600", marginBottom: "0.75rem" }}>Invite via Link</h3>
+                <h3 style={{ fontSize: "14px", fontWeight: "600", marginBottom: "0.75rem" }}>
+                  Invite via Link
+                </h3>
                 <div
                   style={{
                     display: "flex",
@@ -535,7 +403,7 @@ const Team = () => {
                       outline: "none",
                       fontSize: "14px",
                     }}
-                    value="https://www.starthub.com/user/example@"
+                    value={`https://www.starthub.com/project/${projectId}`}
                     readOnly
                   />
                   <Button
@@ -556,7 +424,7 @@ const Team = () => {
         </div>
       )}
     </div>
-  )
-}
+  );
+};
 
-export default Team
+export default Team;

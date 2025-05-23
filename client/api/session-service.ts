@@ -1,26 +1,17 @@
-import { Deliverable, Feedback } from "./project-service"
+import { Deliverable, Feedback } from "@/types/"
 
-const API_BASE_URL = import.meta.env.VITE_API_BASE_URL 
-
-
-const getAuthToken = () => localStorage.getItem("authToken")
+const API_BASE_URL = import.meta.env.VITE_BACKEND_URL 
 
 const fetchWithAuth = async (url: string, options: RequestInit = {}) => {
-  const token = getAuthToken()
-
-  if (!token) {
-    throw new Error("Authentication required")
-  }
-
   const headers = {
     "Content-Type": "application/json",
-    Authorization: `Bearer ${token}`,
     ...options.headers,
   }
 
   const response = await fetch(`${API_BASE_URL}${url}`, {
     ...options,
     headers,
+    credentials: "include", 
   })
 
   if (!response.ok) {
