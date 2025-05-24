@@ -7,7 +7,7 @@ import logo from "../assets/Logo Image.svg"
 import { Link, useNavigate } from "react-router-dom"
 import Input from "./components/Input"
 import { useState } from "react"
-import { useTheme } from "../main"
+import { useTheme } from "../ThemeContext"
 import { Eye24Filled, EyeOff24Filled, EyeOffRegular, EyeRegular } from "@fluentui/react-icons"
 
 const useStyles = makeStyles({

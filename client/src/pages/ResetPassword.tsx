@@ -6,7 +6,7 @@ import logo from "../assets/Logo Image.svg"
 import { Link, useNavigate, useLocation } from "react-router-dom"
 import Input from "./components/Input"
 import { useState, useEffect } from "react"
-import { useTheme } from "../main"
+import { useTheme } from "../ThemeContext"
 import {
   ArrowLeftRegular,
   CheckmarkCircleRegular,

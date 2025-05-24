@@ -14,8 +14,7 @@ import {
   mergeClasses,
   tokens,
 } from '@fluentui/react-components';
-import { useTheme } from '../../main';
-
+import { useTheme } from "../../ThemeContext"
 const useStyles = makeStyles({
   header: {
     backgroundColor: tokens.colorNeutralBackground1,

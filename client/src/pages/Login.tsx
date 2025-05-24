@@ -14,7 +14,7 @@ import {
 import logo from "../assets/Logo Image.svg";
 import { Link, useNavigate } from "react-router-dom";
 import Input from "./components/Input";
-import { useTheme } from "../main";
+import { useTheme } from "../ThemeContext"
 import { Eye24Filled, EyeOff24Filled } from "@fluentui/react-icons";
 import { useAuthContext } from "./components/AuthContext";
 

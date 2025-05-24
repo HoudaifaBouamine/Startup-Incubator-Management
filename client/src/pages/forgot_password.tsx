@@ -6,7 +6,7 @@ import logo from "../assets/Logo Image.svg"
 import { Link } from "react-router-dom"
 import Input from "./components/Input"
 import { useState } from "react"
-import { useTheme } from "../main"
+import { useTheme } from "../ThemeContext"
 import { ArrowLeftRegular, CheckmarkCircleRegular } from "@fluentui/react-icons"
 
 const useStyles = makeStyles({

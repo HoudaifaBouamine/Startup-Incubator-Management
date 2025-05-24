@@ -2,7 +2,7 @@ import { makeStyles, tokens, Text, Image, mergeClasses } from '@fluentui/react-c
 import { Link } from 'react-router-dom';
 import logo from '../assets/Logo Image.svg';
 import { PersonRegular, BookRegular } from '@fluentui/react-icons';
-import { useTheme } from '../main'; 
+import { useTheme } from "../ThemeContext"
 const useStyles = makeStyles({
   background: {
     backgroundColor: tokens.colorNeutralBackground2,
