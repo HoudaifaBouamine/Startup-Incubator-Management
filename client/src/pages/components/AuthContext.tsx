@@ -1,7 +1,4 @@
-"use client";
-
-import React, { createContext, useContext, useState, useEffect, useMemo, useRef } from "react";
-import { fetchWithAuth } from "../../../api/user-service";
+import React, { createContext, useContext, useState, useEffect, useMemo, useRef } from 'react';
 
 interface User {
   name: string;
@@ -28,11 +25,11 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
   const hasInitialized = useRef(false);
 
   const checkAuth = () => {
-    const token = localStorage.getItem("authToken");
-    const email = localStorage.getItem("userEmail");
-    const name = localStorage.getItem("userFullName");
-    const role = localStorage.getItem("userRole");
-    const id = localStorage.getItem("userId");
+    const token = localStorage.getItem('authToken');
+    const email = localStorage.getItem('userEmail');
+    const name = localStorage.getItem('userFullName');
+    const role = localStorage.getItem('userRole');
+    const id = localStorage.getItem('userId');
 
     if (token && email && name && role && id) {
       setUser({ name, email, role, id });
@@ -40,11 +37,11 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     } else {
       setUser(null);
       setIsAuthenticated(false);
-      localStorage.removeItem("authToken");
-      localStorage.removeItem("userEmail");
-      localStorage.removeItem("userFullName");
-      localStorage.removeItem("userRole");
-      localStorage.removeItem("userId");
+      localStorage.removeItem('authToken');
+      localStorage.removeItem('userEmail');
+      localStorage.removeItem('userFullName');
+      localStorage.removeItem('userRole');
+      localStorage.removeItem('userId');
     }
     setLoading(false);
   };
@@ -60,25 +57,26 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     setLoading(true);
     try {
       const res = await fetch(`${import.meta.env.VITE_BACKEND_URL}/auth/signin`, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ email, password }),
       });
       const data = await res.json();
-      console.log(data,"data")
       if (!res.ok || !data.token || !data.user) {
-        throw new Error(data.message || "Login failed");
+        throw new Error(data.message || 'Login failed');
       }
-      console.log(data, 'data');
       const fullName = `${data.user.firstName} ${data.user.lastName}`;
-      localStorage.setItem("authToken", data.token);
-      localStorage.setItem("userEmail", data.user.email);
-      localStorage.setItem("userFullName", fullName);
-      localStorage.setItem("userRole", data.user.role);
-      localStorage.setItem("userId", data.user.id); 
+      localStorage.setItem('authToken', data.token);
+      localStorage.setItem('userEmail', data.user.email);
+      localStorage.setItem('userFullName', fullName);
+      localStorage.setItem('userRole', data.user.role);
+      localStorage.setItem('userId', data.user.id);
 
       setUser({ name: fullName, email: data.user.email, role: data.user.role, id: data.user.id });
       setIsAuthenticated(true);
+    } catch (error) {
+      console.error('Login error:', error);
+      throw error;
     } finally {
       setLoading(false);
     }
@@ -86,29 +84,31 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
 
   const logout = async () => {
     setLoading(true);
-    
-      localStorage.clear();
-      setUser(null);
-      setIsAuthenticated(false);
-      setLoading(false);
+    localStorage.clear();
+    setUser(null);
+    setIsAuthenticated(false);
+    setLoading(false);
   };
 
-  const isRoleAllowed = (roles: string[]) => user ? roles.includes(user.role) : false;
+  const isRoleAllowed = (roles: string[]) => (user ? roles.includes(user.role) : false);
 
-  const value = useMemo(() => ({
-    user,
-    isAuthenticated,
-    loading,
-    isRoleAllowed,
-    login,
-    logout,
-  }), [user, isAuthenticated, loading]);
+  const value = useMemo(
+    () => ({
+      user,
+      isAuthenticated,
+      loading,
+      isRoleAllowed,
+      login,
+      logout,
+    }),
+    [user, isAuthenticated, loading]
+  );
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
 };
 
 export const useAuthContext = () => {
   const context = useContext(AuthContext);
-  if (!context) throw new Error("useAuthContext must be used within AuthProvider");
+  if (!context) throw new Error('useAuthContext must be used within AuthProvider');
   return context;
 };
