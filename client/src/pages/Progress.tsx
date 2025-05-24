@@ -601,7 +601,7 @@ const Progress: React.FC<ProgressProps> = ({ projectId }) => {
               <div className={styles.deliverablesSection}>
                 <div className={styles.tabContainer}>
                   <TabList
-                    selectedValue={activeTab} // Removed defaultSelectedValue
+                    selectedValue={activeTab} 
                     onTabSelect={handleTabChange}
                   >
                     <Tab value="deliverables">

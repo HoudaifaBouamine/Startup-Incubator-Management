@@ -21,7 +21,6 @@ import { getProjectByUser } from '../api/project-service';
 import ProtectedRoute from './pages/components/ProtectedRoute';
 import { useAuthContext } from './pages/components/AuthContext';
 
-// Dummy project ID to use when no projects are found
 const DUMMY_PROJECT_ID = 'dummy-project-id';
 
 const ProjectIdWrapper: React.FC<{ Component: React.FC<{ projectId: string }> }> = ({ Component }) => {
@@ -39,7 +38,6 @@ const ProjectIdWrapper: React.FC<{ Component: React.FC<{ projectId: string }> }>
         }
 
         const userFirstName = user.name?.split(' ')[0] || user.name || '';
-        console.log("User ID:", user.id, "User First Name:", userFirstName);
 
         if (!user.id || !userFirstName) {
           setError("Missing user information (ID or name). Please log in again.");
