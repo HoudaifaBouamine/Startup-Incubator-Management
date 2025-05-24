@@ -394,7 +394,7 @@ const ProjectsManagement = () => {
           <Dropdown
             className={styles.filterDropdown}
             value={statusFilter}
-            onOptionSelect={(_, data) => setStatusFilter(data.optionValue || "all")}
+            onOptionSelect={(_:any, data) => setStatusFilter(data.optionValue || "all")}
             placeholder="Status"
           >
             <Option value="all">Status</Option>
@@ -417,7 +417,7 @@ const ProjectsManagement = () => {
                 className={styles.moreButton}
                 icon={<MoreHorizontalRegular />}
                 appearance="subtle"
-                onClick={(e) => e.stopPropagation()}
+                onClick={(e: React.MouseEvent) => e.stopPropagation()}
               />
             </div>
 
