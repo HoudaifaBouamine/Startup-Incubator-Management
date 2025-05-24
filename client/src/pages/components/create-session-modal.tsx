@@ -12,8 +12,6 @@ import {
   Input,
   makeStyles,
   tokens,
-  DialogOpenChangeData,
-  DialogProps,
 } from "@fluentui/react-components";
 import { CalendarAddRegular } from "@fluentui/react-icons";
 import { createSession } from "../../../api/project-service";
@@ -67,7 +65,7 @@ const CreateSessionModal: React.FC<CreateSessionModalProps> = ({ projectId, onSe
     }
   };
 
-  const handleDialogChange: DialogProps["onOpenChange"] = (_, data) => {
+  const handleOpenChange = (_: any, data: { open: boolean | ((prevState: boolean) => boolean); }) => {
     setOpen(data.open);
     if (!data.open) {
       setDate("");
@@ -76,7 +74,7 @@ const CreateSessionModal: React.FC<CreateSessionModalProps> = ({ projectId, onSe
   };
 
   return (
-    <Dialog open={open} onOpenChange={handleDialogChange}>
+    <Dialog open={open} onOpenChange={handleOpenChange}>
       <DialogTrigger disableButtonEnhancement>
         <Button icon={<CalendarAddRegular />}>Create New Session</Button>
       </DialogTrigger>

@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Routes, Route, useParams } from 'react-router-dom';
+import { Routes, Route, useParams, Navigate } from 'react-router-dom';
 import Home from './pages/Home';
 import Login from './pages/Login';
 import SignUpSelection from './pages/SignUpSelection';
@@ -23,6 +23,7 @@ import ProtectedRoute from './pages/components/ProtectedRoute';
 const ProjectIdWrapper: React.FC<{ Component: React.FC<{ projectId: string }> }> = ({ Component }) => {
   const { projectId } = useParams<{ projectId?: string }>();
   const [fetchedProjectId, setFetchedProjectId] = useState<string | null>(null);
+  const [error, setError] = useState<string | null>(null);
   const userId = localStorage.getItem("userEmail") || "current-user-id";
 
   useEffect(() => {
@@ -39,18 +40,29 @@ const ProjectIdWrapper: React.FC<{ Component: React.FC<{ projectId: string }> }>
           return;
         }
         const projectData = await getProjectByUserId(userId);
-        const newProjectId = projectData[0]?.id || 'default-project-id';
+        if (!projectData || projectData.length === 0) {
+          throw new Error("No project found for user");
+        }
+        const newProjectId = projectData[0]?.id;
         setFetchedProjectId(newProjectId);
         localStorage.setItem('projectId', newProjectId);
       } catch (error) {
         console.error("Failed to fetch project ID:", error);
-        setFetchedProjectId('default-project-id');
+        setError("Failed to load project ID");
       }
     };
     fetchProjectId();
   }, [userId, projectId]);
 
-  return <Component projectId={fetchedProjectId || 'default-project-id'} />;
+  if (error) {
+    return <Navigate to="/404" replace />;
+  }
+
+  if (!fetchedProjectId) {
+    return <div>Loading project...</div>;
+  }
+
+  return <Component projectId={fetchedProjectId} />;
 };
 
 const App: React.FC = () => {
@@ -85,7 +97,8 @@ const App: React.FC = () => {
           <Route path="/mentor/teams-management" element={<div>Teams Management</div>} />
         </Route>
       </Route>
-      <Route path="*" element={<div>404 - Page Not Found</div>} />
+      <Route path="/404" element={<div>404 - Page Not Found</div>} />
+      <Route path="*" element={<Navigate to="/404" replace />} />
     </Routes>
   );
 };

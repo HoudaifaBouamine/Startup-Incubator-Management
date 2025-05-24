@@ -62,7 +62,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
       if (!res.ok || !data.token || !data.user) {
         throw new Error(data.message || "Login failed");
       }
-
+      console.log(data,'data')
       const fullName = `${data.user.firstName} ${data.user.lastName}`;
       localStorage.setItem("authToken", data.token);
       localStorage.setItem("userEmail", data.user.email);

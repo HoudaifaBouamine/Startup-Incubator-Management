@@ -4,7 +4,7 @@ const API_BASE_URL = import.meta.env.VITE_BACKEND_URL;
 
 const fetchWithAuth = async (url: string, options: RequestInit = {}) => {
   const token = localStorage.getItem("authToken");
-  
+
   const headers = {
     "Content-Type": "application/json",
     "Accept": "application/json",
@@ -17,20 +17,34 @@ const fetchWithAuth = async (url: string, options: RequestInit = {}) => {
     headers,
   });
 
+  const contentType = response.headers.get("Content-Type");
+  const isJson = contentType?.includes("application/json");
+
   if (!response.ok) {
-    let errorMessage = 'API request failed';
-    try {
-      const errorData = await response.json();
-      if (response.status === 401) {
-        localStorage.clear();
-        window.location.href = "/login";
+    let errorMessage = `API request failed with status ${response.status}`;
+    if (isJson) {
+      try {
+        const errorData = await response.json();
+        if (response.status === 401) {
+          localStorage.clear();
+          window.location.href = "/login";
+        }
+        errorMessage = errorData.message || errorMessage;
+      } catch {
       }
-      errorMessage = errorData.message || errorMessage;
-    } catch {}
+    } else {
+      const text = await response.text();
+      errorMessage = text || errorMessage;
+    }
     throw new Error(errorMessage);
   }
 
-  return response.json();
+  if (isJson) {
+    return response.json();
+  } else {
+    const text = await response.text();
+    throw new Error(`Expected JSON response but received: ${text || "empty response"}`);
+  }
 };
 
 export const updateUserPassword = async (email: string, currentPassword: string, newPassword: string) => {

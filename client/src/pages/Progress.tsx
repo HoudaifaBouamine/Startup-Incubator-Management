@@ -1,13 +1,38 @@
-"use client"
+"use client";
 
-import type React from "react"
-import { useState, useEffect } from "react"
-import { makeStyles, tokens, ProgressBar, TabList, Tab, Spinner, SelectTabEventHandler } from "@fluentui/react-components"
-import { ChevronRightRegular, DocumentRegular, Folder20Filled, Folder20Regular, Comment20Filled, Comment20Regular, CommentDismiss24Regular, CalendarLtr20Regular, ErrorCircleRegular } from "@fluentui/react-icons"
-import { getProjectById, getProjectSessions, getProjectMembers, getProjectEncadrants, type Session } from "../../api/project-service"
-import CreateSessionModal from "./components/create-session-modal"
-import AddDeliverableModal from "./components/add-delivrable-modal"
-import AddFeedbackModal from "./components/add-feedbacl-modal"
+import type React from "react";
+import { useState, useEffect } from "react";
+import {
+  makeStyles,
+  tokens,
+  ProgressBar,
+  TabList,
+  Tab,
+  Spinner,
+  SelectTabEventHandler,
+} from "@fluentui/react-components";
+import {
+  ChevronRightRegular,
+  DocumentRegular,
+  Folder20Filled,
+  Folder20Regular,
+  Comment20Filled,
+  Comment20Regular,
+  CommentDismiss24Regular,
+  CalendarLtr20Regular,
+  ErrorCircleRegular,
+} from "@fluentui/react-icons";
+import {
+  getProjectById,
+  getProjectSessions,
+  getProjectMembers,
+  getProjectEncadrants,
+  type Session,
+} from "../../api/project-service";
+import CreateSessionModal from "./components/create-session-modal";
+import AddDeliverableModal from "./components/add-delivrable-modal";
+import AddFeedbackModal from "./components/add-feedback-modal";
+import type { Deliverable, Feedback } from "../../types";
 
 const useStyles = makeStyles({
   layout: {
@@ -319,9 +344,7 @@ const useStyles = makeStyles({
     gap: "0.5rem",
     marginTop: "1rem",
   },
-})
-
-import type { Deliverable, Feedback } from "../../types"
+});
 
 const defaultDeliverables: Deliverable[] = [
   {
@@ -352,140 +375,165 @@ const defaultDeliverables: Deliverable[] = [
     progress: 0,
     change: "+0%",
   },
-]
+];
 
 type ProgressProps = {
   projectId: string;
 };
 
 const Progress: React.FC<ProgressProps> = ({ projectId }) => {
-  const styles = useStyles()
-  const [activeTab, setActiveTab] = useState("deliverables")
-  const [selectedSession, setSelectedSession] = useState(0)
-  const [sessions, setSessions] = useState<Session[]>([])
-  const [projectName, setProjectName] = useState<string>("")
-  const [loading, setLoading] = useState<boolean>(true)
-  const [error, setError] = useState<string | null>(null)
-  const [members, setMembers] = useState<any[]>([])
-  const [encadrants, setEncadrants] = useState<any[]>([])
+  const styles = useStyles();
+  const [activeTab, setActiveTab] = useState("deliverables");
+  const [selectedSession, setSelectedSession] = useState(0);
+  const [sessions, setSessions] = useState<Session[]>([]);
+  const [projectName, setProjectName] = useState<string>("");
+  const [loading, setLoading] = useState<boolean>(true);
+  const [error, setError] = useState<string | null>(null);
+  const [members, setMembers] = useState<{ id: string; name: string; avatar?: string }[]>([]);
+  const [encadrants, setEncadrants] = useState<{ id: string; name: string; avatar?: string }[]>([]);
 
   const fetchProjectData = async () => {
     try {
-      setLoading(true)
-      setError(null)
+      setLoading(true);
+      setError(null);
 
       if (!projectId || projectId === "undefined") {
-        throw new Error("Invalid project ID")
+        throw new Error("Invalid project ID");
       }
 
-      const projectData = await getProjectById(projectId)
-      if (!projectData || !projectData.name) {
-        throw new Error("Project data is invalid or empty")
-      }
-      setProjectName(projectData.name)
-
+      console.log("Fetching project data for projectId:", projectId);
       try {
-        const sessionsData = await getProjectSessions(projectId)
-        setSessions(sessionsData || [])
+        const projectData = await getProjectById(projectId);
+        // If no project data is returned, treat it as "no data" instead of an error
+        if (!projectData || !projectData.name) {
+          setProjectName("Project"); // Fallback name
+        } else {
+          setProjectName(projectData.name);
+        }
       } catch (err) {
-        console.warn("Sessions endpoint error:", err)
-        setSessions([])
-      }
-
-      try {
-        const membersData = await getProjectMembers(projectId)
-        setMembers(membersData?.relationData || [])
-      } catch (err) {
-        console.warn("Members endpoint error:", err)
-        setMembers([])
+        console.warn("Project endpoint error:", err);
+        setProjectName("Project"); // Fallback name
       }
 
       try {
-        const encadrantsData = await getProjectEncadrants(projectId)
-        setEncadrants(encadrantsData?.relationData || [])
+        console.log("Fetching sessions for projectId:", projectId);
+        const sessionsData = await getProjectSessions(projectId);
+        setSessions(sessionsData || []);
       } catch (err) {
-        console.warn("Encadrants endpoint error:", err)
-        setEncadrants([])
+        console.warn("Sessions endpoint error:", err);
+        setSessions([]);
+      }
+
+      try {
+        console.log("Fetching members for projectId:", projectId);
+        const membersData = await getProjectMembers(projectId);
+        setMembers(
+          (membersData?.relationData || []).map((item: any) => ({
+            id: item.id,
+            name: item.name ?? item.fullName ?? item.username ?? "Unknown",
+            avatar: item.avatar,
+          }))
+        );
+      } catch (err) {
+        console.warn("Members endpoint error:", err);
+        setMembers([]);
+      }
+
+      try {
+        console.log("Fetching encadrants for projectId:", projectId);
+        const encadrantsData = await getProjectEncadrants(projectId);
+        setEncadrants(
+          (encadrantsData?.relationData || []).map((item: any) => ({
+            id: item.id,
+            name: item.name ?? item.fullName ?? item.username ?? "Unknown",
+            avatar: item.avatar,
+          }))
+        );
+      } catch (err) {
+        console.warn("Encadrants endpoint error:", err);
+        setEncadrants([]);
       }
     } catch (err) {
-      console.error("Error fetching project data:", err)
-      setError(err instanceof Error ? err.message : "Failed to load project data")
+      // Only set error for critical failures (e.g., network issues)
+      console.error("Critical error fetching project data:", err);
+      setError(err instanceof Error ? err.message : "Failed to load project data");
     } finally {
-      setLoading(false)
+      setLoading(false);
     }
-  }
+  };
 
   useEffect(() => {
-    fetchProjectData()
-  }, [projectId])
+    fetchProjectData();
+  }, [projectId]);
 
   const handleTabChange: SelectTabEventHandler = (_event, data) => {
-    setActiveTab(data.value as string)
-  }
+    setActiveTab(data.value as string);
+  };
 
   const handleSessionClick = (index: number) => {
-    setSelectedSession(index)
-  }
+    setSelectedSession(index);
+  };
 
   const handleSessionCreated = () => {
-    fetchProjectData()
-  }
+    fetchProjectData();
+  };
 
   const handleDeliverableAdded = () => {
-    fetchProjectData()
-  }
+    fetchProjectData();
+  };
 
   const handleFeedbackAdded = () => {
-    fetchProjectData()
-  }
+    fetchProjectData();
+  };
 
   const calculateGlobalProgress = () => {
-    if (sessions.length === 0) return 0
+    if (sessions.length === 0) return 0;
 
-    let totalProgress = 0
-    let totalDeliverables = 0
+    let totalProgress = 0;
+    let totalDeliverables = 0;
 
     sessions.forEach((session) => {
       if (session.deliverables) {
         session.deliverables.forEach((deliverable: Deliverable) => {
-          totalProgress += deliverable.progress || 0
-          totalDeliverables++
-        })
+          totalProgress += deliverable.progress || 0;
+          totalDeliverables++;
+        });
       }
-    })
+    });
 
-    return totalDeliverables > 0 ? Math.round(totalProgress / totalDeliverables) : 0
-  }
+    return totalDeliverables > 0 ? Math.round(totalProgress / totalDeliverables) : 0;
+  };
 
-  const globalProgress = calculateGlobalProgress()
+  const globalProgress = calculateGlobalProgress();
 
-  const hasNoSessions = sessions.length === 0
-  const currentSession = hasNoSessions ? null : sessions[selectedSession]
-  const currentDeliverables: Deliverable[] = hasNoSessions ? [] : currentSession?.deliverables || []
-  const currentFeedbacks: Feedback[] = hasNoSessions ? [] : currentSession?.feedbacks || []
+  const hasNoSessions = sessions.length === 0;
+  const currentSession = hasNoSessions ? null : sessions[selectedSession];
+  const currentDeliverables: Deliverable[] = hasNoSessions ? [] : currentSession?.deliverables || [];
+  const currentFeedbacks: Feedback[] = hasNoSessions ? [] : currentSession?.feedbacks || [];
   const totalDeliverables = hasNoSessions
     ? defaultDeliverables.length
-    : sessions.reduce((total, session) => total + (session.deliverables?.length || 0), 0)
+    : sessions.reduce((total, session) => total + (session.deliverables?.length || 0), 0);
   const totalFeedbacks = hasNoSessions
     ? 0
-    : sessions.reduce((total, session) => total + (session.feedbacks?.length || 0), 0)
+    : sessions.reduce((total, session) => total + (session.feedbacks?.length || 0), 0);
 
   if (loading) {
     return (
       <div className={styles.loadingContainer}>
         <Spinner size="large" label="Loading project progress..." />
       </div>
-    )
+    );
   }
 
-  if (error) {
+  // Only show the error UI for critical errors
+  if (error && error !== "Project data is invalid or empty") {
     return (
       <div className={styles.errorContainer}>
         <ErrorCircleRegular className={styles.errorIcon} />
         <h2>Error Loading Project</h2>
         <p>{error}</p>
       </div>
-    )
+    );
   }
 
   return (
@@ -725,7 +773,7 @@ const Progress: React.FC<ProgressProps> = ({ projectId }) => {
         </div>
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default Progress
+export default Progress;
