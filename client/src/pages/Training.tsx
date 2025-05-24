@@ -10,34 +10,33 @@ import {
   ChevronDown20Regular,
 } from "@fluentui/react-icons"
 import { getProjectSessions } from "../../api/project-service"
-import { Session } from "../types"
+import { Session } from "../../types"
 
 const useStyles = makeStyles({
   root: {
     display: "flex",
-    height: "100vh",
     backgroundColor: tokens.colorNeutralBackground2,
   },
   mainContent: {
     flex: 1,
     display: "flex",
     flexDirection: "column",
-    overflow: "auto",
+    overflow: "hidden",
   },
   content: {
-    padding: "32px",
+    padding: "0 2rem",
     flex: 1,
   },
   pageTitle: {
     fontSize: "24px",
     fontWeight: "600",
     color: tokens.colorNeutralForeground1,
-    marginBottom: "8px",
+    marginBottom: "4px",
   },
   pageSubtitle: {
     fontSize: "14px",
     color: tokens.colorNeutralForeground2,
-    marginBottom: "32px",
+    marginBottom: "20px",
   },
   sectionTitle: {
     fontSize: "18px",
@@ -53,7 +52,7 @@ const useStyles = makeStyles({
   calendar: {
     backgroundColor: tokens.colorNeutralBackground1,
     borderRadius: "8px",
-    padding: "16px",
+    padding: "10px 14px",
     width: "350px",
   },
   calendarHeader: {

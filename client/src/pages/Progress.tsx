@@ -322,22 +322,7 @@ const useStyles = makeStyles({
   },
 })
 
-interface Deliverable {
-  title: string
-  description: string
-  status: string
-  progress: number
-  change: string
-}
-
-interface Feedback {
-  author: string
-  text: string
-}
-
-interface ProgressProps {
-  projectId: string
-}
+import type { Deliverable, Feedback } from "../../types"
 
 const defaultDeliverables: Deliverable[] = [
   {
@@ -369,6 +354,10 @@ const defaultDeliverables: Deliverable[] = [
     change: "+0%",
   },
 ]
+
+type ProgressProps = {
+  projectId: string;
+};
 
 const Progress: React.FC<ProgressProps> = ({ projectId }) => {
   const styles = useStyles()

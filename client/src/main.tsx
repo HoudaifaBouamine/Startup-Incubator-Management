@@ -4,6 +4,7 @@ import { BrowserRouter } from 'react-router-dom';
 import App from './App';
 import './index.css';
 import { FluentProvider, webLightTheme, webDarkTheme } from '@fluentui/react-components';
+import { AuthProvider } from './pages/components/AuthContext';
 
 interface ThemeContextType {
   isDarkMode: boolean;
@@ -44,7 +45,6 @@ const ThemeProvider: React.FC<{ children: React.ReactNode }> = ({ children }) =>
         toggleTheme();
       }
     };
-
     window.addEventListener('keydown', handleKeyDown);
     return () => window.removeEventListener('keydown', handleKeyDown);
   }, []);
@@ -62,10 +62,12 @@ const ThemeProvider: React.FC<{ children: React.ReactNode }> = ({ children }) =>
 
 ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
   <React.StrictMode>
-    <BrowserRouter>
-      <ThemeProvider>
-        <App />
-      </ThemeProvider>
-    </BrowserRouter>
+    <AuthProvider>
+      <BrowserRouter>
+        <ThemeProvider>
+          <App />
+        </ThemeProvider>
+      </BrowserRouter>
+    </AuthProvider>
   </React.StrictMode>
 );

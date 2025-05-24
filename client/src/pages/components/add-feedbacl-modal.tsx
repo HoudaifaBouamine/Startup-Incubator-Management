@@ -17,7 +17,7 @@ import {
   tokens,
 } from "@fluentui/react-components"
 import { CommentAddRegular } from "@fluentui/react-icons"
-import { addFeedback } from "../../../api/session-service"
+import { addFeedback } from "../../../api/project-service"
 
 const useStyles = makeStyles({
   formField: {

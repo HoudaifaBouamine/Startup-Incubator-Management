@@ -56,4 +56,6 @@ export interface Project {
   members?: ProjectMember[];
   encadrants?: ProjectMember[];
   juryMembers?: ProjectMember[];
+  teamId: string;
+  progress: ProjectProgress;
 }

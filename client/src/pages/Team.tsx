@@ -2,14 +2,13 @@
 
 import { useState, useEffect } from "react";
 import { makeStyles, tokens, Button, Checkbox, Input, Avatar } from "@fluentui/react-components";
-import { MoreHorizontalRegular, CopyRegular, ShareRegular, PersonAddRegular } from "@fluentui/react-icons";
+import { MoreHorizontalRegular, CopyRegular, ShareRegular, PersonAddRegular, PeopleTeamRegular } from "@fluentui/react-icons";
 import { getProjectMembers, getProjectEncadrants, addMemberToProject } from "../../api/project-service";
-import { ProjectMember } from "../types";
+import { ProjectMember } from "../../types";
 
 const useStyles = makeStyles({
   root: {
     display: "flex",
-    height: "100vh",
     backgroundColor: tokens.colorNeutralBackground2,
   },
   mainContent: {
@@ -19,16 +18,16 @@ const useStyles = makeStyles({
     overflow: "auto",
   },
   content: {
-    padding: "2rem",
+    padding: "1.5rem 2rem",
     display: "flex",
     flexDirection: "column",
-    gap: "2rem",
+    gap: "1rem",
   },
   headerSection: {
     display: "flex",
     justifyContent: "space-between",
     alignItems: "center",
-    marginBottom: "1.5rem",
+    marginBottom: "1rem",
   },
   title: {
     fontSize: "24px",
@@ -47,9 +46,7 @@ const useStyles = makeStyles({
     fontWeight: "600",
     padding: "0.5rem 1rem",
     borderRadius: "4px",
-    ":hover": {
-      backgroundColor: tokens.colorBrandBackgroundHover,
-    },
+    ":hover": { backgroundColor: tokens.colorBrandBackgroundHover },
   },
   section: {
     display: "flex",
@@ -77,9 +74,7 @@ const useStyles = makeStyles({
   },
   tableRow: {
     backgroundColor: tokens.colorNeutralBackground1,
-    ":hover": {
-      backgroundColor: tokens.colorNeutralBackground3,
-    },
+    ":hover": { backgroundColor: tokens.colorNeutralBackground3 },
   },
   tableCell: {
     padding: "0.75rem 1rem",
@@ -87,40 +82,36 @@ const useStyles = makeStyles({
     color: tokens.colorNeutralForeground1,
     verticalAlign: "middle",
   },
-  checkboxCell: {
-    width: "40px",
-    padding: "0.5rem 1rem",
-  },
-  profileCell: {
-    display: "flex",
-    alignItems: "center",
-    gap: "0.75rem",
-  },
-  avatar: {
-    position: "relative",
-  },
-  name: {
-    fontSize: "14px",
-    fontWeight: "500",
-    color: tokens.colorNeutralForeground1,
-  },
-  emailCell: {
-    fontSize: "14px",
-    color: tokens.colorNeutralForeground2,
-  },
-  actionsCell: {
-    width: "40px",
-    textAlign: "center",
-  },
+  checkboxCell: { width: "40px", padding: "0.5rem 1rem" },
+  profileCell: { display: "flex", alignItems: "center", gap: "0.75rem" },
+  avatar: { position: "relative" },
+  name: { fontSize: "14px", fontWeight: "500", color: tokens.colorNeutralForeground1 },
+  emailCell: { fontSize: "14px", color: tokens.colorNeutralForeground2 },
+  actionsCell: { width: "40px", textAlign: "center" },
   menuButton: {
     background: "transparent",
     border: "none",
     color: tokens.colorNeutralForeground2,
     padding: "4px",
-    ":hover": {
-      backgroundColor: tokens.colorNeutralBackground3,
-      borderRadius: "4px",
-    },
+    ":hover": { backgroundColor: tokens.colorNeutralBackground3, borderRadius: "4px" },
+  },
+  noDataContainer: {
+    display: "flex",
+    flexDirection: "column",
+    alignItems: "center",
+    justifyContent: "center",
+    padding: "2rem",
+    borderRadius: "4px",
+    textAlign: "center",
+    gap: "0.5rem",
+  },
+  noDataIcon: {
+    fontSize: "32px",
+    color: tokens.colorNeutralForeground3,
+  },
+  noDataText: {
+    fontSize: "14px",
+    color: tokens.colorNeutralForeground2,
   },
 });
 
@@ -190,80 +181,94 @@ const Team = ({ projectId }: { projectId: string }) => {
 
           <div className={styles.section}>
             <h2 className={styles.sectionTitle}>Members ({members.length})</h2>
-            <table className={styles.table}>
-              <thead>
-                <tr>
-                  <th className={styles.tableHeader} style={{ width: "40px" }}>
-                    <Checkbox />
-                  </th>
-                  <th className={styles.tableHeader}>Name</th>
-                  <th className={styles.tableHeader}>Email</th>
-                  <th className={styles.tableHeader} style={{ width: "40px" }}></th>
-                </tr>
-              </thead>
-              <tbody>
-                {members.map((member) => (
-                  <tr key={member.id} className={styles.tableRow}>
-                    <td className={`${styles.tableCell} ${styles.checkboxCell}`}>
-                      <Checkbox
-                        checked={selectedMembers.includes(member.id)}
-                        onChange={() => handleCheckboxChange(member.id)}
-                      />
-                    </td>
-                    <td className={styles.tableCell}>
-                      <div className={styles.profileCell}>
-                        <div className={styles.avatar}>
-                          <Avatar
-                            name={`${member.firstName} ${member.lastName}`}
-                            size={32}
-                            color="colorful"
-                          />
-                        </div>
-                        <span className={styles.name}>{`${member.firstName} ${member.lastName}`}</span>
-                      </div>
-                    </td>
-                    <td className={`${styles.tableCell} ${styles.emailCell}`}>{member.email}</td>
-                    <td className={`${styles.tableCell} ${styles.actionsCell}`}>
-                      <Button className={styles.menuButton} icon={<MoreHorizontalRegular />} />
-                    </td>
+            {members.length > 0 ? (
+              <table className={styles.table}>
+                <thead>
+                  <tr>
+                    <th className={styles.tableHeader} style={{ width: "40px" }}>
+                      <Checkbox />
+                    </th>
+                    <th className={styles.tableHeader}>Name</th>
+                    <th className={styles.tableHeader}>Email</th>
+                    <th className={styles.tableHeader} style={{ width: "40px" }}></th>
                   </tr>
-                ))}
-              </tbody>
-            </table>
+                </thead>
+                <tbody>
+                  {members.map((member) => (
+                    <tr key={member.id} className={styles.tableRow}>
+                      <td className={`${styles.tableCell} ${styles.checkboxCell}`}>
+                        <Checkbox
+                          checked={selectedMembers.includes(member.id)}
+                          onChange={() => handleCheckboxChange(member.id)}
+                        />
+                      </td>
+                      <td className={styles.tableCell}>
+                        <div className={styles.profileCell}>
+                          <div className={styles.avatar}>
+                            <Avatar
+                              name={`${member.firstName} ${member.lastName}`}
+                              size={32}
+                              color="colorful"
+                            />
+                          </div>
+                          <span className={styles.name}>{`${member.firstName} ${member.lastName}`}</span>
+                        </div>
+                      </td>
+                      <td className={`${styles.tableCell} ${styles.emailCell}`}>{member.email}</td>
+                      <td className={`${styles.tableCell} ${styles.actionsCell}`}>
+                        <Button className={styles.menuButton} icon={<MoreHorizontalRegular />} />
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            ) : (
+              <div className={styles.noDataContainer}>
+                <PeopleTeamRegular className={styles.noDataIcon} />
+                <p className={styles.noDataText}>No members yet. Invite someone to join your project!</p>
+              </div>
+            )}
           </div>
 
           <div className={styles.section}>
             <h2 className={styles.sectionTitle}>Mentors ({mentors.length})</h2>
-            <table className={styles.table}>
-              <tbody>
-                {mentors.map((mentor) => (
-                  <tr key={mentor.id} className={styles.tableRow}>
-                    <td className={`${styles.tableCell} ${styles.checkboxCell}`}>
-                      <Checkbox
-                        checked={selectedMembers.includes(mentor.id)}
-                        onChange={() => handleCheckboxChange(mentor.id)}
-                      />
-                    </td>
-                    <td className={styles.tableCell}>
-                      <div className={styles.profileCell}>
-                        <div className={styles.avatar}>
-                          <Avatar
-                            name={`${mentor.firstName} ${mentor.lastName}`}
-                            size={32}
-                            color="colorful"
-                          />
+            {mentors.length > 0 ? (
+              <table className={styles.table}>
+                <tbody>
+                  {mentors.map((mentor) => (
+                    <tr key={mentor.id} className={styles.tableRow}>
+                      <td className={`${styles.tableCell} ${styles.checkboxCell}`}>
+                        <Checkbox
+                          checked={selectedMembers.includes(mentor.id)}
+                          onChange={() => handleCheckboxChange(mentor.id)}
+                        />
+                      </td>
+                      <td className={styles.tableCell}>
+                        <div className={styles.profileCell}>
+                          <div className={styles.avatar}>
+                            <Avatar
+                              name={`${mentor.firstName} ${mentor.lastName}`}
+                              size={32}
+                              color="colorful"
+                            />
+                          </div>
+                          <span className={styles.name}>{`${mentor.firstName} ${mentor.lastName}`}</span>
                         </div>
-                        <span className={styles.name}>{`${mentor.firstName} ${mentor.lastName}`}</span>
-                      </div>
-                    </td>
-                    <td className={`${styles.tableCell} ${styles.emailCell}`}>{mentor.email}</td>
-                    <td className={`${styles.tableCell} ${styles.actionsCell}`}>
-                      <Button className={styles.menuButton} icon={<MoreHorizontalRegular />} />
-                    </td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
+                      </td>
+                      <td className={`${styles.tableCell} ${styles.emailCell}`}>{mentor.email}</td>
+                      <td className={`${styles.tableCell} ${styles.actionsCell}`}>
+                        <Button className={styles.menuButton} icon={<MoreHorizontalRegular />} />
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            ) : (
+              <div className={styles.noDataContainer}>
+                <PeopleTeamRegular className={styles.noDataIcon} />
+                <p className={styles.noDataText}>No mentors assigned yet. Add a mentor to guide your project!</p>
+              </div>
+            )}
           </div>
         </div>
       </div>

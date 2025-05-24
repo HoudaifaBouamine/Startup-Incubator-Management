@@ -45,6 +45,9 @@ const useStyles = makeStyles({
     lineHeight: "1.2",
     margin: "0.5rem 0",
   },
+  centerText: {
+    textAlign: "center",
+  },
   button: {
     width: "100%",
     padding: "10px",
@@ -165,14 +168,18 @@ const ForgotPassword = () => {
               Enter your email address and we'll send you a link to reset your password.
             </Text>
 
-            {error && <Text className={classes.errorText}>{error}</Text>}
+            {error && (
+              <Text className={classes.errorText} role="alert" aria-live="polite">
+                {error}
+              </Text>
+            )}
 
             <Input
               label="Email Address"
               placeholder="m.riad@esi-sba.dz"
               value={email}
               onChange={(e: React.ChangeEvent<HTMLInputElement>) => setEmail(e.target.value)}
-           
+              type="email"
             />
 
             <Button type="submit" className={classes.button} disabled={loading}>
@@ -187,14 +194,14 @@ const ForgotPassword = () => {
             </div>
           </form>
         ) : (
-          <div className={classes.successMessage}>
+          <div className={classes.successMessage} role="alert" aria-live="polite">
             <CheckmarkCircleRegular className={classes.successIcon} />
-            <Text as="h2" className={classes.title} style={{ textAlign: "center" }}>
+            <Text as="h2" className={mergeClasses(classes.title, classes.centerText)}>
               Check Your Email
             </Text>
-            <Text className={classes.text} style={{ textAlign: "center" }}>
-              We've sent a password reset link to {email}. Please check your inbox and follow the instructions to reset
-              your password.
+            <Text className={mergeClasses(classes.text, classes.centerText)}>
+              We've sent a password reset link to {email}. Please check your inbox and follow the instructions to
+              reset your password.
             </Text>
             <Button
               appearance="secondary"

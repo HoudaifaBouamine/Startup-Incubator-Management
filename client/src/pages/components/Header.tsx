@@ -45,17 +45,16 @@ const useStyles = makeStyles({
     flex: 1,
     display: 'flex',
     justifyContent: 'center',
-    margin: '0 2rem',
+    marginRight: '8rem',
   },
   input: {
     width: '100%',
-    maxWidth: '650px',
+    maxWidth: '580px',
     minWidth: '300px',
     backgroundColor: tokens.colorNeutralBackground3,
     padding: '0.5rem 1rem',
     borderRadius: '4px',
     color: tokens.colorNeutralForeground4,
-    marginRight: '4rem',
   },
   wrapper: {
     display: 'flex',
@@ -63,7 +62,7 @@ const useStyles = makeStyles({
     justifyContent: 'flex-end',
     gap: '0.5rem',
     flexShrink: 0,
-    marginRight: '2rem',
+    marginRight: '4rem',
   },
   button: {
     background: 'transparent',
@@ -90,8 +89,7 @@ const useStyles = makeStyles({
     display: 'flex',
     alignItems: 'center',
     gap: '0.5rem',
-    maxWidth: '180px',
-    minWidth: 0,       
+    Width: '250px',
   },
   profilePicture: {
     borderRadius: '50%',
@@ -104,7 +102,7 @@ const useStyles = makeStyles({
     overflow: 'hidden',
     textOverflow: 'ellipsis',
     flexShrink: 1,      
-    maxWidth: '120px',
+    Width: '120px',
   },
 });
 

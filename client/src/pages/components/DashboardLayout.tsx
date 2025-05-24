@@ -1,43 +1,41 @@
-import React from 'react';
-import { Outlet } from 'react-router-dom';
-import { makeStyles, tokens } from '@fluentui/react-components';
-import Header from './Header';
-import Sidebar from './sideBar';
+"use client";
+
+import React, { useState, useEffect } from "react";
+import { Outlet } from "react-router-dom";
+import { makeStyles, tokens } from "@fluentui/react-components";
+import Header from "./Header";
+import Sidebar from "./sideBar";
 
 const useStyles = makeStyles({
   root: {
-    display: 'flex',
-    flexDirection: 'column',
-    height: '100vh',
+    display: "flex",
+    flexDirection: "column",
     backgroundColor: tokens.colorNeutralBackground2,
-    padding: '0',
-    margin: '0',
+    padding: "0",
+    margin: "0",
   },
   header: {
-    width: '100%',
+    width: "100%",
   },
   contentWrapper: {
-    display: 'flex',
-    flex: 1,
-    overflow: 'hidden',
-    '@media (max-width: 768px)': {
-      flexDirection: 'column', 
+    display: "flex",
+    height: "calc(100vh - 60px)",
+    "@media (max-width: 768px)": {
+      flexDirection: "column",
     },
   },
   sidebar: {
-    width: '260px',
-    '@media (max-width: 768px)': {
-      width: '100%',
+    width: "260px",
+    "@media (max-width: 768px)": {
+      width: "100%",
     },
   },
   mainContent: {
     flex: 1,
-    display: 'flex',
-    flexDirection: 'column',
-    overflow: 'auto',
-    '@media (max-width: 768px)': {
-      padding: '0.5rem',
-    },
+    display: "flex",
+    flexDirection: "column",
+    overflow: "auto",
+    padding: "1rem",
   },
 });
 
@@ -45,7 +43,7 @@ const DashboardLayout: React.FC = () => {
   const styles = useStyles();
 
   return (
-    <div className={styles.root}>
+    <div className={styles.root} style={{ height: "100vh" }}>
       <div className={styles.header}>
         <Header />
       </div>
