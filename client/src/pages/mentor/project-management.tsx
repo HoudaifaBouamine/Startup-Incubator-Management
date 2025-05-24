@@ -394,7 +394,7 @@ const ProjectsManagement = () => {
           <Dropdown
             className={styles.filterDropdown}
             value={statusFilter}
-            onOptionSelect={(_:any, data) => setStatusFilter(data.optionValue || "all")}
+            onOptionSelect={(_:any, data:any) => setStatusFilter(data.optionValue || "all")}
             placeholder="Status"
           >
             <Option value="all">Status</Option>
