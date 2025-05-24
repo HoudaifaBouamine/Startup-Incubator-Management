@@ -1,9 +1,27 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { makeStyles, tokens, Button, Checkbox, Input, Avatar } from "@fluentui/react-components";
-import { MoreHorizontalRegular, CopyRegular, ShareRegular, PersonAddRegular, PeopleTeamRegular } from "@fluentui/react-icons";
-import { getProjectMembers, getProjectEncadrants, addMemberToProject } from "../../api/project-service";
+import {
+  makeStyles,
+  tokens,
+  Button,
+  Checkbox,
+  Input,
+  Avatar,
+} from "@fluentui/react-components";
+import {
+  MoreHorizontalRegular,
+  CopyRegular,
+  ShareRegular,
+  PersonAddRegular,
+  PeopleTeamRegular,
+} from "@fluentui/react-icons";
+import {
+  getProjectMembers,
+  getProjectEncadrants,
+  addMemberToProject,
+} from "../../api/project-service";
+import { getAllUsers } from "../../api/user-service";
 import { ProjectMember } from "../../types";
 
 const useStyles = makeStyles({
@@ -113,52 +131,169 @@ const useStyles = makeStyles({
     fontSize: "14px",
     color: tokens.colorNeutralForeground2,
   },
+  errorContainer: {
+    display: "flex",
+    flexDirection: "column",
+    alignItems: "center",
+    gap: "0.5rem",
+    padding: "1rem",
+    backgroundColor: tokens.colorStatusDangerBackground1,
+    borderRadius: "4px",
+    color: tokens.colorStatusDangerForeground1,
+  },
+  errorText: {
+    fontSize: "14px",
+  },
+  retryButton: {
+    backgroundColor: tokens.colorBrandBackground,
+    color: tokens.colorNeutralForegroundOnBrand,
+    padding: "0.25rem 0.75rem",
+  },
 });
 
 const Team = ({ projectId }: { projectId: string }) => {
   const styles = useStyles();
   const [selectedMembers, setSelectedMembers] = useState<string[]>([]);
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [email, setEmail] = useState("");
+  const [searchQuery, setSearchQuery] = useState("");
   const [members, setMembers] = useState<ProjectMember[]>([]);
   const [mentors, setMentors] = useState<ProjectMember[]>([]);
+  const [allUsers, setAllUsers] = useState<ProjectMember[]>([]);
+  const [usersLoading, setUsersLoading] = useState(false);
+  const [usersError, setUsersError] = useState<string | null>(null);
+  const [inviteError, setInviteError] = useState<string | null>(null);
 
   useEffect(() => {
     const fetchData = async () => {
       try {
+        console.debug("Team: Fetching project members and mentors", { projectId });
         const membersData = await getProjectMembers(projectId);
         const encadrantsData = await getProjectEncadrants(projectId);
+        console.debug("Team: Successfully fetched project data", {
+          members: membersData.relationData,
+          mentors: encadrantsData.relationData,
+        });
         setMembers(membersData.relationData);
         setMentors(encadrantsData.relationData);
       } catch (error) {
-        console.error("Failed to fetch project data:", (error as Error).message);
+        console.error("Team: Failed to fetch project data", {
+          error: (error as Error).message,
+          stack: (error as Error).stack,
+        });
       }
     };
     if (projectId) fetchData();
   }, [projectId]);
 
+  const fetchUsers = async () => {
+    console.debug("Team: Initiating fetchUsers for getAllUsers", { isModalOpen });
+    setUsersLoading(true);
+    setUsersError(null);
+    setAllUsers([]);
+
+    try {
+      const users = await getAllUsers();
+      console.debug("Team: Successfully fetched all users", { users });
+      setAllUsers(users);
+      setUsersError(null);
+    } catch (error) {
+      const errorMessage = (error as Error).message || "Unable to load users. Please try again later.";
+      console.error("Team: Failed to fetch all users", {
+        error: errorMessage,
+        stack: (error as Error).stack,
+      });
+      setUsersError(errorMessage);
+    } finally {
+      setUsersLoading(false);
+      console.debug("Team: Completed fetchUsers", {
+        usersLoading: false,
+        usersError,
+        allUsersCount: allUsers.length,
+      });
+    }
+  };
+
+  useEffect(() => {
+    if (isModalOpen) {
+      fetchUsers();
+    }
+  }, [isModalOpen]);
+
+  const filteredUsers = allUsers
+    .filter((user) => !members.some((member) => member.id === user.id))
+    .filter((user) => user.email.toLowerCase().includes(searchQuery.toLowerCase()))
+    .slice(0, 5); // Limit to 5 users
+
   const handleCheckboxChange = (id: string) => {
+    console.debug("Team: Toggling checkbox for user", { id, selectedMembers });
     setSelectedMembers((prev) =>
       prev.includes(id) ? prev.filter((item) => item !== id) : [...prev, id]
     );
   };
 
-  const handleInvite = async () => {
-    if (!email || !projectId) return;
+  const handleInvite = async (email: string) => {
+    if (!email || !projectId) {
+      console.warn("Team: Invalid invite parameters", { email, projectId });
+      setInviteError("Please enter a valid email and ensure project ID is provided");
+      return;
+    }
+
+    console.debug("Team: Attempting to invite user by email", { email });
     try {
-      await addMemberToProject(projectId, email);
-      setEmail("");
-      setIsModalOpen(false);
+      const user = allUsers.find(
+        (u) => u.email.toLowerCase() === email.toLowerCase()
+      );
+      if (user) {
+        console.debug("Team: Found user to invite", { user });
+        await addMemberToProject(projectId, user.id);
+        console.debug("Team: Successfully invited user", { email, userId: user.id });
+        setSearchQuery("");
+        setIsModalOpen(false);
+        setInviteError(null);
+        const membersData = await getProjectMembers(projectId);
+        console.debug("Team: Refreshed members list after invite", {
+          members: membersData.relationData,
+        });
+        setMembers(membersData.relationData);
+      } else {
+        console.warn("Team: User not found in registered users", { email });
+        setInviteError("User not found in registered users");
+      }
+    } catch (error) {
+      const errorMessage = (error as Error).message || "Failed to invite user";
+      console.error("Team: Invite failed", {
+        email,
+        error: errorMessage,
+        stack: (error as Error).stack,
+      });
+      setInviteError(errorMessage);
+    }
+  };
+
+  const handleInviteUser = async (userId: string) => {
+    console.debug("Team: Attempting to invite registered user", { userId });
+    try {
+      await addMemberToProject(projectId, userId);
+      console.debug("Team: Successfully invited registered user", { userId });
+      setSearchQuery("");
       const membersData = await getProjectMembers(projectId);
+      console.debug("Team: Refreshed members list after invite", {
+        members: membersData.relationData,
+      });
       setMembers(membersData.relationData);
     } catch (error) {
-      console.error("Invite failed:", (error as Error).message);
+      console.error("Team: Failed to invite registered user", {
+        userId,
+        error: (error as Error).message,
+        stack: (error as Error).stack,
+      });
     }
   };
 
   const handleCopyLink = () => {
-    navigator.clipboard.writeText(`https://www.starthub.com/project/${projectId}`);
-    console.log("Link copied to clipboard");
+    const link = `https://www.starthub.com/project/${projectId}`;
+    navigator.clipboard.writeText(link);
+    console.debug("Team: Copied project link to clipboard", { link });
   };
 
   return (
@@ -173,7 +308,12 @@ const Team = ({ projectId }: { projectId: string }) => {
             <Button
               className={styles.inviteButton}
               icon={<PersonAddRegular />}
-              onClick={() => setIsModalOpen(true)}
+              onClick={() => {
+                console.debug("Team: Opening invite modal");
+                setSearchQuery("");
+                setInviteError(null);
+                setIsModalOpen(true);
+              }}
             >
               Invite Member
             </Button>
@@ -273,6 +413,7 @@ const Team = ({ projectId }: { projectId: string }) => {
         </div>
       </div>
 
+      {/* Invite Modal */}
       {isModalOpen && (
         <div
           style={{
@@ -287,7 +428,10 @@ const Team = ({ projectId }: { projectId: string }) => {
             alignItems: "center",
             zIndex: 1000,
           }}
-          onClick={() => setIsModalOpen(false)}
+          onClick={() => {
+            console.debug("Team: Closing invite modal via backdrop click");
+            setIsModalOpen(false);
+          }}
         >
           <div
             style={{
@@ -308,11 +452,16 @@ const Team = ({ projectId }: { projectId: string }) => {
                 marginBottom: "1.5rem",
               }}
             >
-              <h2 style={{ margin: 0, fontSize: "18px", fontWeight: "600" }}>Invite a New Member</h2>
+              <h2 style={{ margin: 0, fontSize: "18px", fontWeight: "600" }}>
+                Invite a New Member
+              </h2>
               <Button
                 appearance="subtle"
                 size="small"
-                onClick={() => setIsModalOpen(false)}
+                onClick={() => {
+                  console.debug("Team: Closing invite modal via close button");
+                  setIsModalOpen(false);
+                }}
                 aria-label="Close"
                 icon={<span style={{ fontSize: "16px" }}>×</span>}
               />
@@ -320,15 +469,16 @@ const Team = ({ projectId }: { projectId: string }) => {
 
             <div style={{ display: "flex", flexDirection: "column", gap: "1.5rem" }}>
               <div>
-                <h3 style={{ fontSize: "14px", fontWeight: "600", marginBottom: "0.75rem" }}>
-                  Invite via Email
-                </h3>
                 <div style={{ display: "flex", gap: "0.5rem" }}>
                   <Input
                     style={{ flex: 1 }}
-                    placeholder="example@esi-sba.dz"
-                    value={email}
-                    onChange={(e) => setEmail(e.target.value)}
+                    placeholder="Enter email to invite or search registered users"
+                    value={searchQuery}
+                    onChange={(e) => {
+                      console.debug("Team: Updating search query", { searchQuery: e.target.value });
+                      setSearchQuery(e.target.value);
+                      setInviteError(null);
+                    }}
                   />
                   <Button
                     style={{
@@ -336,55 +486,92 @@ const Team = ({ projectId }: { projectId: string }) => {
                       color: tokens.colorNeutralForegroundOnBrand,
                       minWidth: "100px",
                     }}
-                    onClick={handleInvite}
+                    onClick={() => handleInvite(searchQuery)}
                   >
-                    Send invite
+                    Invite
                   </Button>
                 </div>
-              </div>
-
-              <div>
-                <h3 style={{ fontSize: "14px", fontWeight: "600", marginBottom: "0.75rem" }}>
-                  Registered Users
-                </h3>
-                <div style={{ display: "flex", flexDirection: "column", gap: "0.75rem" }}>
-                  {members.map((user) => (
-                    <div
-                      key={user.id}
-                      style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}
-                    >
-                      <div style={{ display: "flex", alignItems: "center", gap: "0.75rem" }}>
-                        <div
-                          style={{
-                            width: "32px",
-                            height: "32px",
-                            borderRadius: "50%",
-                            backgroundColor: tokens.colorNeutralBackground3,
-                            display: "flex",
-                            alignItems: "center",
-                            justifyContent: "center",
-                          }}
-                        >
-                          <PersonAddRegular style={{ fontSize: "16px", color: tokens.colorNeutralForeground3 }} />
-                        </div>
-                        <div>
-                          <div style={{ fontSize: "14px", fontWeight: "500" }}>
-                            {`${user.firstName} ${user.lastName}`}
-                          </div>
-                          <div style={{ fontSize: "12px", color: tokens.colorNeutralForeground2 }}>
-                            {user.email}
-                          </div>
-                        </div>
-                      </div>
+                <div style={{ marginTop: "1rem" }}>
+                  {usersLoading ? (
+                    <p style={{ color: tokens.colorNeutralForeground2 }}>Loading users...</p>
+                  ) : usersError ? (
+                    <div className={styles.errorContainer}>
+                      <p className={styles.errorText}>{usersError}</p>
                       <Button
-                        appearance="outline"
-                        icon={<span>+</span>}
-                        onClick={() => addMemberToProject(projectId, user.email)}
+                        className={styles.retryButton}
+                        onClick={() => {
+                          console.debug("Team: Retrying fetchUsers due to error");
+                          fetchUsers();
+                        }}
                       >
-                        Invite
+                        Retry
                       </Button>
                     </div>
-                  ))}
+                  ) : filteredUsers.length === 0 ? (
+                    <p style={{ color: tokens.colorNeutralForeground2 }}>
+                      {searchQuery
+                        ? "No registered users found matching your search"
+                        : "No registered users available to invite"}
+                    </p>
+                  ) : (
+                    <div style={{ display: "flex", flexDirection: "column" }}>
+                      {filteredUsers.map((user) => (
+                        <div
+                          key={user.id}
+                          style={{
+                            display: "flex",
+                            justifyContent: "space-between",
+                            alignItems: "center",
+                            padding: "0.5rem 0",
+                            borderBottom: `1px solid ${tokens.colorNeutralStroke2}`,
+                            flex: "1 1 auto", // Allow items to grow/shrink equally
+                          }}
+                        >
+                          <div style={{ display: "flex", alignItems: "center", gap: "0.75rem", flex: "1" }}>
+                            <Avatar
+                              name={`${user.firstName} ${user.lastName}`}
+                              size={32}
+                              color="colorful"
+                            />
+                            <div style={{ flex: "1", overflow: "hidden" }}>
+                              <div
+                                style={{
+                                  fontSize: "14px",
+                                  fontWeight: "500",
+                                  whiteSpace: "nowrap",
+                                  overflow: "hidden",
+                                  textOverflow: "ellipsis",
+                                }}
+                              >
+                                {`${user.firstName} ${user.lastName}`}
+                              </div>
+                              <div
+                                style={{
+                                  fontSize: "12px",
+                                  color: tokens.colorNeutralForeground2,
+                                  whiteSpace: "nowrap",
+                                  overflow: "hidden",
+                                  textOverflow: "ellipsis",
+                                }}
+                              >
+                                {user.email}
+                              </div>
+                            </div>
+                          </div>
+                          <Button
+                            appearance="primary"
+                            size="small"
+                            onClick={() => handleInviteUser(user.id)}
+                          >
+                            Invite
+                          </Button>
+                        </div>
+                      ))}
+                    </div>
+                  )}
+                  {inviteError && (
+                    <p style={{ color: "red", marginTop: "0.5rem" }}>{inviteError}</p>
+                  )}
                 </div>
               </div>
 

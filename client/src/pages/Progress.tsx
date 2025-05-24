@@ -10,6 +10,8 @@ import {
   Tab,
   Spinner,
   SelectTabEventHandler,
+  Text,
+  Title2,
 } from "@fluentui/react-components";
 import {
   ChevronRightRegular,
@@ -29,7 +31,6 @@ import {
   getProjectEncadrants,
   type Session,
 } from "../../api/project-service";
-import CreateSessionModal from "./components/create-session-modal";
 import AddDeliverableModal from "./components/add-delivrable-modal";
 import AddFeedbackModal from "./components/add-feedback-modal";
 import type { Deliverable, Feedback } from "../../types";
@@ -38,52 +39,79 @@ const useStyles = makeStyles({
   layout: {
     display: "flex",
     flexDirection: "column",
-    height: "100%",
     padding: "0",
     margin: "0",
   },
   headerSection: {
     backgroundColor: tokens.colorNeutralBackground1,
-    padding: "1rem 2rem",
-    marginBottom: "0.5rem",
-    boxShadow: "0 1px 2px rgba(0,0,0,0.05)",
+    padding: "1.5rem 2rem",
+    borderRadius: "8px",
+    boxShadow: tokens.shadow4,
+    margin: "0 auto",
+    display: "flex",
+    flexDirection: "column",
+    justifyContent: "center",
+    alignItems: "center",
+    gap: "1rem",
+    width: "95%",
+    position: "relative",
+    boxSizing: "border-box",
+    overflow: "hidden",
   },
   headerTitle: {
     fontSize: tokens.fontSizeBase600,
-    fontWeight: "600",
+    fontWeight: "700",
     color: tokens.colorNeutralForeground1,
     display: "flex",
     justifyContent: "space-between",
     alignItems: "center",
-    margin: "0 0 0.75rem 0",
+    width: "100%",
+    margin: 0,
+    zIndex: 1,
+  },
+  progressSection: {
+    display: "flex",
+    justifyContent: "center",
+    alignItems: "flex-end",
+    width: "100%",
+    position: "absolute",
+    bottom: 0,
+    left: 0,
+    right: 0,
+    padding: "0 2rem",
+    boxSizing: "border-box",
   },
   progressPercentage: {
-    fontSize: tokens.fontSizeBase600,
+    fontSize: tokens.fontSizeBase500,
     fontWeight: "600",
     color: tokens.colorBrandForeground1,
+    position: "relative",
+    zIndex: 1,
+    marginBottom: "0.5rem",
   },
   globalProgressBar: {
-    height: "8px",
-    backgroundColor: tokens.colorNeutralBackground4,
-    "& .fui-ProgressBar__bar": {
-      backgroundColor: tokens.colorBrandForeground1,
-    },
-    margin: "0",
+    width: "100%",
+    height: "6px",
+    position: "absolute",
+    bottom: 0,
+    left: 0,
+    right: 0,
+  },
+  progressText: {
+    fontSize: tokens.fontSizeBase300,
+    color: tokens.colorNeutralForeground2,
+    fontWeight: "500",
   },
   contentWrapper: {
     display: "flex",
     flex: 1,
-    height: "calc(100% - 70px)",
     backgroundColor: tokens.colorNeutralBackground2,
-    overflow: "hidden",
-    alignItems: "stretch",
-  },
+    },
   mainContent: {
     flex: 1,
     display: "flex",
-    padding: "0.5rem 2rem 1rem",
-    gap: "2rem",
-    height: "100%",
+    padding: "0 1rem",
+    gap: "1rem",
     position: "relative",
   },
   sessionsSection: {
@@ -91,14 +119,14 @@ const useStyles = makeStyles({
     flexDirection: "column",
     gap: "0.25rem",
     flex: "1 1 33%",
-    padding: "0",
-    maxHeight: "calc(100vh - 120px)",
+    padding: "0 1rem",
+    overflowY: "auto",
   },
   sessionHeader: {
     fontSize: "16px",
     fontWeight: "600",
     color: tokens.colorNeutralForeground1,
-    marginBottom: "0.25rem",
+    marginBottom: "1rem",
     display: "flex",
     alignItems: "center",
     gap: "0.5rem",
@@ -111,10 +139,10 @@ const useStyles = makeStyles({
     display: "flex",
     alignItems: "center",
     justifyContent: "space-between",
-    padding: "0.5rem 0.75rem",
+    padding: "0.25rem 0.5rem",
     backgroundColor: tokens.colorNeutralBackground1,
     borderRadius: "4px",
-    marginBottom: "1px",
+    marginBottom: "0.75rem",
     cursor: "pointer",
     ":hover": {
       backgroundColor: tokens.colorNeutralBackground4,
@@ -130,17 +158,15 @@ const useStyles = makeStyles({
     display: "flex",
     flexDirection: "column",
     gap: "0.25rem",
-    maxHeight: "calc(100vh - 120px)",
+    padding: "0 1rem",
   },
   tabContainer: {
     marginBottom: "0.5rem",
-    borderBottom: `1px solid ${tokens.colorNeutralStroke2}`,
   },
   deliverableCard: {
     backgroundColor: tokens.colorNeutralBackground1,
     borderRadius: "8px",
     padding: "0.75rem 1rem",
-    marginBottom: "0.5rem",
     display: "flex",
     alignItems: "center",
     justifyContent: "space-between",
@@ -153,7 +179,7 @@ const useStyles = makeStyles({
     display: "flex",
     justifyContent: "space-between",
     alignItems: "center",
-    marginBottom: "0.25rem",
+    marginBottom: "0.5rem",
   },
   deliverableName: {
     fontSize: tokens.fontSizeBase500,
@@ -165,10 +191,11 @@ const useStyles = makeStyles({
     fontSize: "14px",
     color: tokens.colorNeutralForeground2,
     margin: 0,
+    lineHeight: "1.5",
   },
   statusBadge: {
     fontSize: "12px",
-    padding: "2px 8px",
+    padding: "4px 12px",
     borderRadius: "16px",
     backgroundColor: "transparent",
     border: `1px solid ${tokens.colorBrandStroke1}`,
@@ -179,7 +206,7 @@ const useStyles = makeStyles({
   },
   notStartedBadge: {
     fontSize: "12px",
-    padding: "2px 8px",
+    padding: "4px 12px",
     borderRadius: "16px",
     backgroundColor: "transparent",
     border: `1px solid ${tokens.colorNeutralForeground3}`,
@@ -192,7 +219,7 @@ const useStyles = makeStyles({
     display: "flex",
     flexDirection: "column",
     alignItems: "flex-end",
-    gap: "0.25rem",
+    gap: "0.5rem",
   },
   progressPercentageSmall: {
     fontSize: tokens.fontSizeBase600,
@@ -206,11 +233,11 @@ const useStyles = makeStyles({
   feedbackCard: {
     backgroundColor: tokens.colorNeutralBackground1,
     borderRadius: "8px",
-    padding: "0.75rem 1rem",
-    marginBottom: "0.5rem",
+    padding: "1rem 1.5rem",
+    marginBottom: "1rem",
     display: "flex",
     alignItems: "center",
-    gap: "1rem",
+    gap: "1.5rem",
   },
   feedbackAvatar: {
     width: "24px",
@@ -224,16 +251,17 @@ const useStyles = makeStyles({
   feedbackText: {
     fontSize: "14px",
     color: tokens.colorNeutralForeground2,
+    lineHeight: "1.5",
   },
   pagination: {
     display: "flex",
     justifyContent: "center",
-    gap: "0.5rem",
-    marginTop: "0.5rem",
+    gap: "1rem",
+    marginTop: "1rem",
   },
   paginationItem: {
-    width: "28px",
-    height: "28px",
+    width: "32px",
+    height: "32px",
     display: "flex",
     alignItems: "center",
     justifyContent: "center",
@@ -248,18 +276,10 @@ const useStyles = makeStyles({
     backgroundColor: tokens.colorNeutralBackground3,
     fontWeight: tokens.fontWeightSemibold,
   },
-  divider: {
-    backgroundColor: tokens.colorNeutralStroke2,
-    width: "2px",
-    position: "absolute",
-    top: 0,
-    bottom: "0",
-    left: "calc(33% + 1rem)",
-  },
   statItem: {
     display: "flex",
     alignItems: "center",
-    gap: "0.5rem",
+    gap: "0.75rem",
     fontSize: "14px",
   },
   noFeedback: {
@@ -268,25 +288,26 @@ const useStyles = makeStyles({
     alignItems: "center",
     justifyContent: "center",
     textAlign: "center",
-    padding: "3rem 1rem",
+    padding: "4rem 2rem",
     height: "100%",
   },
   noFeedbackIcon: {
-    fontSize: "24px",
+    fontSize: "28px",
     color: tokens.colorNeutralForeground3,
-    marginBottom: "1rem",
+    marginBottom: "1.5rem",
   },
   noFeedbackTitle: {
-    fontSize: "16px",
+    fontSize: "18px",
     fontWeight: "600",
     color: tokens.colorNeutralForeground1,
-    marginBottom: "0.5rem",
+    marginBottom: "1rem",
   },
   noFeedbackText: {
     fontSize: "14px",
     color: tokens.colorNeutralForeground2,
-    maxWidth: "300px",
+    maxWidth: "350px",
     margin: "0 auto",
+    lineHeight: "1.6",
   },
   noSessionsContainer: {
     display: "flex",
@@ -294,17 +315,16 @@ const useStyles = makeStyles({
     alignItems: "center",
     justifyContent: "center",
     textAlign: "center",
-    padding: "3rem 1rem",
-    height: "100%",
+    padding: "4rem 2rem",
     backgroundColor: tokens.colorNeutralBackground1,
     borderRadius: "8px",
   },
   noSessionsIcon: {
-    fontSize: "24px",
+    fontSize: "28px",
     color: tokens.colorNeutralForeground3,
-    marginBottom: "1rem",
-    width: "48px",
-    height: "48px",
+    marginBottom: "1.5rem",
+    width: "56px",
+    height: "56px",
     display: "flex",
     alignItems: "center",
     justifyContent: "center",
@@ -314,7 +334,7 @@ const useStyles = makeStyles({
   defaultDeliverablesList: {
     display: "flex",
     flexDirection: "column",
-    gap: "0.5rem",
+    gap: "1rem",
     width: "100%",
   },
   loadingContainer: {
@@ -323,26 +343,27 @@ const useStyles = makeStyles({
     alignItems: "center",
     height: "100%",
     width: "100%",
+    padding: "2rem",
   },
   errorContainer: {
     display: "flex",
     flexDirection: "column",
     alignItems: "center",
     justifyContent: "center",
-    padding: "2rem",
+    padding: "3rem",
     backgroundColor: tokens.colorNeutralBackground1,
     borderRadius: "8px",
     color: tokens.colorStatusDangerForeground1,
-    gap: "1rem",
+    gap: "1.5rem",
   },
   errorIcon: {
-    fontSize: "32px",
+    fontSize: "40px",
     color: tokens.colorStatusDangerForeground1,
   },
   actionsContainer: {
     display: "flex",
-    gap: "0.5rem",
-    marginTop: "1rem",
+    gap: "1rem",
+    marginTop: "1.5rem",
   },
 });
 
@@ -384,7 +405,8 @@ type ProgressProps = {
 const Progress: React.FC<ProgressProps> = ({ projectId }) => {
   const styles = useStyles();
   const [activeTab, setActiveTab] = useState("deliverables");
-  const [selectedSession, setSelectedSession] = useState(0);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [selectedSessionId, setSelectedSessionId] = useState<string | null>(null);
   const [sessions, setSessions] = useState<Session[]>([]);
   const [projectName, setProjectName] = useState<string>("");
   const [loading, setLoading] = useState<boolean>(true);
@@ -404,15 +426,14 @@ const Progress: React.FC<ProgressProps> = ({ projectId }) => {
       console.log("Fetching project data for projectId:", projectId);
       try {
         const projectData = await getProjectById(projectId);
-        // If no project data is returned, treat it as "no data" instead of an error
         if (!projectData || !projectData.name) {
-          setProjectName("Project"); // Fallback name
+          setProjectName("Project");
         } else {
           setProjectName(projectData.name);
         }
       } catch (err) {
         console.warn("Project endpoint error:", err);
-        setProjectName("Project"); // Fallback name
+        setProjectName("Project");
       }
 
       try {
@@ -454,7 +475,6 @@ const Progress: React.FC<ProgressProps> = ({ projectId }) => {
         setEncadrants([]);
       }
     } catch (err) {
-      // Only set error for critical failures (e.g., network issues)
       console.error("Critical error fetching project data:", err);
       setError(err instanceof Error ? err.message : "Failed to load project data");
     } finally {
@@ -466,16 +486,18 @@ const Progress: React.FC<ProgressProps> = ({ projectId }) => {
     fetchProjectData();
   }, [projectId]);
 
+  useEffect(() => {
+    if (sessions.length > 0 && !selectedSessionId) {
+      setSelectedSessionId(sessions[0].id);
+    }
+  }, [sessions]);
+
   const handleTabChange: SelectTabEventHandler = (_event, data) => {
     setActiveTab(data.value as string);
   };
 
-  const handleSessionClick = (index: number) => {
-    setSelectedSession(index);
-  };
-
-  const handleSessionCreated = () => {
-    fetchProjectData();
+  const handleSessionClick = (sessionId: string) => {
+    setSelectedSessionId(sessionId);
   };
 
   const handleDeliverableAdded = () => {
@@ -505,9 +527,10 @@ const Progress: React.FC<ProgressProps> = ({ projectId }) => {
   };
 
   const globalProgress = calculateGlobalProgress();
+  const currentStep = globalProgress; // Current step is the progress percentage
 
   const hasNoSessions = sessions.length === 0;
-  const currentSession = hasNoSessions ? null : sessions[selectedSession];
+  const currentSession = hasNoSessions ? null : sessions.find((session) => session.id === selectedSessionId) || null;
   const currentDeliverables: Deliverable[] = hasNoSessions ? [] : currentSession?.deliverables || [];
   const currentFeedbacks: Feedback[] = hasNoSessions ? [] : currentSession?.feedbacks || [];
   const totalDeliverables = hasNoSessions
@@ -525,7 +548,6 @@ const Progress: React.FC<ProgressProps> = ({ projectId }) => {
     );
   }
 
-  // Only show the error UI for critical errors
   if (error && error !== "Project data is invalid or empty") {
     return (
       <div className={styles.errorContainer}>
@@ -540,10 +562,16 @@ const Progress: React.FC<ProgressProps> = ({ projectId }) => {
     <div className={styles.layout}>
       <div className={styles.headerSection}>
         <div className={styles.headerTitle}>
-          <h1 style={{ margin: 0 }}>{projectName || "Project"} Progress</h1>
+          <Title2>{projectName || "Project"} Progress</Title2>
           <span className={styles.progressPercentage}>{globalProgress}%</span>
         </div>
-        <ProgressBar value={globalProgress / 100} thickness="large" className={styles.globalProgressBar} />
+        <div className={styles.progressSection}>
+          <ProgressBar
+            value={0.5 / 100}
+            thickness="large"
+            className={styles.globalProgressBar}
+          />
+        </div>
       </div>
 
       <div className={styles.contentWrapper}>
@@ -551,7 +579,9 @@ const Progress: React.FC<ProgressProps> = ({ projectId }) => {
           {hasNoSessions ? (
             <>
               <div className={styles.sessionsSection}>
-                <h2 className={styles.sessionHeader}>Sessions</h2>
+                <h2 className={styles.sessionHeader}>
+                  Sessions <span className={styles.sessionCount}>({sessions.length})</span>
+                </h2>
                 <div className={styles.noSessionsContainer}>
                   <div className={styles.noSessionsIcon}>
                     <CalendarLtr20Regular style={{ fontSize: "24px" }} />
@@ -560,9 +590,6 @@ const Progress: React.FC<ProgressProps> = ({ projectId }) => {
                   <p className={styles.noFeedbackText}>
                     When your mentor submits a new progress report, you can see it here.
                   </p>
-                  <div className={styles.actionsContainer}>
-                    <CreateSessionModal projectId={projectId} onSessionCreated={handleSessionCreated} />
-                  </div>
                 </div>
                 <div className={styles.pagination}>
                   <div className={styles.paginationItem}>{"<"}</div>
@@ -571,13 +598,10 @@ const Progress: React.FC<ProgressProps> = ({ projectId }) => {
                 </div>
               </div>
 
-              <div className={styles.divider} />
-
               <div className={styles.deliverablesSection}>
                 <div className={styles.tabContainer}>
                   <TabList
-                    defaultSelectedValue="deliverables"
-                    selectedValue={activeTab}
+                    selectedValue={activeTab} // Removed defaultSelectedValue
                     onTabSelect={handleTabChange}
                   >
                     <Tab value="deliverables">
@@ -644,19 +668,15 @@ const Progress: React.FC<ProgressProps> = ({ projectId }) => {
                   <div
                     key={index}
                     className={styles.sessionItem}
-                    onClick={() => handleSessionClick(index)}
+                    onClick={() => handleSessionClick(session.id)}
                     style={{
-                      borderLeft: selectedSession === index ? `3px solid ${tokens.colorBrandBackground}` : "none",
+                      borderLeft: selectedSessionId === session.id ? `3px solid ${tokens.colorBrandBackground}` : "none",
                     }}
                   >
                     <span className={styles.sessionDate}>{session.date || "No date available"}</span>
                     <ChevronRightRegular />
                   </div>
                 ))}
-
-                <div className={styles.actionsContainer}>
-                  <CreateSessionModal projectId={projectId} onSessionCreated={handleSessionCreated} />
-                </div>
 
                 <div className={styles.pagination}>
                   <div className={styles.paginationItem}>{"<"}</div>
@@ -665,13 +685,10 @@ const Progress: React.FC<ProgressProps> = ({ projectId }) => {
                 </div>
               </div>
 
-              <div className={styles.divider} />
-
               <div className={styles.deliverablesSection}>
                 <div className={styles.tabContainer}>
                   <TabList
-                    defaultSelectedValue="deliverables"
-                    selectedValue={activeTab}
+                    selectedValue={activeTab} // Removed defaultSelectedValue
                     onTabSelect={handleTabChange}
                   >
                     <Tab value="deliverables">

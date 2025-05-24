@@ -1,4 +1,3 @@
-// AuthContext.tsx
 "use client";
 
 import React, { createContext, useContext, useState, useEffect, useMemo, useRef } from "react";
@@ -8,6 +7,7 @@ interface User {
   name: string;
   email: string;
   role: string;
+  id: string;
 }
 
 interface AuthContextType {
@@ -32,13 +32,19 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     const email = localStorage.getItem("userEmail");
     const name = localStorage.getItem("userFullName");
     const role = localStorage.getItem("userRole");
+    const id = localStorage.getItem("userId");
 
-    if (token && email && name && role) {
-      setUser({ name, email, role });
+    if (token && email && name && role && id) {
+      setUser({ name, email, role, id });
       setIsAuthenticated(true);
     } else {
       setUser(null);
       setIsAuthenticated(false);
+      localStorage.removeItem("authToken");
+      localStorage.removeItem("userEmail");
+      localStorage.removeItem("userFullName");
+      localStorage.removeItem("userRole");
+      localStorage.removeItem("userId");
     }
     setLoading(false);
   };
@@ -59,17 +65,19 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
         body: JSON.stringify({ email, password }),
       });
       const data = await res.json();
+      console.log(data,"data")
       if (!res.ok || !data.token || !data.user) {
         throw new Error(data.message || "Login failed");
       }
-      console.log(data,'data')
+      console.log(data, 'data');
       const fullName = `${data.user.firstName} ${data.user.lastName}`;
       localStorage.setItem("authToken", data.token);
       localStorage.setItem("userEmail", data.user.email);
       localStorage.setItem("userFullName", fullName);
       localStorage.setItem("userRole", data.user.role);
+      localStorage.setItem("userId", data.user.id); 
 
-      setUser({ name: fullName, email: data.user.email, role: data.user.role });
+      setUser({ name: fullName, email: data.user.email, role: data.user.role, id: data.user.id });
       setIsAuthenticated(true);
     } finally {
       setLoading(false);
@@ -78,16 +86,11 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
 
   const logout = async () => {
     setLoading(true);
-    try {
-      await fetchWithAuth("/auth/logout", { method: "POST" });
-    } catch (err) {
-      console.warn("Logout failed", err);
-    } finally {
+    
       localStorage.clear();
       setUser(null);
       setIsAuthenticated(false);
       setLoading(false);
-    }
   };
 
   const isRoleAllowed = (roles: string[]) => user ? roles.includes(user.role) : false;

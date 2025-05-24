@@ -4,6 +4,7 @@ import React, { useState } from "react"
 import { makeStyles, tokens, Button, Input, Text } from "@fluentui/react-components"
 import { Eye24Filled, EyeOff24Filled } from "@fluentui/react-icons"
 import { updateUserPassword } from "../../api/user-service"
+import { useAuthContext } from "./components/AuthContext"
 
 const useStyles = makeStyles({
   noProjectContainer: {
@@ -127,8 +128,8 @@ const Settings: React.FC = () => {
   const [error, setError] = useState<string | null>(null)
   const [success, setSuccess] = useState(false)
   const [loading, setLoading] = useState(false)
-
-  const userEmail = "user@example.com"
+  const { user } = useAuthContext();
+    const userEmail=user?.email
 
   const handleResetPassword = async (e: React.FormEvent) => {
     e.preventDefault()
@@ -152,7 +153,14 @@ const Settings: React.FC = () => {
 
     setLoading(true)
 
+    if (!userEmail) {
+      setError("User email is missing. Please log in again.");
+      setLoading(false);
+      return;
+    }
+
     try {
+        console.log("Updating password for user:", userEmail)
       await updateUserPassword(userEmail, currentPassword, newPassword)
       setSuccess(true)
       setCurrentPassword("")

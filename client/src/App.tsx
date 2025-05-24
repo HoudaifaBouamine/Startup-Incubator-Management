@@ -17,45 +17,73 @@ import Support from './pages/Support';
 import Settings from './pages/Settings';
 import ProjectsManagement from './pages/mentor/project-management';
 import ProjectDetail from './pages/mentor/project-details';
-import { getProjectByUserId } from '../api/project-service';
+import { getProjectByUser } from '../api/project-service';
 import ProtectedRoute from './pages/components/ProtectedRoute';
+import { useAuthContext } from './pages/components/AuthContext';
+
+// Dummy project ID to use when no projects are found
+const DUMMY_PROJECT_ID = 'dummy-project-id';
 
 const ProjectIdWrapper: React.FC<{ Component: React.FC<{ projectId: string }> }> = ({ Component }) => {
   const { projectId } = useParams<{ projectId?: string }>();
+  const { user } = useAuthContext();
   const [fetchedProjectId, setFetchedProjectId] = useState<string | null>(null);
   const [error, setError] = useState<string | null>(null);
-  const userId = localStorage.getItem("userEmail") || "current-user-id";
 
   useEffect(() => {
     const fetchProjectId = async () => {
       try {
+        if (!user) {
+          setError("User not authenticated. Please log in.");
+          return;
+        }
+
+        const userFirstName = user.name?.split(' ')[0] || user.name || '';
+        console.log("User ID:", user.id, "User First Name:", userFirstName);
+
+        if (!user.id || !userFirstName) {
+          setError("Missing user information (ID or name). Please log in again.");
+          return;
+        }
+
         if (projectId) {
           setFetchedProjectId(projectId);
           localStorage.setItem('projectId', projectId);
           return;
         }
+
         const storedProjectId = localStorage.getItem('projectId');
         if (storedProjectId) {
           setFetchedProjectId(storedProjectId);
           return;
         }
-        const projectData = await getProjectByUserId(userId);
-        if (!projectData || projectData.length === 0) {
-          throw new Error("No project found for user");
+
+        const projects = await getProjectByUser({ id: user.id, firstName: userFirstName });
+        if (!projects || projects.length === 0) {
+          console.warn("No projects found for user, using dummy project ID:", DUMMY_PROJECT_ID);
+          setFetchedProjectId(DUMMY_PROJECT_ID);
+        } else {
+          const newProjectId = projects[0].id;
+          setFetchedProjectId(newProjectId);
+          localStorage.setItem('projectId', newProjectId);
         }
-        const newProjectId = projectData[0]?.id;
-        setFetchedProjectId(newProjectId);
-        localStorage.setItem('projectId', newProjectId);
-      } catch (error) {
-        console.error("Failed to fetch project ID:", error);
-        setError("Failed to load project ID");
+      } catch (err) {
+        console.error("Failed to fetch project ID:", err);
+        setError("Failed to load project ID. Please check your user data or contact support.");
       }
     };
+
     fetchProjectId();
-  }, [userId, projectId]);
+  }, [projectId, user]);
 
   if (error) {
-    return <Navigate to="/404" replace />;
+    return (
+      <div style={{ padding: '2rem', textAlign: 'center' }}>
+        <h2>Error</h2>
+        <p>{error}</p>
+        <a href="/login">Log in again</a>
+      </div>
+    );
   }
 
   if (!fetchedProjectId) {

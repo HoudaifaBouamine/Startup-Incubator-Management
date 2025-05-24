@@ -1,8 +1,16 @@
-"use client"
+"use client";
 
-import { useState, useEffect } from "react"
-import { useParams, useNavigate, Link } from "react-router-dom"
-import { makeStyles, Button, Spinner, TabList, Tab, type SelectTabEventHandler, tokens } from "@fluentui/react-components"
+import { useState, useEffect } from "react";
+import { useParams, useNavigate, Link } from "react-router-dom";
+import { 
+  makeStyles, 
+  Button, 
+  Spinner, 
+  TabList, 
+  Tab, 
+  type SelectTabEventHandler, 
+  tokens 
+} from "@fluentui/react-components";
 import {
   ChevronRight20Regular,
   Folder20Filled,
@@ -13,9 +21,10 @@ import {
   PeopleRegular,
   CalendarLtr20Regular,
   Add16Filled,
-} from "@fluentui/react-icons"
-import { useAuthContext } from "../components/AuthContext"
-import { Deliverable, Project } from "../../../types"
+} from "@fluentui/react-icons";
+import { useAuthContext } from "../components/AuthContext";
+import { Deliverable, Project } from "../../../types";
+import CreateSessionModal from "../components/create-session-modal";
 
 const useStyles = makeStyles({
   container: {
@@ -38,17 +47,14 @@ const useStyles = makeStyles({
     "&:hover": { textDecoration: "underline" },
   },
   breadcrumbCurrent: { color: tokens.colorNeutralForeground1 },
-
   projectHeader: {
-  backgroundColor: tokens.colorNeutralBackground1,
-  padding: "20px 24px",
-  borderBottom: `1px solid ${tokens.colorNeutralStroke1}`,
-  borderRadius: "8px",
-  boxShadow: "0 1px 1px rgba(0, 0, 0, 1)",
-  margin: "0 28px",
-
-},
-
+    backgroundColor: tokens.colorNeutralBackground1,
+    padding: "20px 24px",
+    borderBottom: `1px solid ${tokens.colorNeutralStroke1}`,
+    borderRadius: "8px",
+    boxShadow: "0 1px 1px rgba(0, 0, 0, 1)",
+    margin: "0 28px",
+  },
   projectHeaderTop: {
     display: "flex",
     justifyContent: "space-between",
@@ -95,10 +101,9 @@ const useStyles = makeStyles({
     display: "flex",
     flexDirection: "column",
     padding: "0 24px",
-    
   },
   sessionsPanelHeader: {
-    margin:"2px"
+    margin: "2px",
   },
   sessionsPanelTitle: {
     fontSize: "18px",
@@ -117,7 +122,6 @@ const useStyles = makeStyles({
     backgroundColor: tokens.colorNeutralBackground1,
     "&:hover": { backgroundColor: tokens.colorNeutralBackground3 },
     borderRadius: "4px",
-    
   },
   sessionItemActive: {
     backgroundColor: tokens.colorNeutralBackground3,
@@ -198,7 +202,7 @@ const useStyles = makeStyles({
     "&:hover": { backgroundColor: tokens.colorBrandBackgroundHover },
     "&:focus": { outline: "none" },
   },
-  deliverablesContent: { flex: 1, padding: "2px 6px",paddingRight:'28px', overflow: "auto" },
+  deliverablesContent: { flex: 1, padding: "2px 6px", paddingRight: "28px", overflow: "auto" },
   deliverablesList: { display: "flex", flexDirection: "column", gap: "4px" },
   deliverableItem: {
     display: "flex",
@@ -276,29 +280,30 @@ const useStyles = makeStyles({
     gap: "16px",
   },
   unauthorizedText: { fontSize: "16px", color: tokens.colorNeutralForeground1 },
-})
+});
 
 const ProjectDetail = () => {
-  const styles = useStyles()
-  const { projectId } = useParams<{ projectId: string }>()
-  const navigate = useNavigate()
-  const { user, loading: isLoading } = useAuthContext()
-  const [project, setProject] = useState<Project | null>(null)
-  const [projectLoading, setProjectLoading] = useState(true)
-  const [activeTab, setActiveTab] = useState("deliverables")
-  const [selectedSessionIndex, setSelectedSessionIndex] = useState(0)
-  const [editMode, setEditMode] = useState(false)
-  const [tempDeliverables, setTempDeliverables] = useState<Deliverable[]>([])
+  const styles = useStyles();
+  const { projectId } = useParams<{ projectId: string }>();
+  const navigate = useNavigate();
+  const { user, loading: isLoading } = useAuthContext();
+  const [project, setProject] = useState<Project | null>(null);
+  const [projectLoading, setProjectLoading] = useState(true);
+  const [activeTab, setActiveTab] = useState("deliverables"); // Controlled state
+  const [selectedSessionIndex, setSelectedSessionIndex] = useState(0);
+  const [editMode, setEditMode] = useState(false);
+  const [tempDeliverables, setTempDeliverables] = useState<Deliverable[]>([]);
+  const [refreshTrigger, setRefreshTrigger] = useState(0);
 
   useEffect(() => {
-    if (!isLoading && user && user.role !== "SUPERVISOR") navigate("/dashboard")
-  }, [user, isLoading, navigate])
+    if (!isLoading && user && user.role !== "SUPERVISOR") navigate("/dashboard");
+  }, [user, isLoading, navigate]);
 
   useEffect(() => {
     const fetchProject = async () => {
       try {
         setTimeout(() => {
-          const isCompleted = projectId === "1"
+          const isCompleted = projectId === "1";
           let mockProject: Project = isCompleted
             ? {
                 id: projectId || "1",
@@ -320,55 +325,61 @@ const ProjectDetail = () => {
                 },
                 industry: "", about: "", problem: "", solution: "", idea: "", targetAudience: "", competitiveAdvantage: "", motivation: "", status: "", stage: "", createdAt: "",
               }
-            : { id: projectId || "3", name: "Project Name", teamId: "Team ID", progress: { id: "progress3", name: "Progress", globalProgress: 0, sessions: [] }, industry: "", about: "", problem: "", solution: "", idea: "", targetAudience: "", competitiveAdvantage: "", motivation: "", status: "", stage: "", createdAt: "" }
-          setProject(mockProject)
-          setProjectLoading(false)
-        }, 1000)
+            : { id: projectId || "3", name: "Project Name", teamId: "Team ID", progress: { id: "progress3", name: "Progress", globalProgress: 0, sessions: [] }, industry: "", about: "", problem: "", solution: "", idea: "", targetAudience: "", competitiveAdvantage: "", motivation: "", status: "", stage: "", createdAt: "" };
+          setProject(mockProject);
+          setProjectLoading(false);
+        }, 1000);
       } catch (error) {
-        console.error("Error fetching project:", error)
-        setProjectLoading(false)
+        console.error("Error fetching project:", error);
+        setProjectLoading(false);
       }
-    }
-    if (projectId) fetchProject()
-  }, [projectId])
+    };
+    if (projectId) fetchProject();
+  }, [projectId, refreshTrigger]);
 
-  const handleTabChange: SelectTabEventHandler = (_, data) => setActiveTab(data.value as string)
-  const handleSessionClick = (index: number) => setSelectedSessionIndex(index)
+  const handleTabChange: SelectTabEventHandler = (_, data) => setActiveTab(data.value as string);
+  const handleSessionClick = (index: number) => setSelectedSessionIndex(index);
   const handleEditToggle = () => {
     if (editMode && project && project.progress.sessions[selectedSessionIndex]) {
-      const updatedSessions = [...project.progress.sessions]
-      updatedSessions[selectedSessionIndex] = { ...updatedSessions[selectedSessionIndex], deliverables: tempDeliverables }
-      let totalProgress = 0, totalDeliverables = 0
-      updatedSessions.forEach(session => session.deliverables.forEach(deliverable => { totalProgress += deliverable.progress; totalDeliverables++ }))
-      const newProgress = totalDeliverables > 0 ? Math.round(totalProgress / totalDeliverables) : 0
-      setProject({ ...project, progress: { ...project.progress, globalProgress: newProgress, sessions: updatedSessions } })
-    } else if (project && project.progress.sessions[selectedSessionIndex]) setTempDeliverables([...project.progress.sessions[selectedSessionIndex].deliverables])
-    setEditMode(!editMode)
-  }
+      const updatedSessions = [...project.progress.sessions];
+      updatedSessions[selectedSessionIndex] = { ...updatedSessions[selectedSessionIndex], deliverables: tempDeliverables };
+      let totalProgress = 0, totalDeliverables = 0;
+      updatedSessions.forEach(session => session.deliverables.forEach(deliverable => { totalProgress += deliverable.progress; totalDeliverables++ }));
+      const newProgress = totalDeliverables > 0 ? Math.round(totalProgress / totalDeliverables) : 0;
+      setProject({ ...project, progress: { ...project.progress, globalProgress: newProgress, sessions: updatedSessions } });
+    } else if (project && project.progress.sessions[selectedSessionIndex]) {
+      setTempDeliverables([...project.progress.sessions[selectedSessionIndex].deliverables]);
+    }
+    setEditMode(!editMode);
+  };
   const handleIncrementProgress = (deliverableIndex: number) => {
-    if (!editMode) return
-    const updatedDeliverables = [...tempDeliverables]
-    const currentProgress = updatedDeliverables[deliverableIndex].progress
-    const newProgress = Math.min(currentProgress + 10, 100)
-    updatedDeliverables[deliverableIndex] = { ...updatedDeliverables[deliverableIndex], progress: newProgress, change: "+10%", status: newProgress === 0 ? "not started" : newProgress === 100 ? "done" : "in progress" }
-    setTempDeliverables(updatedDeliverables)
-  }
+    if (!editMode) return;
+    const updatedDeliverables = [...tempDeliverables];
+    const currentProgress = updatedDeliverables[deliverableIndex].progress;
+    const newProgress = Math.min(currentProgress + 10, 100);
+    updatedDeliverables[deliverableIndex] = { ...updatedDeliverables[deliverableIndex], progress: newProgress, change: "+10%", status: newProgress === 0 ? "not started" : newProgress === 100 ? "done" : "in progress" };
+    setTempDeliverables(updatedDeliverables);
+  };
 
-  const getStatusBadgeClass = (status: string) => ({ "not started": styles.statusBadgeNotStarted, "in progress": styles.statusBadgeInProgress, "done": styles.statusBadgeDone }[status] || "")
-  const getStatusText = (status: string) => ({ "not started": "Not started", "in progress": "In progress", "done": "Done" }[status] || status)
+  const getStatusBadgeClass = (status: string) => ({ "not started": styles.statusBadgeNotStarted, "in progress": styles.statusBadgeInProgress, "done": styles.statusBadgeDone }[status] || "");
+  const getStatusText = (status: string) => ({ "not started": "Not started", "in progress": "In progress", "done": "Done" }[status] || status);
 
   if (!isLoading && user && user.role !== "SUPERVISOR") return (
     <div className={styles.unauthorizedContainer}>
       <h2 className={styles.unauthorizedText}>You don't have permission to access this page.</h2>
       <Button appearance="primary" onClick={() => navigate("/dashboard")}>Go to Dashboard</Button>
     </div>
-  )
+  );
   if (projectLoading || isLoading || !project) return (
     <div className={styles.loadingContainer}><Spinner size="large" label="Loading project details..." /></div>
-  )
+  );
 
-  const currentSession = project.progress.sessions[selectedSessionIndex] || { deliverables: [], feedbacks: [] }
-  const deliverablesToDisplay = editMode ? tempDeliverables : currentSession.deliverables
+  const currentSession = project.progress.sessions[selectedSessionIndex] || { deliverables: [], feedbacks: [] };
+  const deliverablesToDisplay = editMode ? tempDeliverables : currentSession.deliverables;
+
+  const handleSessionCreated = () => {
+    setRefreshTrigger(prev => prev + 1);
+  };
 
   return (
     <div className={styles.container}>
@@ -394,6 +405,7 @@ const ProjectDetail = () => {
         <div className={styles.sessionsPanel}>
           <div className={styles.sessionsPanelHeader}>
             <h2 className={styles.sessionsPanelTitle}>Sessions {project.progress.sessions.length > 0 && `(${project.progress.sessions.length})`}</h2>
+            <CreateSessionModal projectId={projectId || ""} onSessionCreated={handleSessionCreated} />
           </div>
           {project.progress.sessions.length > 0 ? (
             <div className={styles.sessionsList}>
@@ -414,7 +426,7 @@ const ProjectDetail = () => {
         </div>
         <div className={styles.deliverablesPanel}>
           <div className={styles.tabContainer}>
-            <TabList defaultSelectedValue="deliverables" selectedValue={activeTab} onTabSelect={handleTabChange}>
+            <TabList selectedValue={activeTab} onTabSelect={handleTabChange}>
               <Tab value="deliverables">
                 <div className={styles.tabContent}>
                   {activeTab === "deliverables" ? <Folder20Filled style={{ color: tokens.colorBrandForeground1 }} /> : <Folder20Regular />}
@@ -457,7 +469,7 @@ const ProjectDetail = () => {
         </div>
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default ProjectDetail
+export default ProjectDetail;

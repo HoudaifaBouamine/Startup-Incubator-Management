@@ -1,16 +1,16 @@
-"use client"
+"use client";
 
-import { useState, useEffect } from "react"
-import { makeStyles, tokens, Button } from "@fluentui/react-components"
+import { useState, useEffect } from "react";
+import { makeStyles, tokens, Button } from "@fluentui/react-components";
 import {
   ChevronRight20Regular,
   Clock20Regular,
   Map20Regular,
   ChevronUp20Regular,
   ChevronDown20Regular,
-} from "@fluentui/react-icons"
-import { getProjectSessions } from "../../api/project-service"
-import { Session } from "../../types"
+} from "@fluentui/react-icons";
+import { getProjectSessions } from "../../api/project-service";
+import { Session } from "../../types";
 
 const useStyles = makeStyles({
   root: {
@@ -174,65 +174,198 @@ const useStyles = makeStyles({
     backgroundColor: tokens.colorNeutralBackground1,
     borderRadius: "8px",
     height: "120px",
+    display: "flex",
+    flexDirection: "column",
+    justifyContent: "center",
+    alignItems: "center",
+    padding: "16px",
   },
-})
+  pastWorkshopDate: {
+    fontSize: "14px",
+    color: tokens.colorNeutralForeground2,
+  },
+  pastWorkshopTitle: {
+    fontSize: "16px",
+    fontWeight: "600",
+    color: tokens.colorNeutralForeground1,
+  },
+  // New style for the "no workshops" message
+  noWorkshopsMessage: {
+    fontSize: "14px",
+    color: tokens.colorNeutralForeground2,
+    textAlign: "center",
+    padding: "20px",
+    backgroundColor: tokens.colorNeutralBackground1,
+    borderRadius: "8px",
+  },
+});
 
 const Training = ({ projectId }: { projectId: string }) => {
-  const styles = useStyles()
-  const [activeDay, setActiveDay] = useState(11)
-  const [selectedDay, setSelectedDay] = useState(26)
-  const [sessions, setSessions] = useState<Session[]>([])
+  const styles = useStyles();
+  const [activeDay, setActiveDay] = useState<number | null>(null);
+  const [selectedDay, setSelectedDay] = useState<number | null>(null);
+  const [sessions, setSessions] = useState<Session[]>([]);
+  const [currentMonth, setCurrentMonth] = useState(new Date().getMonth());
+  const [currentYear, setCurrentYear] = useState(new Date().getFullYear());
 
-  const days = ["Su", "Mo", "Tu", "We", "Th", "Fr", "Sa"]
-  const novemberDays = Array.from({ length: 30 }, (_, i) => i + 1)
-  const nextMonthDays = Array.from({ length: 5 }, (_, i) => i + 1)
-  const prevMonthDays = Array.from({ length: 2 }, (_, i) => i + 28)
-
-  const calendarDays = [...prevMonthDays, ...novemberDays, ...nextMonthDays]
+  const days = ["Su", "Mo", "Tu", "We", "Th", "Fr", "Sa"];
 
   useEffect(() => {
     const fetchSessions = async () => {
       try {
-        const data = await getProjectSessions(projectId)
-        setSessions(data)
+        const data = await getProjectSessions(projectId);
+        setSessions(data);
       } catch (error) {
-        console.error("Failed to fetch sessions:", error)
+        console.error("Failed to fetch sessions:", error);
       }
-    }
-    fetchSessions()
-  }, [projectId])
+    };
+    fetchSessions();
+  }, [projectId]);
 
-  const currentDate = new Date("2025-05-23")
+  // Dynamically generate calendar days
+  const getCalendarDays = () => {
+    const firstDay = new Date(currentYear, currentMonth, 1);
+    const lastDay = new Date(currentYear, currentMonth + 1, 0);
+    const prevLastDay = new Date(currentYear, currentMonth, 0);
+    const nextDays = new Date(currentYear, currentMonth + 1, 1);
+
+    const prevDays = Array.from(
+      { length: firstDay.getDay() },
+      (_, i) => prevLastDay.getDate() - firstDay.getDay() + i + 1
+    );
+    const currentDays = Array.from(
+      { length: lastDay.getDate() },
+      (_, i) => i + 1
+    );
+    const nextDaysCount = 7 - ((prevDays.length + currentDays.length) % 7 || 7);
+    const nextDaysArray = Array.from(
+      { length: nextDaysCount },
+      (_, i) => i + 1
+    );
+
+    return [...prevDays, ...currentDays, ...nextDaysArray];
+  };
+
+  const calendarDays = getCalendarDays();
+  const monthName = new Date(currentYear, currentMonth).toLocaleString(
+    "default",
+    { month: "long" }
+  );
+
+  const currentDate = new Date("2025-05-24"); // Today's date: May 24, 2025
   const upcomingWorkshops = sessions
     .filter((session) => new Date(session.date) >= currentDate)
     .map((session) => ({
-      date: new Date(session.date).toLocaleDateString("en-US", { month: "long", day: "numeric" }),
+      date: new Date(session.date).toLocaleDateString("en-US", {
+        month: "long",
+        day: "numeric",
+      }),
       time: "9:00 AM to 5:00 PM", // Placeholder, adjust based on API data
       location: "ESI SBA Room 04", // Placeholder
       title: `Session ${session.id}`,
       description: session.feedbacks?.[0]?.text || "No description available",
       mentor: session.feedbacks?.[0]?.author || "@mentor_name",
-    }))
+    }));
 
-  const pastWorkshops = sessions
-    .filter((session) => new Date(session.date) < currentDate)
+  // Dummy past workshops
+  const dummyPastWorkshops = [
+    {
+      title: "Workshop title",
+      date: "March 12, 2023",
+      time: "10:00 AM - 4:00 PM",
+      description: "Solutions for Tomorrow",
+      id: "past1",
+    },
+    {
+      title: "Workshop title",
+      date: "March 15, 2023",
+      time: "10:00 AM - 4:00 PM",
+      description: "Solutions for Tomorrow",
+      id: "past2",
+    },
+    {
+      title: "Workshop title",
+      date: "March 15, 2023",
+      time: "10:00 AM - 4:00 PM",
+      description: "Solutions for Tomorrow",
+      id: "past3",
+    },
+    {
+      title: "Workshop title",
+      date: "March 15, 2023",
+      time: "10:00 AM - 4:00 PM",
+      description: "Solutions for Tomorrow",
+      id: "past4",
+    },
+    {
+      title: "Workshop title",
+      date: "March 15, 2023",
+      time: "10:00 AM - 4:00 PM",
+      description: "Solutions for Tomorrow",
+      id: "past5",
+    },
+    {
+      title: "Workshop title",
+      date: "March 15, 2023",
+      time: "10:00 AM - 4:00 PM",
+      description: "Solutions for Tomorrow",
+      id: "past6",
+    },
+    {
+      title: "Workshop title",
+      date: "March 15, 2023",
+      time: "10:00 AM - 4:00 PM",
+      description: "Solutions for Tomorrow",
+      id: "past7",
+    },
+  ];
+
+  const handlePrevMonth = () => {
+    setCurrentMonth((prev) => (prev === 0 ? 11 : prev - 1));
+    setCurrentYear((prev) => (currentMonth === 0 ? prev - 1 : prev));
+    setActiveDay(null);
+    setSelectedDay(null);
+  };
+
+  const handleNextMonth = () => {
+    setCurrentMonth((prev) => (prev === 11 ? 0 : prev + 1));
+    setCurrentYear((prev) => (currentMonth === 11 ? prev + 1 : prev));
+    setActiveDay(null);
+    setSelectedDay(null);
+  };
 
   return (
     <div className={styles.root}>
       <div className={styles.mainContent}>
         <div className={styles.content}>
           <h1 className={styles.pageTitle}>Training</h1>
-          <p className={styles.pageSubtitle}>Attend workshops to learn, grow, and advance.</p>
+          <p className={styles.pageSubtitle}>
+            Attend workshops to learn, grow, and advance.
+          </p>
 
-          <h2 className={styles.sectionTitle}>Upcoming Workshops ({upcomingWorkshops.length})</h2>
+          <h2 className={styles.sectionTitle}>
+            Upcoming Workshops ({upcomingWorkshops.length})
+          </h2>
 
           <div className={styles.calendarContainer}>
             <div className={styles.calendar}>
               <div className={styles.calendarHeader}>
-                <span className={styles.calendarMonth}>November</span>
+                <span className={styles.calendarMonth}>
+                  {monthName} {currentYear}
+                </span>
                 <div className={styles.calendarControls}>
-                  <Button appearance="subtle" icon={<ChevronUp20Regular />} size="small" />
-                  <Button appearance="subtle" icon={<ChevronDown20Regular />} size="small" />
+                  <Button
+                    appearance="subtle"
+                    icon={<ChevronUp20Regular />}
+                    size="small"
+                    onClick={handlePrevMonth}
+                  />
+                  <Button
+                    appearance="subtle"
+                    icon={<ChevronDown20Regular />}
+                    size="small"
+                    onClick={handleNextMonth}
+                  />
                 </div>
               </div>
 
@@ -244,70 +377,102 @@ const Training = ({ projectId }: { projectId: string }) => {
                 ))}
 
                 {calendarDays.map((day, index) => {
-                  const isCurrentMonth = index >= 2 && index < 32
-                  const isActive = isCurrentMonth && day === activeDay
-                  const isSelected = isCurrentMonth && day === selectedDay
+                  const isCurrentMonth =
+                    index >= new Date(currentYear, currentMonth, 1).getDay() &&
+                    index <
+                      new Date(currentYear, currentMonth, 1).getDay() +
+                        new Date(currentYear, currentMonth, 0).getDate();
+                  const isActive = isCurrentMonth && day === activeDay;
+                  const isSelected = isCurrentMonth && day === selectedDay;
 
                   return (
                     <div
                       key={`${index}-${day}`}
-                      className={`${styles.calendarDay} ${isActive ? styles.calendarDayActive : ""} ${
-                        isSelected ? styles.calendarDaySelected : ""
-                      }`}
+                      className={`${styles.calendarDay} ${
+                        isActive ? styles.calendarDayActive : ""
+                      } ${isSelected ? styles.calendarDaySelected : ""}`}
                       style={{
-                        color: isCurrentMonth ? undefined : tokens.colorNeutralForeground3,
+                        color: isCurrentMonth
+                          ? undefined
+                          : tokens.colorNeutralForeground3,
                         cursor: isCurrentMonth ? "pointer" : "default",
                       }}
                       onClick={() => isCurrentMonth && setActiveDay(day)}
                     >
                       {day}
                     </div>
-                  )
+                  );
                 })}
               </div>
             </div>
 
             <div className={styles.workshopList}>
-              {upcomingWorkshops.map((workshop, index) => (
-                <div key={index} className={styles.workshopItem}>
-                  <div className={styles.workshopInfo}>
-                    <div className={styles.workshopDate}>
-                      <div className={styles.workshopDateTitle}>{workshop.date}</div>
-                      <div className={styles.workshopMeta}>
-                        <Clock20Regular />
-                        <span>{workshop.time}</span>
+              {upcomingWorkshops.length > 0 ? (
+                upcomingWorkshops.map((workshop, index) => (
+                  <div key={index} className={styles.workshopItem}>
+                    <div className={styles.workshopInfo}>
+                      <div className={styles.workshopDate}>
+                        <div className={styles.workshopDateTitle}>
+                          {workshop.date}
+                        </div>
+                        <div className={styles.workshopMeta}>
+                          <Clock20Regular />
+                          <span>{workshop.time}</span>
+                        </div>
+                        <div className={styles.workshopMeta}>
+                          <Map20Regular />
+                          <span>{workshop.location}</span>
+                        </div>
                       </div>
-                      <div className={styles.workshopMeta}>
-                        <Map20Regular />
-                        <span>{workshop.location}</span>
+
+                      <div className={styles.workshopDetails}>
+                        <div className={styles.workshopTitle}>
+                          {workshop.title}
+                        </div>
+                        <div className={styles.workshopDescription}>
+                          {workshop.description}
+                        </div>
+                        <div className={styles.mentorName}>
+                          {workshop.mentor}
+                        </div>
                       </div>
                     </div>
 
-                    <div className={styles.workshopDetails}>
-                      <div className={styles.workshopTitle}>{workshop.title}</div>
-                      <div className={styles.workshopDescription}>{workshop.description}</div>
-                      <div className={styles.mentorName}>{workshop.mentor}</div>
-                    </div>
+                    <ChevronRight20Regular />
                   </div>
-
-                  <ChevronRight20Regular />
+                ))
+              ) : (
+                <div className={styles.noWorkshopsMessage}>
+                  No upcoming workshops scheduled.
                 </div>
-              ))}
+              )}
             </div>
           </div>
 
           <div className={styles.pastWorkshops}>
-            <h2 className={styles.sectionTitle}>Past Workshops ({pastWorkshops.length})</h2>
+            <h2 className={styles.sectionTitle}>
+              Past Workshops ({dummyPastWorkshops.length})
+            </h2>
             <div className={styles.pastWorkshopsGrid}>
-              {pastWorkshops.map((session, index) => (
-                <div key={index} className={styles.pastWorkshopCard}></div>
+              {dummyPastWorkshops.map((workshop) => (
+                <div key={workshop.id} className={styles.pastWorkshopCard}>
+                  <div className={styles.pastWorkshopDate}>
+                    {workshop.date} | {workshop.time}
+                  </div>
+                  <div className={styles.pastWorkshopTitle}>
+                    {workshop.title}
+                  </div>
+                  <div className={styles.workshopDescription}>
+                    {workshop.description}
+                  </div>
+                </div>
               ))}
             </div>
           </div>
         </div>
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default Training
+export default Training;

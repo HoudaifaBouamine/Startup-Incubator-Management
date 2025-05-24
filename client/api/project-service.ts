@@ -6,7 +6,7 @@ import {
   ProjectMember,
   Project,
 } from "../types";
-import { fetchWithAuth } from "./user-service"; 
+import { fetchWithAuth } from "./user-service";
 
 const API_BASE_URL = import.meta.env.VITE_BACKEND_URL;
 
@@ -30,8 +30,19 @@ export const getProjectJuryMembers = async (projectId: string): Promise<ProjectR
   return fetchWithAuth(`/projects/${projectId}/relation?relationType=juryMembers`);
 };
 
-export const getProjectByUserId = async (userId: string): Promise<Project[]> => {
-  return fetchWithAuth(`/projects/user/${userId}`);
+export const getProjectByUser = async (user: { id: string; firstName: string; }): Promise<Project[]> => {
+  try {
+    const userId = user.id;
+    const firstName = user.firstName || '';
+
+    const projects = await fetchWithAuth(`/projects/search/owner/${encodeURIComponent(firstName)}`);
+    return projects.filter((project: Project) =>
+      project?.owners?.some((owner: ProjectMember) => owner.id === userId)
+    );
+  } catch (error) {
+    console.error("Error fetching projects by user ID:", error);
+    return [];
+  }
 };
 
 export const createProject = async (projectData: {
@@ -62,9 +73,10 @@ export const getProjectsWithoutEncadrants = async (): Promise<{ projects: { id: 
   return fetchWithAuth('/projects/noencadrants');
 };
 
-export const addMemberToProject = async (projectId: string, userId: string) => {
-  return fetchWithAuth(`/projects/${projectId}/add-member/${userId}`, {
-    method: 'POST',
+export const addMemberToProject = async (projectId: string, userIdentifier: string) => {
+  return fetchWithAuth("/projects/add-member", {
+    method: "POST",
+    body: JSON.stringify({ projectId, userIdentifier }),
   });
 };
 
