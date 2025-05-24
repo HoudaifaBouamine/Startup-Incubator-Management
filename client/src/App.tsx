@@ -91,42 +91,45 @@ const ProjectIdWrapper: React.FC<{ Component: React.FC<{ projectId: string }> }>
   return <Component projectId={fetchedProjectId} />;
 };
 
-const App: React.FC = () => {
-  return (
-    <Routes>
-      <Route path="/" element={<Home />} />
-      <Route path="/login" element={<Login />} />
-      <Route path="/signup" element={<SignUpSelection />} />
-      <Route path="/signup/student" element={<StudentSignUp />} />
-      <Route path="/signup/professor" element={<ProfessorSignUp />} />
-      <Route path="/verifyEmail" element={<Otp />} />
-      <Route path="/application" element={<Application />} />
-      <Route path="/forgot-password" element={<ForgotPassword />} />
-      <Route path="/reset-password" element={<ResetPassword />} />
-      <Route element={<ProtectedRoute allowedRoles={['MEMBER', 'SUPERVISOR']} />}>
-        <Route element={<DashboardLayout />}>
-          <Route path="/support" element={<Support />} />
-          <Route path="/settings" element={<Settings />} />
-        </Route>
-      </Route>
-      <Route element={<ProtectedRoute allowedRoles={['MEMBER']} />}>
-        <Route element={<DashboardLayout />}>
-          <Route path="/progress/:projectId?" element={<ProjectIdWrapper Component={Progress} />} />
-          <Route path="/team/:projectId?" element={<ProjectIdWrapper Component={Team} />} />
-          <Route path="/training/:projectId?" element={<ProjectIdWrapper Component={Training} />} />
-        </Route>
-      </Route>
-      <Route element={<ProtectedRoute allowedRoles={['SUPERVISOR']} />}>
-        <Route element={<DashboardLayout />}>
-          <Route path="/mentor/projects-management" element={<ProjectsManagement />} />
-          <Route path="/mentor/projects/:projectId" element={<ProjectIdWrapper Component={ProjectDetail} />} />
-          <Route path="/mentor/teams-management" element={<div>Teams Management</div>} />
-        </Route>
-      </Route>
-      <Route path="/404" element={<div>404 - Page Not Found</div>} />
-      <Route path="*" element={<Navigate to="/404" replace />} />
-    </Routes>
-  );
-};
+// const App: React.FC = () => {
+//   return (
+//     <Routes>
+//       <Route path="/" element={<Home />} />
+//       <Route path="/login" element={<Login />} />
+//       <Route path="/signup" element={<SignUpSelection />} />
+//       <Route path="/signup/student" element={<StudentSignUp />} />
+//       <Route path="/signup/professor" element={<ProfessorSignUp />} />
+//       <Route path="/verifyEmail" element={<Otp />} />
+//       <Route path="/application" element={<Application />} />
+//       <Route path="/forgot-password" element={<ForgotPassword />} />
+//       <Route path="/reset-password" element={<ResetPassword />} />
+//       <Route element={<ProtectedRoute allowedRoles={['MEMBER', 'SUPERVISOR']} />}>
+//         <Route element={<DashboardLayout />}>
+//           <Route path="/support" element={<Support />} />
+//           <Route path="/settings" element={<Settings />} />
+//         </Route>
+//       </Route>
+//       <Route element={<ProtectedRoute allowedRoles={['MEMBER']} />}>
+//         <Route element={<DashboardLayout />}>
+//           <Route path="/progress/:projectId?" element={<ProjectIdWrapper Component={Progress} />} />
+//           <Route path="/team/:projectId?" element={<ProjectIdWrapper Component={Team} />} />
+//           <Route path="/training/:projectId?" element={<ProjectIdWrapper Component={Training} />} />
+//         </Route>
+//       </Route>
+//       <Route element={<ProtectedRoute allowedRoles={['SUPERVISOR']} />}>
+//         <Route element={<DashboardLayout />}>
+//           <Route path="/mentor/projects-management" element={<ProjectsManagement />} />
+//           <Route path="/mentor/projects/:projectId" element={<ProjectIdWrapper Component={ProjectDetail} />} />
+//           <Route path="/mentor/teams-management" element={<div>Teams Management</div>} />
+//         </Route>
+//       </Route>
+//       <Route path="/404" element={<div>404 - Page Not Found</div>} />
+//       <Route path="*" element={<Navigate to="/404" replace />} />
+//     </Routes>
+//   );
+// };
 
+// export default App;
+
+const App = () => <div>Hello World</div>;
 export default App;
