@@ -300,7 +300,7 @@ const useStyles = makeStyles({
     justifyContent: "space-between",
     alignItems: "center",
     width: "100%",
-    padding: "1rem",
+    padding: "0.5rem",
     backgroundColor: tokens.colorNeutralBackground3,
     borderRadius: tokens.borderRadiusMedium,
     marginTop: "0.5rem",
@@ -330,7 +330,7 @@ const useStyles = makeStyles({
     backgroundColor: tokens.colorNeutralBackground1,
     color: tokens.colorNeutralForeground4,
     border: `1px solid ${tokens.colorNeutralStroke1}`,
-    padding: "10px",
+    padding: "15px",
     "@media (max-width: 480px)": {
       padding: "6px",
       fontSize: tokens.fontSizeBase200,
@@ -353,7 +353,7 @@ const useStyles = makeStyles({
     display: "grid",
     gridTemplateColumns: "repeat(2, 1fr)",
     gridTemplateRows: "repeat(3, auto)",
-    gap: "0.5rem",
+    gap: "0.25rem",
     width: "100%",
     marginTop: "0.5rem",
     "@media (max-width: 480px)": {
@@ -366,15 +366,15 @@ const useStyles = makeStyles({
   },
   teamMemberTag: {
     width: "100%",
-    overflow: "hidden",
     textOverflow: "ellipsis",
+    position:"relative",
     display: "flex",
-    alignItems: "center",
-    gap: "8px",
+    gap: "10px",
     "@media (max-width: 480px)": {
       fontSize: tokens.fontSizeBase200,
     },
   },
+
   errorContainer: {
     backgroundColor: tokens.colorStatusDangerBackground1,
     color: tokens.colorStatusDangerForeground1,
@@ -571,7 +571,6 @@ const Application: React.FC = () => {
         },
         body: JSON.stringify(formData),
       })
-
       if (!response.ok) {
         const errorData: ApiError = await response.json()
 
@@ -615,6 +614,7 @@ const Application: React.FC = () => {
       navigate(-1)
     }
   }
+console.log(formData)
 
   return (
     <div className={classes.background}>
@@ -800,11 +800,12 @@ const Application: React.FC = () => {
                         key={email}
                         value={email}
                         className={classes.teamMemberTag}
-                        icon={<Avatar name={email.split("@")[0]} />}
+                        icon={<Avatar name={email.split("@")[0]} style={{width:"28px", height:"28px"}} />}
                       >
                         <Text style={{ fontSize: tokens.fontSizeBase100 }}>{email}</Text>
                         <DismissRegular
                           aria-label="remove"
+                          style={{position:"absolute", right:"0.6rem", top:"0.6rem"}}
                           onClick={(e) => {
                             e.stopPropagation();
                             removeTeamMember(email);
