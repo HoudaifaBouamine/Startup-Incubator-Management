@@ -3,9 +3,8 @@
 import type React from "react"
 import { useState, useEffect } from "react"
 import { makeStyles, tokens, ProgressBar, TabList, Tab, Spinner, SelectTabEventHandler } from "@fluentui/react-components"
-import {ChevronRightRegular,DocumentRegular,Folder20Filled,Folder20Regular,Comment20Filled,Comment20Regular,CommentDismiss24Regular,CalendarLtr20Regular,ErrorCircleRegular,
-} from "@fluentui/react-icons"
-import {getProjectById,getProjectSessions,getProjectMembers,getProjectEncadrants,type Session,} from "../../api/project-service"
+import { ChevronRightRegular, DocumentRegular, Folder20Filled, Folder20Regular, Comment20Filled, Comment20Regular, CommentDismiss24Regular, CalendarLtr20Regular, ErrorCircleRegular } from "@fluentui/react-icons"
+import { getProjectById, getProjectSessions, getProjectMembers, getProjectEncadrants, type Session } from "../../api/project-service"
 import CreateSessionModal from "./components/create-session-modal"
 import AddDeliverableModal from "./components/add-delivrable-modal"
 import AddFeedbackModal from "./components/add-feedbacl-modal"
@@ -229,7 +228,7 @@ const useStyles = makeStyles({
     width: "2px",
     position: "absolute",
     top: 0,
-    bottom: 0,
+    bottom: "0",
     left: "calc(33% + 1rem)",
   },
   statItem: {
@@ -375,20 +374,27 @@ const Progress: React.FC<ProgressProps> = ({ projectId }) => {
       setLoading(true)
       setError(null)
 
+      if (!projectId || projectId === "undefined") {
+        throw new Error("Invalid project ID")
+      }
+
       const projectData = await getProjectById(projectId)
+      if (!projectData || !projectData.name) {
+        throw new Error("Project data is invalid or empty")
+      }
       setProjectName(projectData.name)
 
       try {
         const sessionsData = await getProjectSessions(projectId)
-        setSessions(sessionsData)
+        setSessions(sessionsData || [])
       } catch (err) {
-        console.warn("Sessions endpoint not available:", err)
+        console.warn("Sessions endpoint error:", err)
         setSessions([])
       }
 
       try {
         const membersData = await getProjectMembers(projectId)
-        setMembers(membersData.relationData || [])
+        setMembers(membersData?.relationData || [])
       } catch (err) {
         console.warn("Members endpoint error:", err)
         setMembers([])
@@ -396,7 +402,7 @@ const Progress: React.FC<ProgressProps> = ({ projectId }) => {
 
       try {
         const encadrantsData = await getProjectEncadrants(projectId)
-        setEncadrants(encadrantsData.relationData || [])
+        setEncadrants(encadrantsData?.relationData || [])
       } catch (err) {
         console.warn("Encadrants endpoint error:", err)
         setEncadrants([])
@@ -410,9 +416,7 @@ const Progress: React.FC<ProgressProps> = ({ projectId }) => {
   }
 
   useEffect(() => {
-    if (projectId) {
-      fetchProjectData()
-    }
+    fetchProjectData()
   }, [projectId])
 
   const handleTabChange: SelectTabEventHandler = (_event, data) => {
@@ -442,10 +446,12 @@ const Progress: React.FC<ProgressProps> = ({ projectId }) => {
     let totalDeliverables = 0
 
     sessions.forEach((session) => {
-      session.deliverables.forEach((deliverable: Deliverable) => {
-        totalProgress += deliverable.progress
-        totalDeliverables++
-      })
+      if (session.deliverables) {
+        session.deliverables.forEach((deliverable: Deliverable) => {
+          totalProgress += deliverable.progress || 0
+          totalDeliverables++
+        })
+      }
     })
 
     return totalDeliverables > 0 ? Math.round(totalProgress / totalDeliverables) : 0
@@ -459,7 +465,7 @@ const Progress: React.FC<ProgressProps> = ({ projectId }) => {
   const currentFeedbacks: Feedback[] = hasNoSessions ? [] : currentSession?.feedbacks || []
   const totalDeliverables = hasNoSessions
     ? defaultDeliverables.length
-    : sessions.reduce((total, session) => total + session.deliverables.length, 0)
+    : sessions.reduce((total, session) => total + (session.deliverables?.length || 0), 0)
   const totalFeedbacks = hasNoSessions
     ? 0
     : sessions.reduce((total, session) => total + (session.feedbacks?.length || 0), 0)
@@ -595,7 +601,7 @@ const Progress: React.FC<ProgressProps> = ({ projectId }) => {
                       borderLeft: selectedSession === index ? `3px solid ${tokens.colorBrandBackground}` : "none",
                     }}
                   >
-                    <span className={styles.sessionDate}>{session.date}</span>
+                    <span className={styles.sessionDate}>{session.date || "No date available"}</span>
                     <ChevronRightRegular />
                   </div>
                 ))}
@@ -658,14 +664,14 @@ const Progress: React.FC<ProgressProps> = ({ projectId }) => {
                         <div key={index} className={styles.deliverableCard}>
                           <div className={styles.deliverableInfo}>
                             <div className={styles.deliverableHeader}>
-                              <h3 className={styles.deliverableName}>{item.title}</h3>
-                              <div className={styles.statusBadge}>{item.status}</div>
+                              <h3 className={styles.deliverableName}>{item.title || "Untitled"}</h3>
+                              <div className={styles.statusBadge}>{item.status || "Unknown"}</div>
                             </div>
-                            <p className={styles.deliverableSubtext}>{item.description}</p>
+                            <p className={styles.deliverableSubtext}>{item.description || "No description"}</p>
                           </div>
                           <div className={styles.progressInfo}>
-                            <span className={styles.progressPercentageSmall}>{item.progress}%</span>
-                            <span className={styles.progressChange}>{item.change}</span>
+                            <span className={styles.progressPercentageSmall}>{item.progress || 0}%</span>
+                            <span className={styles.progressChange}>{item.change || "+0%"}</span>
                           </div>
                         </div>
                       ))
@@ -695,8 +701,8 @@ const Progress: React.FC<ProgressProps> = ({ projectId }) => {
                             <DocumentRegular />
                           </div>
                           <div>
-                            <h4 className={styles.deliverableName}>{feedback.author}</h4>
-                            <p className={styles.feedbackText}>{feedback.text}</p>
+                            <h4 className={styles.deliverableName}>{feedback.author || "Anonymous"}</h4>
+                            <p className={styles.feedbackText}>{feedback.text || "No feedback provided"}</p>
                           </div>
                         </div>
                       ))
