@@ -222,7 +222,7 @@ const Team = ({ projectId }: { projectId: string }) => {
   const filteredUsers = allUsers
     .filter((user) => !members.some((member) => member.id === user.id))
     .filter((user) => user.email.toLowerCase().includes(searchQuery.toLowerCase()))
-    .slice(0, 5); // Limit to 5 users
+    .slice(0, 5); 
 
   const handleCheckboxChange = (id: string) => {
     console.debug("Team: Toggling checkbox for user", { id, selectedMembers });
@@ -413,7 +413,6 @@ const Team = ({ projectId }: { projectId: string }) => {
         </div>
       </div>
 
-      {/* Invite Modal */}
       {isModalOpen && (
         <div
           style={{
@@ -485,6 +484,7 @@ const Team = ({ projectId }: { projectId: string }) => {
                       backgroundColor: tokens.colorBrandBackground,
                       color: tokens.colorNeutralForegroundOnBrand,
                       minWidth: "100px",
+                      marginTop: "0.5rem",
                     }}
                     onClick={() => handleInvite(searchQuery)}
                   >
@@ -524,7 +524,7 @@ const Team = ({ projectId }: { projectId: string }) => {
                             alignItems: "center",
                             padding: "0.5rem 0",
                             borderBottom: `1px solid ${tokens.colorNeutralStroke2}`,
-                            flex: "1 1 auto", // Allow items to grow/shrink equally
+                            flex: "1 1 auto", 
                           }}
                         >
                           <div style={{ display: "flex", alignItems: "center", gap: "0.75rem", flex: "1" }}>

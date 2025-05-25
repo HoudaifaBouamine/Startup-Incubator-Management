@@ -2,7 +2,7 @@ import React, { Suspense } from 'react';
 import { Routes, Route, Navigate } from 'react-router-dom';
 import ProjectIdWrapper from './pages/components/ProjectIdWrapper';
 
-// Lazy load components to avoid circular dependencies
+
 const Home = React.lazy(() => import('./pages/Home'));
 const Login = React.lazy(() => import('./pages/Login'));
 const SignUpSelection = React.lazy(() => import('./pages/SignUpSelection'));

@@ -8,7 +8,7 @@ import { Link, useNavigate } from "react-router-dom"
 import Input from "./components/Input"
 import { useState } from "react"
 import { useTheme } from "../ThemeContext"
-import { Eye24Filled, EyeOff24Filled, EyeOffRegular, EyeRegular } from "@fluentui/react-icons"
+import { Eye24Filled, EyeOff24Filled } from "@fluentui/react-icons"
 
 const useStyles = makeStyles({
   background: {
@@ -43,7 +43,7 @@ const useStyles = makeStyles({
     width: "100%",
   },
   title: {
-    fontSize: tokens.fontSizeHero800,
+    fontSize: tokens.fontSizeHero900,
     fontFamily: tokens.fontFamilyBase,
     fontWeight: tokens.fontWeightSemibold,
     color: tokens.colorNeutralForeground1,

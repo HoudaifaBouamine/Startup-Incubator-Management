@@ -166,7 +166,7 @@ const useStyles = makeStyles({
   deliverableCard: {
     backgroundColor: tokens.colorNeutralBackground1,
     borderRadius: "8px",
-    padding: "0.75rem 1rem",
+    padding: "1rem 1.25rem",
     display: "flex",
     alignItems: "center",
     justifyContent: "space-between",
@@ -315,7 +315,7 @@ const useStyles = makeStyles({
     alignItems: "center",
     justifyContent: "center",
     textAlign: "center",
-    padding: "4rem 2rem",
+    padding: "6rem 4rem",
     backgroundColor: tokens.colorNeutralBackground1,
     borderRadius: "8px",
   },
@@ -527,7 +527,7 @@ const Progress: React.FC<ProgressProps> = ({ projectId }) => {
   };
 
   const globalProgress = calculateGlobalProgress();
-  const currentStep = globalProgress; // Current step is the progress percentage
+  const currentStep = globalProgress; 
 
   const hasNoSessions = sessions.length === 0;
   const currentSession = hasNoSessions ? null : sessions.find((session) => session.id === selectedSessionId) || null;
@@ -688,7 +688,7 @@ const Progress: React.FC<ProgressProps> = ({ projectId }) => {
               <div className={styles.deliverablesSection}>
                 <div className={styles.tabContainer}>
                   <TabList
-                    selectedValue={activeTab} // Removed defaultSelectedValue
+                    selectedValue={activeTab} 
                     onTabSelect={handleTabChange}
                   >
                     <Tab value="deliverables">

@@ -55,7 +55,7 @@ const fetchWithAuth = async (url: string, options: RequestInit = {}) => {
       } else {
         const text = await response.text();
         errorDetails = text;
-        console.error("fetchWithAuth: Error response body (non-JSON)", text.substring(0, 100) + "..."); // Log truncated HTML
+        console.error("fetchWithAuth: Error response body (non-JSON)", text.substring(0, 100) + "..."); 
         if (text.includes("<html")) {
           errorMessage = `Received HTML response instead of JSON. Possible wrong endpoint or server error. Status: ${response.status}`;
         } else {

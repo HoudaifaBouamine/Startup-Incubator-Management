@@ -12,7 +12,6 @@ import {
   Input,
   Textarea,
   Select,
-  // type OpenChangeEventHandler, // Import type for onOpenChange
 } from "@fluentui/react-components";
 import { FolderAddRegular } from "@fluentui/react-icons";
 import { addDeliverable } from "../../../api/project-service";

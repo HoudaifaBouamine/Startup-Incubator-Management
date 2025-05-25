@@ -87,7 +87,7 @@ const useStyles = makeStyles({
     },
   },
   logo: {
-    width: "70px",
+    width: "60px",
     marginBottom: "0.5rem",
   },
   logoDark: {

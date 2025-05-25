@@ -189,7 +189,7 @@ const useStyles = makeStyles({
     fontWeight: "600",
     color: tokens.colorNeutralForeground1,
   },
-  // New style for the "no workshops" message
+  
   noWorkshopsMessage: {
     fontSize: "14px",
     color: tokens.colorNeutralForeground2,
@@ -222,7 +222,7 @@ const Training = ({ projectId }: { projectId: string }) => {
     fetchSessions();
   }, [projectId]);
 
-  // Dynamically generate calendar days
+
   const getCalendarDays = () => {
     const firstDay = new Date(currentYear, currentMonth, 1);
     const lastDay = new Date(currentYear, currentMonth + 1, 0);
@@ -252,7 +252,7 @@ const Training = ({ projectId }: { projectId: string }) => {
     { month: "long" }
   );
 
-  const currentDate = new Date("2025-05-24"); // Today's date: May 24, 2025
+  const currentDate = new Date("2025-05-24"); 
   const upcomingWorkshops = sessions
     .filter((session) => new Date(session.date) >= currentDate)
     .map((session) => ({
@@ -260,14 +260,14 @@ const Training = ({ projectId }: { projectId: string }) => {
         month: "long",
         day: "numeric",
       }),
-      time: "9:00 AM to 5:00 PM", // Placeholder, adjust based on API data
-      location: "ESI SBA Room 04", // Placeholder
+      time: "9:00 AM to 5:00 PM", 
+      location: "ESI SBA Room 04", 
       title: `Session ${session.id}`,
       description: session.feedbacks?.[0]?.text || "No description available",
       mentor: session.feedbacks?.[0]?.author || "@mentor_name",
     }));
 
-  // Dummy past workshops
+
   const dummyPastWorkshops = [
     {
       title: "Workshop title",
