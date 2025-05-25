@@ -34,6 +34,7 @@ import {
 import AddDeliverableModal from "./components/add-delivrable-modal";
 import AddFeedbackModal from "./components/add-feedback-modal";
 import type { Deliverable, Feedback } from "../../types";
+import { useAuthContext } from "./components/AuthContext";
 
 const useStyles = makeStyles({
   layout: {
@@ -398,11 +399,9 @@ const defaultDeliverables: Deliverable[] = [
   },
 ];
 
-type ProgressProps = {
-  projectId: string;
-};
 
-const Progress: React.FC<ProgressProps> = ({ projectId }) => {
+
+const Progress = () => {
   const styles = useStyles();
   const [activeTab, setActiveTab] = useState("deliverables");
   const [currentPage, setCurrentPage] = useState(1);
@@ -413,6 +412,8 @@ const Progress: React.FC<ProgressProps> = ({ projectId }) => {
   const [error, setError] = useState<string | null>(null);
   const [members, setMembers] = useState<{ id: string; name: string; avatar?: string }[]>([]);
   const [encadrants, setEncadrants] = useState<{ id: string; name: string; avatar?: string }[]>([]);
+  const {user}=useAuthContext()
+  const projectId=user?.projectId
 
   const fetchProjectData = async () => {
     try {

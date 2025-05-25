@@ -1,6 +1,5 @@
 import React, { Suspense } from 'react';
 import { Routes, Route, Navigate } from 'react-router-dom';
-import ProjectIdWrapper from './pages/components/ProjectIdWrapper';
 
 
 const Home = React.lazy(() => import('./pages/Home'));
@@ -43,15 +42,15 @@ const App: React.FC = () => {
         </Route>
         <Route element={<ProtectedRoute allowedRoles={['MEMBER']} />}>
           <Route element={<DashboardLayout />}>
-            <Route path="/progress/:projectId?" element={<ProjectIdWrapper Component={Progress} />} />
-            <Route path="/team/:projectId?" element={<ProjectIdWrapper Component={Team} />} />
-            <Route path="/training/:projectId?" element={<ProjectIdWrapper Component={Training} />} />
+            <Route path="/progress" element={<Progress  />} />
+            <Route path="/team" element={<Team />} />
+            <Route path="/training" element={<Training/>} />
           </Route>
         </Route>
         <Route element={<ProtectedRoute allowedRoles={['SUPERVISOR']} />}>
           <Route element={<DashboardLayout />}>
             <Route path="/mentor/projects-management" element={<ProjectsManagement />} />
-            <Route path="/mentor/projects/:projectId" element={<ProjectIdWrapper Component={ProjectDetail} />} />
+            <Route path="/mentor/projects/:projectId" element={<ProjectDetail />}  />
             <Route path="/mentor/teams-management" element={<div>Teams Management</div>} />
           </Route>
         </Route>

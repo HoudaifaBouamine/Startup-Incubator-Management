@@ -11,6 +11,7 @@ import {
 } from "@fluentui/react-icons";
 import { getProjectSessions } from "../../api/project-service";
 import { Session } from "../../types";
+import { useAuthContext } from "./components/AuthContext";
 
 const useStyles = makeStyles({
   root: {
@@ -200,18 +201,23 @@ const useStyles = makeStyles({
   },
 });
 
-const Training = ({ projectId }: { projectId: string }) => {
+const Training = () => {
   const styles = useStyles();
   const [activeDay, setActiveDay] = useState<number | null>(null);
   const [selectedDay, setSelectedDay] = useState<number | null>(null);
   const [sessions, setSessions] = useState<Session[]>([]);
   const [currentMonth, setCurrentMonth] = useState(new Date().getMonth());
   const [currentYear, setCurrentYear] = useState(new Date().getFullYear());
-
+  const {user}=useAuthContext()
+  const projectId=user?.projectId
   const days = ["Su", "Mo", "Tu", "We", "Th", "Fr", "Sa"];
 
   useEffect(() => {
     const fetchSessions = async () => {
+      if (!projectId) {
+        setSessions([]);
+        return;
+      }
       try {
         const data = await getProjectSessions(projectId);
         setSessions(data);

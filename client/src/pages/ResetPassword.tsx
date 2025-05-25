@@ -185,7 +185,6 @@ const ResetPassword = () => {
   const [resetLoading, setResetLoading] = useState<boolean>(false);
   const [success, setSuccess] = useState<boolean>(false);
 
-  // Debug deployment version and environment
   useEffect(() => {
     console.log("ResetPassword component version: 1.0.0 (Updated 2025-05-25)");
     console.log("ResetPassword component mounted.");
@@ -198,7 +197,6 @@ const ResetPassword = () => {
     }
   }, [backendUrl, location]);
 
-  // Extract token from URL
   useEffect(() => {
     console.log("Extracting token from URL...");
     try {
@@ -225,7 +223,6 @@ const ResetPassword = () => {
     setResetError(null);
 
 
-    // Password validation
     if (newPassword !== confirmPassword) {
       console.warn("Passwords do not match.");
       setResetError("Passwords do not match");

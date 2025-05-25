@@ -947,7 +947,7 @@ console.log(formData)
                 </Text>
               </div>
             </div>
-            <Button className={classes.button} onClick={() => navigate("/dashboard")}>
+            <Button className={classes.button} onClick={() => navigate("/progress")}>
               Go to Dashboard
             </Button>
             <Button className={classes.secondaryButton} onClick={() => navigate("/application-details")}>

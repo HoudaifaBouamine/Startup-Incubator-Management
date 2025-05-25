@@ -23,6 +23,7 @@ import {
 } from "../../api/project-service";
 import { getAllUsers } from "../../api/user-service";
 import { ProjectMember } from "../../types";
+import { useAuthContext } from "./components/AuthContext";
 
 const useStyles = makeStyles({
   root: {
@@ -151,7 +152,7 @@ const useStyles = makeStyles({
   },
 });
 
-const Team = ({ projectId }: { projectId: string }) => {
+const Team = () => {
   const styles = useStyles();
   const [selectedMembers, setSelectedMembers] = useState<string[]>([]);
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -162,9 +163,14 @@ const Team = ({ projectId }: { projectId: string }) => {
   const [usersLoading, setUsersLoading] = useState(false);
   const [usersError, setUsersError] = useState<string | null>(null);
   const [inviteError, setInviteError] = useState<string | null>(null);
-
+  const {user}=useAuthContext()
+  const projectId=user?.projectId
   useEffect(() => {
     const fetchData = async () => {
+      if (!projectId) {
+        console.warn("Team: projectId is not defined, skipping fetchData");
+        return;
+      }
       try {
         console.debug("Team: Fetching project members and mentors", { projectId });
         const membersData = await getProjectMembers(projectId);
@@ -271,6 +277,11 @@ const Team = ({ projectId }: { projectId: string }) => {
   };
 
   const handleInviteUser = async (userId: string) => {
+    if (!projectId) {
+      console.warn("Team: Cannot invite user, projectId is not defined", { userId, projectId });
+      setInviteError("Project ID is not defined. Cannot invite user.");
+      return;
+    }
     console.debug("Team: Attempting to invite registered user", { userId });
     try {
       await addMemberToProject(projectId, userId);
