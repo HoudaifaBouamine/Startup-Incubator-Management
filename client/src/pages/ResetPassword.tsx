@@ -96,7 +96,6 @@ const useStyles = makeStyles({
     position: "absolute",
     right: "10px",
     top: "50%",
-    transform: "translateY(-50%)",
     background: "none",
     border: "none",
     cursor: "pointer",
@@ -225,9 +224,6 @@ const ResetPassword = () => {
     e.preventDefault();
     setResetError(null);
 
-    // Debug form inputs
-    console.log("New Password:", newPassword);
-    console.log("Confirm Password:", confirmPassword);
 
     // Password validation
     if (newPassword !== confirmPassword) {
@@ -242,14 +238,6 @@ const ResetPassword = () => {
       return;
     }
 
-    const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
-    if (!passwordRegex.test(newPassword)) {
-      console.warn("Password does not meet complexity requirements.");
-      setResetError(
-        "Password must contain at least one uppercase letter, one lowercase letter, one number, and one special character."
-      );
-      return;
-    }
 
     setResetLoading(true);
 
