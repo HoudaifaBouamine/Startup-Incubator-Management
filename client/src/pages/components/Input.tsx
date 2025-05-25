@@ -1,4 +1,4 @@
-import { Text, tokens, makeStyles } from '@fluentui/react-components';
+import { Label, tokens, makeStyles } from '@fluentui/react-components';
 
 const useStyles = makeStyles({
   inputWrapper: {
@@ -21,11 +21,11 @@ const useStyles = makeStyles({
     color: tokens.colorNeutralForeground1,
     paddingLeft: '0.5rem',
     outline: 'none',
-    '::placeholder': {
+    '&::placeholder': {
       color: tokens.colorNeutralForeground4,
     },
   },
-  Text: {
+  text: {
     fontWeight: tokens.fontWeightSemibold,
     flexShrink: 0,
   },
@@ -38,7 +38,7 @@ const useStyles = makeStyles({
     boxShadow: tokens.shadow4,
     whiteSpace: 'nowrap',
   },
-  Divider: {
+  divider: {
     borderBottom: `1px solid ${tokens.colorNeutralForeground1}`,
     width: '100%',
   },
@@ -70,10 +70,8 @@ const Input = ({
   return (
     <div className={classes.inputWrapper}>
       <div className={classes.labelWrapper}>
-        <Text as="label" className={classes.Text}>
-          {label}
-        </Text>
-        {errorMessage && <Text className={classes.errorText}>{errorMessage}</Text>}
+        <Label className={classes.text}>{label}</Label>
+        {errorMessage && <span className={classes.errorText}>{errorMessage}</span>}
       </div>
       <input
         type={type}
@@ -84,7 +82,7 @@ const Input = ({
         onKeyDown={onKeyDown}
         className={classes.inputField}
       />
-      <div className={classes.Divider}></div>
+      <div className={classes.divider} />
     </div>
   );
 };

@@ -7,8 +7,8 @@ import logo from "../assets/Logo Image.svg"
 import { Link, useNavigate } from "react-router-dom"
 import Input from "./components/Input"
 import { useState } from "react"
-import { useTheme } from "../main"
-import { Eye24Filled, EyeOff24Filled, EyeOffRegular, EyeRegular } from "@fluentui/react-icons"
+import { useTheme } from "../ThemeContext"
+import { Eye24Filled, EyeOff24Filled} from "@fluentui/react-icons"
 
 const useStyles = makeStyles({
   background: {
@@ -81,7 +81,7 @@ const useStyles = makeStyles({
     },
   },
   logo: {
-    maxHeight: "50px",
+    maxHeight: "60px",
   },
   logoDark: {
     filter: "brightness(0) invert(1)",
@@ -93,7 +93,7 @@ const useStyles = makeStyles({
   passwordToggle: {
     position: "absolute",
     right: "10px",
-    top: "calc(50% + 10px)", // Adjusted to account for label
+    top: "calc(50% + 10px)", 
     transform: "translateY(-50%)",
     background: "none",
     border: "none",

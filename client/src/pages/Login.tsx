@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   makeStyles,
   mergeClasses,
@@ -9,12 +9,14 @@ import {
   Text,
   Image,
   Checkbox,
+  Label,
 } from "@fluentui/react-components";
 import logo from "../assets/Logo Image.svg";
 import { Link, useNavigate } from "react-router-dom";
 import Input from "./components/Input";
-import { useTheme } from "../main";
-import { Eye24Filled, EyeOff24Filled,  } from "@fluentui/react-icons";
+import { useTheme } from "../ThemeContext"
+import { Eye24Filled, EyeOff24Filled } from "@fluentui/react-icons";
+import { useAuthContext } from "./components/AuthContext";
 
 const useStyles = makeStyles({
   background: {
@@ -85,7 +87,7 @@ const useStyles = makeStyles({
     },
   },
   logo: {
-    width: "70px",
+    width: "60px",
     marginBottom: "0.5rem",
   },
   logoDark: {
@@ -137,7 +139,7 @@ const useStyles = makeStyles({
     color: tokens.colorNeutralForeground1,
     paddingLeft: "0.5rem",
     outline: "none",
-    '::placeholder': {
+    "::placeholder": {
       color: tokens.colorNeutralForeground4,
     },
   },
@@ -151,13 +153,18 @@ const useStyles = makeStyles({
     gap: "0.5rem",
     marginBottom: "0.25rem",
   },
+  errorText: {
+    color: tokens.colorPaletteRedForeground1,
+    fontSize: "14px",
+    marginBottom: "0.5rem",
+  },
 });
 
 const Login = () => {
   const classes = useStyles();
   const navigate = useNavigate();
-  const backendUrl = import.meta.env.VITE_BACKEND_URL;
   const { isDarkMode } = useTheme();
+  const { login, isAuthenticated, user } = useAuthContext();
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -166,28 +173,12 @@ const Login = () => {
   const [showPassword, setShowPassword] = useState(false);
   const [rememberMe, setRememberMe] = useState(false);
 
-  const handleSubmit = async (e: React.FormEvent) => {
+const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setError(null);
     setLoading(true);
-
     try {
-      const res = await fetch(`${backendUrl}/auth/signin`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          Accept: "application/json",
-        },
-        body: JSON.stringify({ email, password }),
-      });
-
-      const data = await res.json();
-
-      if (!res.ok) {
-        throw new Error(data.message || "Login failed");
-      }
-
-      navigate("/dashboard");
+      await login(email, password);
     } catch (err: any) {
       setError(err.message);
     } finally {
@@ -195,7 +186,17 @@ const Login = () => {
     }
   };
 
-  console.log("Password input type:", showPassword ? "text" : "password");
+  useEffect(() => {
+    if (isAuthenticated && user) {
+      const dest =
+        user.role === 'SUPERVISOR'
+          ? '/mentor/projects-management'
+          : '/progress';
+      navigate(dest, { replace: true });
+    }
+  }, [isAuthenticated, user, navigate]);
+
+
 
   return (
     <div className={classes.background}>
@@ -211,7 +212,7 @@ const Login = () => {
           </Text>
           <Text className={classes.text}>Log in to continue your journey</Text>
 
-          {error && <Text style={{ color: "red" }}>{error}</Text>}
+          {error && <Text className={classes.errorText}>{error}</Text>}
 
           <Input
             label="Email Address"
@@ -222,9 +223,9 @@ const Login = () => {
 
           <div className={classes.passwordWrapper}>
             <div className={classes.labelWrapper}>
-              <Text as="label" style={{ fontWeight: tokens.fontWeightSemibold }}>
+              <Label style={{ fontWeight: tokens.fontWeightSemibold }}>
                 Password
-              </Text>
+              </Label>
             </div>
             <div className={classes.passwordInputContainer}>
               <input
@@ -254,7 +255,7 @@ const Login = () => {
             <Checkbox
               label="Remember Me"
               checked={rememberMe}
-              onChange={(e, data) => setRememberMe(!!data.checked)}
+              onChange={(_e, data) => setRememberMe(!!data.checked)}
             />
             <Link to="/forgot-password" className={classes.forgotPassword}>
               Forgot Password?
@@ -276,4 +277,3 @@ const Login = () => {
 };
 
 export default Login;
-

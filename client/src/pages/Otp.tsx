@@ -2,8 +2,7 @@ import { makeStyles, mergeClasses, tokens, Button, Input, Text, Image, MessageBa
 import { useState, useRef, useEffect } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import logo from '../assets/Logo Image.svg';
-import { useTheme } from '../main'; 
-
+import { useTheme } from "../ThemeContext"
 const useStyles = makeStyles({
   background: {
     backgroundColor: tokens.colorNeutralBackground2,
@@ -247,9 +246,7 @@ const Otp: React.FC = () => {
     }
   };
 
-  useEffect(() => {
-    console.log('Current OTP:', otp);
-  }, [otp]);
+ 
 
   return (
     <div className={classes.background}>

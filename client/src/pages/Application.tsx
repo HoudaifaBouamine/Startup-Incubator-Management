@@ -13,6 +13,7 @@ import {
   Select,
   Label,
   Tag,
+  TagGroup,
   Avatar,
   useId,
   Badge,
@@ -26,6 +27,7 @@ import {
   MegaphoneRegular,
   DesignIdeas24Filled,
   ErrorCircleRegular,
+  DismissRegular,
 } from "@fluentui/react-icons"
 import { useNavigate } from "react-router-dom"
 import Input from "./components/Input"
@@ -36,7 +38,6 @@ interface FormData {
   about: string
   problem: string
   solution: string
-  idea: string
   targetAudience: string
   competitiveAdvantage: string
   motivation: string
@@ -64,7 +65,6 @@ const useStyles = makeStyles({
   background: {
     backgroundColor: tokens.colorNeutralBackground2,
     minHeight: "100vh",
-    overflow: "auto",
     display: "flex",
     justifyContent: "center",
     alignItems: "center",
@@ -75,18 +75,16 @@ const useStyles = makeStyles({
     display: "flex",
     flexDirection: "column",
     alignItems: "center",
-    gap: "1.25rem",
-    padding: "2rem",
-    paddingTop: "2.5rem", // Added extra padding at top for the absolute error message
+    gap: "1rem",
+    padding: "1.75rem 2rem",
+    margin: "auto 0",
     borderRadius: "1rem",
     width: "450px",
-    minHeight: "60vh",
     maxHeight: "90vh",
-    height: "auto",
     boxShadow: tokens.shadow8,
     boxSizing: "border-box",
-    overflow: "auto",
-    position: "relative", // Added for absolute positioning context
+    overflow: "hidden",
+    position: "relative",
     "@media (max-width: 768px)": {
       width: "80%",
       padding: "1.5rem",
@@ -103,7 +101,7 @@ const useStyles = makeStyles({
   header: {
     display: "flex",
     flexDirection: "column",
-    gap: "0.75rem",
+    gap: "0.25rem",
     textAlign: "center",
     width: "100%",
   },
@@ -119,16 +117,17 @@ const useStyles = makeStyles({
     },
   },
   title: {
-    fontSize: "2.5rem",
+    fontSize: tokens.fontSizeHero800,
     fontFamily: tokens.fontFamilyBase,
     fontWeight: tokens.fontWeightBold,
     color: tokens.colorNeutralForeground1,
     lineHeight: "1.1",
+    marigin:"0",
     "@media (max-width: 768px)": {
-      fontSize: "2rem",
+      fontSize: "1.75rem",
     },
     "@media (max-width: 480px)": {
-      fontSize: "1.75rem",
+      fontSize: "1.5rem",
     },
   },
   inputWrapper: {
@@ -180,6 +179,7 @@ const useStyles = makeStyles({
   text: {
     color: tokens.colorNeutralForeground4,
     fontWeight: tokens.fontWeightSemibold,
+    marginBottom:"0.25",
     fontSize: tokens.fontSizeBase400,
     "@media (max-width: 480px)": {
       fontSize: tokens.fontSizeBase300,
@@ -239,10 +239,9 @@ const useStyles = makeStyles({
     alignItems: "center",
     justifyContent: "flex-start",
     gap: "0.75rem",
-    padding: "0.75rem",
+    padding: "0.5rem 0.75rem",
     paddingLeft: "1rem",
-    backgroundColor: tokens.colorNeutralBackground3,
-    border: `1px solid ${tokens.colorNeutralStroke2}`,
+    border: `2px solid ${tokens.colorNeutralStroke2}`,
     borderRadius: tokens.borderRadiusMedium,
     fontWeight: tokens.fontWeightRegular,
     color: tokens.colorNeutralForeground1,
@@ -301,7 +300,7 @@ const useStyles = makeStyles({
     justifyContent: "space-between",
     alignItems: "center",
     width: "100%",
-    padding: "1rem",
+    padding: "0.5rem",
     backgroundColor: tokens.colorNeutralBackground3,
     borderRadius: tokens.borderRadiusMedium,
     marginTop: "0.5rem",
@@ -331,7 +330,7 @@ const useStyles = makeStyles({
     backgroundColor: tokens.colorNeutralBackground1,
     color: tokens.colorNeutralForeground4,
     border: `1px solid ${tokens.colorNeutralStroke1}`,
-    padding: "10px",
+    padding: "15px",
     "@media (max-width: 480px)": {
       padding: "6px",
       fontSize: tokens.fontSizeBase200,
@@ -354,7 +353,7 @@ const useStyles = makeStyles({
     display: "grid",
     gridTemplateColumns: "repeat(2, 1fr)",
     gridTemplateRows: "repeat(3, auto)",
-    gap: "0.5rem",
+    gap: "0.25rem",
     width: "100%",
     marginTop: "0.5rem",
     "@media (max-width: 480px)": {
@@ -367,12 +366,15 @@ const useStyles = makeStyles({
   },
   teamMemberTag: {
     width: "100%",
-    overflow: "hidden",
     textOverflow: "ellipsis",
+    position:"relative",
+    display: "flex",
+    gap: "10px",
     "@media (max-width: 480px)": {
       fontSize: tokens.fontSizeBase200,
     },
   },
+
   errorContainer: {
     backgroundColor: tokens.colorStatusDangerBackground1,
     color: tokens.colorStatusDangerForeground1,
@@ -407,8 +409,8 @@ const Application: React.FC = () => {
   const stageOptions: { value: string; title: string; subtitle: string; icon: JSX.Element }[] = [
     { value: "IDEA", title: "Idea Stage", subtitle: "I need to develop my startup", icon: <Lightbulb24Regular /> },
     { value: "PROTOTYPE", title: "Prototype", subtitle: "I have a working prototype", icon: <DesignIdeas24Filled /> },
-    { value: "MVP", title: "MVP", subtitle: "I am ready to test my product", icon: <Rocket24Regular /> },
-    { value: "LAUNCHED", title: "Launched", subtitle: "My startup is live and growing", icon: <MegaphoneRegular /> },
+    { value: "LAUNCHED", title: "Launched", subtitle: "I am ready to test my product", icon: <Rocket24Regular /> },
+    { value: "SCALING", title: "Scaling", subtitle: "My startup is live and growing", icon: <MegaphoneRegular /> },
   ]
 
   const [formData, setFormData] = useState<FormData>({
@@ -417,7 +419,6 @@ const Application: React.FC = () => {
     about: "",
     problem: "",
     solution: "",
-    idea: "",
     targetAudience: "",
     competitiveAdvantage: "",
     motivation: "",
@@ -438,7 +439,6 @@ const Application: React.FC = () => {
 
   const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
 
-  // Check for authentication token
   useEffect(() => {
     const token = localStorage.getItem("authToken")
     if (!token) {
@@ -457,7 +457,6 @@ const Application: React.FC = () => {
       case 2:
         if (!formData.problem) newErrors.problem = "Problem statement is required"
         if (!formData.solution) newErrors.solution = "Solution description is required"
-        if (!formData.idea) newErrors.idea = "Idea description is required"
         break
       case 3:
         if (!formData.targetAudience) newErrors.targetAudience = "Target audience is required"
@@ -572,7 +571,6 @@ const Application: React.FC = () => {
         },
         body: JSON.stringify(formData),
       })
-
       if (!response.ok) {
         const errorData: ApiError = await response.json()
 
@@ -594,7 +592,6 @@ const Application: React.FC = () => {
       } else {
         setApiError("An unexpected error occurred")
       }
-      // Stay on the current step
     } finally {
       setLoading(false)
     }
@@ -617,6 +614,7 @@ const Application: React.FC = () => {
       navigate(-1)
     }
   }
+console.log(formData)
 
   return (
     <div className={classes.background}>
@@ -728,18 +726,7 @@ const Application: React.FC = () => {
                   onChange={handleInputChange("solution")}
                 />
               </div>
-              <div className={classes.inputWrapper}>
-                <div className={classes.labelWrapper}>
-                  <Label className={classes.Label}>Your Idea</Label>
-                  {errors.idea && <Text className={classes.errorText}>{errors.idea}</Text>}
-                </div>
-                <Textarea
-                  placeholder="Describe your innovative idea in detail."
-                  className={classes.textarea}
-                  value={formData.idea}
-                  onChange={handleInputChange("idea")}
-                />
-              </div>
+             
             </div>
           </div>
         )}
@@ -804,24 +791,30 @@ const Application: React.FC = () => {
                 onKeyDown={handleTeamMemberKeyPress}
                 errorMessage={(errors.teamMember || errors.memberEmails) ?? undefined}
               />
-              <Button appearance="secondary" onClick={addTeamMember}>
-                Add Team Member
-              </Button>
+              
               {formData.memberEmails.length > 0 && (
-                <div className={classes.teamMembersGrid}>
-                  {formData.memberEmails.map((email) => (
-                    <Tag
-                      key={email}
-                      dismissible
-                      dismissIcon={{ "aria-label": "remove" }}
-                      media={<Avatar name={email.split("@")[0]} />}
-                      onDismiss={() => removeTeamMember(email)}
-                      className={classes.teamMemberTag}
-                    >
-                      <Text style={{ fontSize: tokens.fontSizeBase100 }}>{email}</Text>
-                    </Tag>
-                  ))}
-                </div>
+                <TagGroup onDismiss={(__e: any, { value }: { value: string }) => removeTeamMember(value)}>
+                  <div className={classes.teamMembersGrid}>
+                    {formData.memberEmails.map((email) => (
+                      <Tag
+                        key={email}
+                        value={email}
+                        className={classes.teamMemberTag}
+                        icon={<Avatar name={email.split("@")[0]} style={{width:"28px", height:"28px"}} />}
+                      >
+                        <Text style={{ fontSize: tokens.fontSizeBase100 }}>{email}</Text>
+                        <DismissRegular
+                          aria-label="remove"
+                          style={{position:"absolute", right:"0.6rem", top:"0.6rem"}}
+                          onClick={(e) => {
+                            e.stopPropagation();
+                            removeTeamMember(email);
+                          }}
+                        />
+                      </Tag>
+                    ))}
+                  </div>
+                </TagGroup>
               )}
             </div>
             <div className={classes.inputWrapper}>
@@ -833,24 +826,29 @@ const Application: React.FC = () => {
                 onKeyDown={handleMentorKeyPress}
                 errorMessage={errors.mentor ?? undefined}
               />
-              <Button appearance="secondary" onClick={addMentor}>
-                Add Mentor
-              </Button>
+              
               {formData.encadrantEmails.length > 0 && (
-                <div className={classes.teamMembersGrid}>
-                  {formData.encadrantEmails.map((email) => (
-                    <Tag
-                      key={email}
-                      dismissible
-                      dismissIcon={{ "aria-label": "remove" }}
-                      media={<Avatar name={email.split("@")[0]} />}
-                      onDismiss={() => removeMentor(email)}
-                      className={classes.teamMemberTag}
-                    >
-                      <Text style={{ fontSize: tokens.fontSizeBase100 }}>{email}</Text>
-                    </Tag>
-                  ))}
-                </div>
+                <TagGroup onDismiss={(_e: any, { value }: { value: string }) => removeMentor(value)}>
+                  <div className={classes.teamMembersGrid}>
+                    {formData.encadrantEmails.map((email) => (
+                      <Tag
+                        key={email}
+                        value={email}
+                        className={classes.teamMemberTag}
+                        icon={<Avatar name={email.split("@")[0]} />}
+                      >
+                        <Text style={{ fontSize: tokens.fontSizeBase100 }}>{email}</Text>
+                        <DismissRegular
+                          aria-label="remove"
+                          onClick={(e) => {
+                            e.stopPropagation();
+                            removeMentor(email);
+                          }}
+                        />
+                      </Tag>
+                    ))}
+                  </div>
+                </TagGroup>
               )}
             </div>
           </div>
@@ -862,7 +860,7 @@ const Application: React.FC = () => {
               <Text as="h1" className={classes.title}>
                 How far along is your startup?
               </Text>
-              <Text className={classes.text} style={{ marginBottom: "0.5rem" }}>
+              <Text className={classes.text}>
                 Understanding your startup's current stage helps us tailor the incubator's support
               </Text>
             </div>
@@ -949,7 +947,7 @@ const Application: React.FC = () => {
                 </Text>
               </div>
             </div>
-            <Button className={classes.button} onClick={() => navigate("/dashboard")}>
+            <Button className={classes.button} onClick={() => navigate("/progress")}>
               Go to Dashboard
             </Button>
             <Button className={classes.secondaryButton} onClick={() => navigate("/application-details")}>

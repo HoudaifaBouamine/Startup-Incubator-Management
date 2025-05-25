@@ -1,8 +1,6 @@
-"use client"
+"use client";
 
-import type React from "react"
-
-import { useState } from "react"
+import React, { useState } from "react";
 import {
   Dialog,
   DialogTrigger,
@@ -13,53 +11,36 @@ import {
   Button,
   Input,
   Textarea,
-  makeStyles,
-  tokens,
   Select,
-} from "@fluentui/react-components"
-import { FolderAddRegular } from "@fluentui/react-icons"
-import { addDeliverable } from "../../../api/session-service"
-
-const useStyles = makeStyles({
-  formField: {
-    display: "flex",
-    flexDirection: "column",
-    gap: "0.5rem",
-    marginBottom: "1rem",
-  },
-  label: {
-    fontWeight: tokens.fontWeightSemibold,
-  },
-  errorText: {
-    color: tokens.colorStatusDangerForeground1,
-    fontSize: tokens.fontSizeBase200,
-    marginTop: "0.25rem",
-  },
-})
+} from "@fluentui/react-components";
+import { FolderAddRegular } from "@fluentui/react-icons";
+import { addDeliverable } from "../../../api/project-service";
 
 interface AddDeliverableModalProps {
-  sessionId: string
-  onDeliverableAdded: () => void
+  sessionId: string;
+  onDeliverableAdded: () => void;
 }
 
-const AddDeliverableModal: React.FC<AddDeliverableModalProps> = ({ sessionId, onDeliverableAdded }) => {
-  const styles = useStyles()
-  const [open, setOpen] = useState(false)
-  const [title, setTitle] = useState("")
-  const [description, setDescription] = useState("")
-  const [status, setStatus] = useState("not started")
-  const [loading, setLoading] = useState(false)
-  const [error, setError] = useState<string | null>(null)
+const AddDeliverableModal: React.FC<AddDeliverableModalProps> = ({
+  sessionId,
+  onDeliverableAdded,
+}) => {
+  const [open, setOpen] = useState(false);
+  const [title, setTitle] = useState("");
+  const [description, setDescription] = useState("");
+  const [status, setStatus] = useState("not started");
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState<string | null>(null);
 
   const handleSubmit = async () => {
     if (!title) {
-      setError("Please enter a title")
-      return
+      setError("Please enter a title");
+      return;
     }
 
     try {
-      setLoading(true)
-      setError(null)
+      setLoading(true);
+      setError(null);
 
       await addDeliverable(sessionId, {
         title,
@@ -67,50 +48,76 @@ const AddDeliverableModal: React.FC<AddDeliverableModalProps> = ({ sessionId, on
         status,
         progress: status === "not started" ? 0 : 10,
         change: "+0%",
-      })
+      });
 
-      setOpen(false)
-      onDeliverableAdded()
+      setOpen(false);
+      onDeliverableAdded();
     } catch (err) {
-      console.error("Error adding deliverable:", err)
-      setError(err instanceof Error ? err.message : "Failed to add deliverable")
+      console.error("Error adding deliverable:", err);
+      setError(err instanceof Error ? err.message : "Failed to add deliverable");
     } finally {
-      setLoading(false)
+      setLoading(false);
     }
-  }
+  };
+
+  const handleOpenChange = (_: unknown, data: { open: boolean }) => {
+    setOpen(data.open);
+  };
+
+  const handleTitleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setTitle(e.target.value);
+  };
+
+  const handleDescriptionChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
+    setDescription(e.target.value);
+  };
+
+  const handleStatusChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    setStatus(e.target.value);
+  };
 
   return (
-    <Dialog open={open} onOpenChange={(e: any, data: { open: boolean | ((prevState: boolean) => boolean) }) => setOpen(data.open)}>
+    <Dialog open={open} onOpenChange={handleOpenChange}>
       <DialogTrigger disableButtonEnhancement>
         <Button icon={<FolderAddRegular />}>Add Deliverable</Button>
       </DialogTrigger>
       <DialogSurface>
         <DialogTitle>Add New Deliverable</DialogTitle>
         <DialogBody>
-          <div className={styles.formField}>
-            <label className={styles.label}>Title</label>
-            <Input value={title} onChange={(e) => setTitle(e.target.value)} placeholder="e.g., Prototype, Demo Video" />
-          </div>
+          <div style={{ display: "flex", flexDirection: "column", gap: "1rem" }}>
+            <div>
+              <label style={{ fontWeight: "600", display: "block", marginBottom: "0.25rem" }}>Title</label>
+              <Input
+                value={title}
+                onChange={handleTitleChange}
+                placeholder="e.g., Prototype, Demo Video"
+              />
+            </div>
 
-          <div className={styles.formField}>
-            <label className={styles.label}>Description</label>
-            <Textarea
-              value={description}
-              onChange={(e) => setDescription(e.target.value)}
-              placeholder="Describe what this deliverable is about"
-            />
-          </div>
+            <div>
+              <label style={{ fontWeight: "600", display: "block", marginBottom: "0.25rem" }}>Description</label>
+              <Textarea
+                value={description}
+                onChange={handleDescriptionChange}
+                placeholder="Deliverable description"
+              />
+            </div>
 
-          <div className={styles.formField}>
-            <label className={styles.label}>Status</label>
-            <Select value={status} onChange={(e) => setStatus(e.target.value)}>
-              <option value="not started">Not Started</option>
-              <option value="in progress">In Progress</option>
-              <option value="completed">Completed</option>
-            </Select>
-          </div>
+            <div>
+              <label style={{ fontWeight: "600", display: "block", marginBottom: "0.25rem" }}>Status</label>
+              <Select value={status} onChange={handleStatusChange}>
+                <option value="not started">Not Started</option>
+                <option value="in progress">In Progress</option>
+                <option value="completed">Completed</option>
+              </Select>
+            </div>
 
-          {error && <div className={styles.errorText}>{error}</div>}
+            {error && (
+              <div style={{ color: "#d13438", fontSize: "0.875rem" }}>
+                {error}
+              </div>
+            )}
+          </div>
         </DialogBody>
         <DialogActions>
           <Button appearance="secondary" onClick={() => setOpen(false)}>
@@ -122,7 +129,6 @@ const AddDeliverableModal: React.FC<AddDeliverableModalProps> = ({ sessionId, on
         </DialogActions>
       </DialogSurface>
     </Dialog>
-  )
-}
-
-export default AddDeliverableModal
+  );
+};
+export default AddDeliverableModal;
